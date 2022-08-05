@@ -1,12 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
+    <Compile Include="Output.fs" />
+    <Compile Include="Hello.fs" />
     <Compile Include="Program.fs" />
+    <Content Include="appsettings.json" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="FSharp.SystemCommandLine" Version="0.13.0-beta4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="spectre.console" Version="0.44.0" />
+  </ItemGroup>
 </Project>
