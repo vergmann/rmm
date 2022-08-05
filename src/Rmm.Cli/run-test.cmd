@@ -1,1 +1,1 @@
-dotnet run -- -c localhost -o .
+dotnet run -- data-export -c kbndvcrm80\dev01 -o .
