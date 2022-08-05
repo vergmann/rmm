@@ -2,6 +2,8 @@
 open System.IO
 open System.Threading
 open System.Threading.Tasks
+open System.CommandLine.Invocation
+open System.CommandLine.Help
 open FSharp.SystemCommandLine
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Configuration
@@ -36,9 +38,22 @@ let main argv =
     let logger = host.Services.GetService<ILogger>()
     let cfg = host.Services.GetService<IConfiguration>()
 
+    let showHelp (ctx: InvocationContext) =
+        let hc = HelpContext(
+            ctx.HelpBuilder,
+            ctx.Parser.Configuration.RootCommand,
+            Console.Out
+        )
+        task {
+            ctx.HelpBuilder.Write(hc)
+        }
+        
+
+    let ctx = Input.Context()
     rootCommand argv {
         description "RMM Utility"
-        setHandler Task.FromResult
+        inputs ctx
+        setHandler showHelp
         addCommand (dataExportCmd logger cfg)
     }
     |> Async.AwaitTask
