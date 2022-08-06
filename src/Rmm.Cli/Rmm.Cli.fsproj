@@ -4,9 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="commands\DataExport.fs" />
     <Compile Include="Output.fs" />
     <Compile Include="Hello.fs" />
-    <Compile Include="DataExport.fs" />
     <Compile Include="Program.fs" />
     <Content Include="appsettings.json" />
   </ItemGroup>
