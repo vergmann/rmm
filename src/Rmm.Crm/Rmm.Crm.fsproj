@@ -11,7 +11,7 @@
             <Visible>False</Visible>
         </Compile>
         <Compile Include="DB.fs" />
-        <Compile Include="Logs.fs" />
+        <Compile Include="Data.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 

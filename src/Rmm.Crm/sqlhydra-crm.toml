@@ -8,11 +8,10 @@ reader_type = "Microsoft.Data.SqlClient.SqlDataReader"
 [filters]
 include = [
     "dbo/Contact",
-    "dbo/dgs_systemlogentry",
+    "dbo/dgs_systemlogentry*",
     "dbo/ActivityP*",
     "dbo/SystemUser*"
     ]
 exclude = [
-    "dbo/Filter*",
-    "dbo/*Base"
+    "dbo/Filter*"
 ]

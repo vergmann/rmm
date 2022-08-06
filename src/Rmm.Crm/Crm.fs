@@ -135,6 +135,63 @@ module dbo =
             if __.ActivityPartyId.IsNull() then None else Some(__.Read())
 
     [<CLIMutable>]
+    type ActivityPartyBase =
+        { ActivityId: System.Guid
+          ActivityPartyId: System.Guid
+          PartyId: Option<System.Guid>
+          PartyObjectTypeCode: int
+          ParticipationTypeMask: int
+          AddressUsed: Option<string>
+          PartyIdName: Option<string>
+          Effort: Option<double>
+          ExchangeEntryId: Option<string>
+          ResourceSpecId: Option<System.Guid>
+          DoNotPhone: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ScheduledEnd: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ScheduledStart: Option<System.DateTime>
+          IsPartyDeleted: bool
+          AddressUsedEmailColumnNumber: Option<int> }
+
+    type ActivityPartyBaseReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.ActivityId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ActivityId")
+        member __.ActivityPartyId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ActivityPartyId")
+        member __.PartyId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PartyId")
+        member __.PartyObjectTypeCode = RequiredColumn(reader, getOrdinal, reader.GetInt32, "PartyObjectTypeCode")
+        member __.ParticipationTypeMask = RequiredColumn(reader, getOrdinal, reader.GetInt32, "ParticipationTypeMask")
+        member __.AddressUsed = OptionalColumn(reader, getOrdinal, reader.GetString, "AddressUsed")
+        member __.PartyIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "PartyIdName")
+        member __.Effort = OptionalColumn(reader, getOrdinal, reader.GetDouble, "Effort")
+        member __.ExchangeEntryId = OptionalColumn(reader, getOrdinal, reader.GetString, "ExchangeEntryId")
+        member __.ResourceSpecId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ResourceSpecId")
+        member __.DoNotPhone = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotPhone")
+        member __.ScheduledEnd = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ScheduledEnd")
+        member __.ScheduledStart = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ScheduledStart")
+        member __.IsPartyDeleted = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "IsPartyDeleted")
+        member __.AddressUsedEmailColumnNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "AddressUsedEmailColumnNumber")
+
+        member __.Read() =
+            { ActivityId = __.ActivityId.Read()
+              ActivityPartyId = __.ActivityPartyId.Read()
+              PartyId = __.PartyId.Read()
+              PartyObjectTypeCode = __.PartyObjectTypeCode.Read()
+              ParticipationTypeMask = __.ParticipationTypeMask.Read()
+              AddressUsed = __.AddressUsed.Read()
+              PartyIdName = __.PartyIdName.Read()
+              Effort = __.Effort.Read()
+              ExchangeEntryId = __.ExchangeEntryId.Read()
+              ResourceSpecId = __.ResourceSpecId.Read()
+              DoNotPhone = __.DoNotPhone.Read()
+              ScheduledEnd = __.ScheduledEnd.Read()
+              ScheduledStart = __.ScheduledStart.Read()
+              IsPartyDeleted = __.IsPartyDeleted.Read()
+              AddressUsedEmailColumnNumber = __.AddressUsedEmailColumnNumber.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.ActivityPartyId.IsNull() then None else Some(__.Read())
+
+    [<CLIMutable>]
     type ActivityPointer =
         { ModifiedOnBehalfByName: Option<string>
           CreatedOnBehalfByYomiName: Option<string>
@@ -373,6 +430,845 @@ module dbo =
 
         member __.ReadIfNotNull() =
             if __.OwnerId.IsNull() then None else Some(__.Read())
+
+    [<CLIMutable>]
+    type ActivityPointerBase =
+        { OwningBusinessUnit: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ActualEnd: Option<System.DateTime>
+          ActivityId: System.Guid
+          IsBilled: Option<bool>
+          CreatedBy: Option<System.Guid>
+          Description: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ModifiedOn: Option<System.DateTime>
+          ServiceId: Option<System.Guid>
+          ActivityTypeCode: int
+          StateCode: int
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ScheduledEnd: Option<System.DateTime>
+          ScheduledDurationMinutes: Option<int>
+          ActualDurationMinutes: Option<int>
+          StatusCode: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ActualStart: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          CreatedOn: Option<System.DateTime>
+          PriorityCode: Option<int>
+          RegardingObjectId: Option<System.Guid>
+          Subject: Option<string>
+          IsWorkflowCreated: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ScheduledStart: Option<System.DateTime>
+          ModifiedBy: Option<System.Guid>
+          RegardingObjectTypeCode: Option<int>
+          RegardingObjectIdName: Option<string>
+          TimeZoneRuleVersionNumber: Option<int>
+          UTCConversionTimeZoneCode: Option<int>
+          RegardingObjectIdYomiName: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          RecApptMstrOverriddenCreatedOn: Option<System.DateTime>
+          RecApptMstrGlobalObjectId: Option<string>
+          SeriesStatus: Option<bool>
+          RecApptMstrOutlookOwnerApptId: Option<int>
+          DeletedExceptionsList: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          NextExpansionInstanceDate: Option<System.DateTime>
+          RecApptMstrLocation: Option<string>
+          GroupId: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          LastExpandedInstanceDate: Option<System.DateTime>
+          ExpansionStateCode: Option<int>
+          RecApptMstrCategory: Option<string>
+          RecApptMstrIsAllDayEvent: Option<bool>
+          RecApptMstrSubcategory: Option<string>
+          RecApptMstrSubscriptionId: Option<System.Guid>
+          RecApptMstrImportSequenceNumber: Option<int>
+          ModifiedFieldsMask: Option<string>
+          CreatedOnBehalfBy: Option<System.Guid>
+          OwnerId: System.Guid
+          InstanceTypeCode: int
+          SeriesId: Option<System.Guid>
+          TransactionCurrencyId: Option<System.Guid>
+          ExchangeRate: Option<decimal>
+          IsRegularActivity: bool
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OriginalStartDate: Option<System.DateTime>
+          ModifiedOnBehalfBy: Option<System.Guid>
+          OwnerIdType: int
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          QteCloseOverriddenCreatedOn: Option<System.DateTime>
+          QuoteNumber: Option<string>
+          QteCloseImportSequenceNumber: Option<int>
+          QteCloseCategory: Option<string>
+          QteCloseRevision: Option<int>
+          QteCloseSubcategory: Option<string>
+          ApptCategory: Option<string>
+          ApptGlobalObjectId: Option<string>
+          ApptIsAllDayEvent: Option<bool>
+          ApptImportSequenceNumber: Option<int>
+          ApptOutlookOwnerApptId: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ApptOverriddenCreatedOn: Option<System.DateTime>
+          ApptSubcategory: Option<string>
+          ApptSubscriptionId: Option<System.Guid>
+          ApptLocation: Option<string>
+          ActualCost_Base: Option<decimal>
+          CampActImportSequenceNumber: Option<int>
+          BudgetedCost_Base: Option<decimal>
+          ActualCost: Option<decimal>
+          IgnoreInactiveListMembers: Option<bool>
+          DoNotSendOnOptOut: Option<bool>
+          TypeCode: Option<int>
+          CampActSubcategory: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          CampActOverriddenCreatedOn: Option<System.DateTime>
+          ExcludeIfContactedInXDays: Option<int>
+          CampActCategory: Option<string>
+          BudgetedCost: Option<decimal>
+          CampActChannelTypeCode: Option<int>
+          FirstName: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ReceivedOn: Option<System.DateTime>
+          ResponseCode: Option<int>
+          YomiLastName: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          CampResOverriddenCreatedOn: Option<System.DateTime>
+          YomiFirstName: Option<string>
+          CompanyName: Option<string>
+          CampResCategory: Option<string>
+          Telephone: Option<string>
+          OriginatingActivityId: Option<System.Guid>
+          Fax: Option<string>
+          LastName: Option<string>
+          CampResImportSequenceNumber: Option<int>
+          OriginatingActivityIdTypeCode: Option<int>
+          EMailAddress: Option<string>
+          CampResChannelTypeCode: Option<int>
+          YomiCompanyName: Option<string>
+          PromotionCodeName: Option<string>
+          CampResSubcategory: Option<string>
+          SuccessCount: Option<int>
+          OperationTypeCode: Option<int>
+          BulkOperationNumber: Option<string>
+          TargetMembersCount: Option<int>
+          CreatedRecordTypeCode: Option<int>
+          Parameters: Option<string>
+          ErrorNumber: Option<int>
+          TargetedRecordTypeCode: Option<int>
+          FailureCount: Option<int>
+          Compressed: Option<bool>
+          ReadReceiptRequested: Option<bool>
+          DeliveryReceiptRequested: Option<bool>
+          EmailSubcategory: Option<string>
+          Notifications: Option<int>
+          MessageId: Option<string>
+          Sender: Option<string>
+          ToRecipients: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          EmailOverriddenCreatedOn: Option<System.DateTime>
+          SubmittedBy: Option<string>
+          EmailImportSequenceNumber: Option<int>
+          EmailDirectionCode: Option<bool>
+          MimeType: Option<string>
+          MessageIdDupCheck: Option<System.Guid>
+          DeliveryAttempts: Option<int>
+          TrackingToken: Option<string>
+          EmailCategory: Option<string>
+          SvcApptImportSequenceNumber: Option<int>
+          SvcApptLocation: Option<string>
+          SvcApptIsAllDayEvent: Option<bool>
+          SvcApptSubcategory: Option<string>
+          SiteId: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          SvcApptOverriddenCreatedOn: Option<System.DateTime>
+          SvcApptCategory: Option<string>
+          SvcApptSubscriptionId: Option<System.Guid>
+          TaskCategory: Option<string>
+          PercentComplete: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          TaskOverriddenCreatedOn: Option<System.DateTime>
+          TaskSubscriptionId: Option<System.Guid>
+          TaskSubcategory: Option<string>
+          TaskImportSequenceNumber: Option<int>
+          Address: Option<string>
+          LetterImportSequenceNumber: Option<int>
+          LetterSubscriptionId: Option<System.Guid>
+          LetterCategory: Option<string>
+          LetterSubcategory: Option<string>
+          LetterDirectionCode: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          LetterOverriddenCreatedOn: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          PhoneOverriddenCreatedOn: Option<System.DateTime>
+          PhoneImportSequenceNumber: Option<int>
+          PhoneNumber: Option<string>
+          PhoneSubcategory: Option<string>
+          PhoneDirectionCode: Option<bool>
+          PhoneSubscriptionId: Option<System.Guid>
+          PhoneCategory: Option<string>
+          OrdCloseSubcategory: Option<string>
+          OrdCloseImportSequenceNumber: Option<int>
+          OrdCloseRevision: Option<int>
+          OrderNumber: Option<string>
+          OrdCloseCategory: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OrdCloseOverriddenCreatedOn: Option<System.DateTime>
+          FaxNumber: Option<string>
+          CoverPageName: Option<string>
+          NumberOfPages: Option<int>
+          FaxSubscriptionId: Option<System.Guid>
+          FaxImportSequenceNumber: Option<int>
+          BillingCode: Option<string>
+          Tsid: Option<string>
+          FaxDirectionCode: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          FaxOverriddenCreatedOn: Option<System.DateTime>
+          FaxSubcategory: Option<string>
+          FaxCategory: Option<string>
+          IncResSubcategory: Option<string>
+          IncResCategory: Option<string>
+          IncResImportSequenceNumber: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          IncResOverriddenCreatedOn: Option<System.DateTime>
+          TimeSpent: Option<int>
+          CompetitorId: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OppCloseOverriddenCreatedOn: Option<System.DateTime>
+          OppCloseImportSequenceNumber: Option<int>
+          ActualRevenue_Base: Option<decimal>
+          ActualRevenue: Option<decimal>
+          OppCloseSubcategory: Option<string>
+          OppCloseCategory: Option<string>
+          EmailAttachmentCount: int
+          ConversationIndex: Option<string>
+          InReplyTo: Option<string>
+          CorrelationMethod: Option<int>
+          BaseConversationIndexHash: Option<int>
+          ParentActivityId: Option<System.Guid>
+          SenderMailboxId: Option<System.Guid>
+          IsMapiPrivate: Option<bool>
+          LeftVoiceMail: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          DeliveryLastAttemptedOn: Option<System.DateTime>
+          StageId: Option<System.Guid>
+          DeliveryPriorityCode: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          SentOn: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          PostponeActivityProcessingUntil: Option<System.DateTime>
+          ProcessId: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OverriddenCreatedOn: Option<System.DateTime>
+          ImportSequenceNumber: Option<int>
+          PostURL: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          PostedOn: Option<System.DateTime>
+          PostAuthor: Option<System.Guid>
+          ThreadId: Option<string>
+          PostMessageType: Option<int>
+          SentimentValue: Option<double>
+          PostId: Option<string>
+          PostFromProfileId: Option<System.Guid>
+          PostToProfileId: Option<string>
+          SocialActivityDirectionCode: Option<bool>
+          InResponseTo: Option<string>
+          SocialAdditionalParams: Option<string>
+          PostAuthorAccount: Option<System.Guid>
+          PostAuthorType: Option<int>
+          PostAuthorAccountName: Option<string>
+          PostAuthorAccountType: Option<int>
+          PostAuthorName: Option<string>
+          PostAuthorYomiName: Option<string>
+          PostAuthorAccountYomiName: Option<string>
+          EmailSender: Option<System.Guid>
+          SendersAccount: Option<System.Guid>
+          EmailSenderName: Option<string>
+          SendersAccountName: Option<string>
+          EmailSenderObjectTypeCode: Option<int>
+          SendersAccountObjectTypeCode: Option<int>
+          SendersAccountYomiName: Option<string>
+          EmailSenderYomiName: Option<string>
+          CrmTaskAssignedUniqueId: Option<System.Guid>
+          Community: Option<int>
+          TraversedPath: Option<string>
+          AttachmentErrors: Option<int>
+          IsUnsafe: Option<int>
+          CreatedByExternalParty: Option<System.Guid>
+          ModifiedByExternalParty: Option<System.Guid>
+          ActivityAdditionalParams: Option<string>
+          OnHoldTime: Option<int>
+          SLAInvokedId: Option<System.Guid>
+          SLAId: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          LastOnHoldTime: Option<System.DateTime>
+          ImportSequenceNumber_10107: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OverriddenCreatedOn_10107: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          SortDate: Option<System.DateTime>
+          ExchangeWebLink: Option<string>
+          ExchangeItemId: Option<string>
+          FollowEmailUserPreference: Option<bool>
+          IsEmailFollowed: Option<bool>
+          EmailTrackingId: Option<System.Guid>
+          ReplyCount: Option<int>
+          EmailReminderStatus: Option<int>
+          EmailReminderType: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          DelayedEmailSendTime: Option<System.DateTime>
+          ReminderActionCardId: Option<System.Guid>
+          OpenCount: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          EmailReminderExpiryTime: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          LastOpenedTime: Option<System.DateTime>
+          TemplateId: Option<System.Guid>
+          LinksClickedCount: Option<int>
+          AttachmentOpenCount: Option<int>
+          EmailReminderText: Option<string>
+          ConversationTrackingId: Option<System.Guid>
+          ImportSequenceNumber_10124: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OverriddenCreatedOn_10124: Option<System.DateTime>
+          ImportSequenceNumber_10147: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OverriddenCreatedOn_10147: Option<System.DateTime> }
+
+    type ActivityPointerBaseReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.OwningBusinessUnit = OptionalColumn(reader, getOrdinal, reader.GetGuid, "OwningBusinessUnit")
+        member __.ActualEnd = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ActualEnd")
+        member __.ActivityId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ActivityId")
+        member __.IsBilled = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IsBilled")
+        member __.CreatedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedBy")
+        member __.Description = OptionalColumn(reader, getOrdinal, reader.GetString, "Description")
+        member __.ModifiedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ModifiedOn")
+        member __.ServiceId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ServiceId")
+        member __.ActivityTypeCode = RequiredColumn(reader, getOrdinal, reader.GetInt32, "ActivityTypeCode")
+        member __.StateCode = RequiredColumn(reader, getOrdinal, reader.GetInt32, "StateCode")
+        member __.ScheduledEnd = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ScheduledEnd")
+        member __.ScheduledDurationMinutes = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ScheduledDurationMinutes")
+        member __.ActualDurationMinutes = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ActualDurationMinutes")
+        member __.StatusCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "StatusCode")
+        member __.ActualStart = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ActualStart")
+        member __.CreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "CreatedOn")
+        member __.PriorityCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PriorityCode")
+        member __.RegardingObjectId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "RegardingObjectId")
+        member __.Subject = OptionalColumn(reader, getOrdinal, reader.GetString, "Subject")
+        member __.IsWorkflowCreated = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IsWorkflowCreated")
+        member __.ScheduledStart = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ScheduledStart")
+        member __.ModifiedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedBy")
+        member __.RegardingObjectTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "RegardingObjectTypeCode")
+        member __.RegardingObjectIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "RegardingObjectIdName")
+        member __.TimeZoneRuleVersionNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TimeZoneRuleVersionNumber")
+        member __.UTCConversionTimeZoneCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "UTCConversionTimeZoneCode")
+        member __.RegardingObjectIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "RegardingObjectIdYomiName")
+        member __.RecApptMstrOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "RecApptMstrOverriddenCreatedOn")
+        member __.RecApptMstrGlobalObjectId = OptionalColumn(reader, getOrdinal, reader.GetString, "RecApptMstrGlobalObjectId")
+        member __.SeriesStatus = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "SeriesStatus")
+        member __.RecApptMstrOutlookOwnerApptId = OptionalColumn(reader, getOrdinal, reader.GetInt32, "RecApptMstrOutlookOwnerApptId")
+        member __.DeletedExceptionsList = OptionalColumn(reader, getOrdinal, reader.GetString, "DeletedExceptionsList")
+        member __.NextExpansionInstanceDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "NextExpansionInstanceDate")
+        member __.RecApptMstrLocation = OptionalColumn(reader, getOrdinal, reader.GetString, "RecApptMstrLocation")
+        member __.GroupId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "GroupId")
+        member __.LastExpandedInstanceDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "LastExpandedInstanceDate")
+        member __.ExpansionStateCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ExpansionStateCode")
+        member __.RecApptMstrCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "RecApptMstrCategory")
+        member __.RecApptMstrIsAllDayEvent = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "RecApptMstrIsAllDayEvent")
+        member __.RecApptMstrSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "RecApptMstrSubcategory")
+        member __.RecApptMstrSubscriptionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "RecApptMstrSubscriptionId")
+        member __.RecApptMstrImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "RecApptMstrImportSequenceNumber")
+        member __.ModifiedFieldsMask = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedFieldsMask")
+        member __.CreatedOnBehalfBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedOnBehalfBy")
+        member __.OwnerId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "OwnerId")
+        member __.InstanceTypeCode = RequiredColumn(reader, getOrdinal, reader.GetInt32, "InstanceTypeCode")
+        member __.SeriesId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SeriesId")
+        member __.TransactionCurrencyId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "TransactionCurrencyId")
+        member __.ExchangeRate = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "ExchangeRate")
+        member __.IsRegularActivity = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "IsRegularActivity")
+        member __.OriginalStartDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OriginalStartDate")
+        member __.ModifiedOnBehalfBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedOnBehalfBy")
+        member __.OwnerIdType = RequiredColumn(reader, getOrdinal, reader.GetInt32, "OwnerIdType")
+        member __.QteCloseOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "QteCloseOverriddenCreatedOn")
+        member __.QuoteNumber = OptionalColumn(reader, getOrdinal, reader.GetString, "QuoteNumber")
+        member __.QteCloseImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "QteCloseImportSequenceNumber")
+        member __.QteCloseCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "QteCloseCategory")
+        member __.QteCloseRevision = OptionalColumn(reader, getOrdinal, reader.GetInt32, "QteCloseRevision")
+        member __.QteCloseSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "QteCloseSubcategory")
+        member __.ApptCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "ApptCategory")
+        member __.ApptGlobalObjectId = OptionalColumn(reader, getOrdinal, reader.GetString, "ApptGlobalObjectId")
+        member __.ApptIsAllDayEvent = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "ApptIsAllDayEvent")
+        member __.ApptImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ApptImportSequenceNumber")
+        member __.ApptOutlookOwnerApptId = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ApptOutlookOwnerApptId")
+        member __.ApptOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ApptOverriddenCreatedOn")
+        member __.ApptSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "ApptSubcategory")
+        member __.ApptSubscriptionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ApptSubscriptionId")
+        member __.ApptLocation = OptionalColumn(reader, getOrdinal, reader.GetString, "ApptLocation")
+        member __.ActualCost_Base = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "ActualCost_Base")
+        member __.CampActImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "CampActImportSequenceNumber")
+        member __.BudgetedCost_Base = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "BudgetedCost_Base")
+        member __.ActualCost = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "ActualCost")
+        member __.IgnoreInactiveListMembers = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IgnoreInactiveListMembers")
+        member __.DoNotSendOnOptOut = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotSendOnOptOut")
+        member __.TypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TypeCode")
+        member __.CampActSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "CampActSubcategory")
+        member __.CampActOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "CampActOverriddenCreatedOn")
+        member __.ExcludeIfContactedInXDays = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ExcludeIfContactedInXDays")
+        member __.CampActCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "CampActCategory")
+        member __.BudgetedCost = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "BudgetedCost")
+        member __.CampActChannelTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "CampActChannelTypeCode")
+        member __.FirstName = OptionalColumn(reader, getOrdinal, reader.GetString, "FirstName")
+        member __.ReceivedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ReceivedOn")
+        member __.ResponseCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ResponseCode")
+        member __.YomiLastName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiLastName")
+        member __.CampResOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "CampResOverriddenCreatedOn")
+        member __.YomiFirstName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiFirstName")
+        member __.CompanyName = OptionalColumn(reader, getOrdinal, reader.GetString, "CompanyName")
+        member __.CampResCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "CampResCategory")
+        member __.Telephone = OptionalColumn(reader, getOrdinal, reader.GetString, "Telephone")
+        member __.OriginatingActivityId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "OriginatingActivityId")
+        member __.Fax = OptionalColumn(reader, getOrdinal, reader.GetString, "Fax")
+        member __.LastName = OptionalColumn(reader, getOrdinal, reader.GetString, "LastName")
+        member __.CampResImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "CampResImportSequenceNumber")
+        member __.OriginatingActivityIdTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "OriginatingActivityIdTypeCode")
+        member __.EMailAddress = OptionalColumn(reader, getOrdinal, reader.GetString, "EMailAddress")
+        member __.CampResChannelTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "CampResChannelTypeCode")
+        member __.YomiCompanyName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiCompanyName")
+        member __.PromotionCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "PromotionCodeName")
+        member __.CampResSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "CampResSubcategory")
+        member __.SuccessCount = OptionalColumn(reader, getOrdinal, reader.GetInt32, "SuccessCount")
+        member __.OperationTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "OperationTypeCode")
+        member __.BulkOperationNumber = OptionalColumn(reader, getOrdinal, reader.GetString, "BulkOperationNumber")
+        member __.TargetMembersCount = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TargetMembersCount")
+        member __.CreatedRecordTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "CreatedRecordTypeCode")
+        member __.Parameters = OptionalColumn(reader, getOrdinal, reader.GetString, "Parameters")
+        member __.ErrorNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ErrorNumber")
+        member __.TargetedRecordTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TargetedRecordTypeCode")
+        member __.FailureCount = OptionalColumn(reader, getOrdinal, reader.GetInt32, "FailureCount")
+        member __.Compressed = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "Compressed")
+        member __.ReadReceiptRequested = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "ReadReceiptRequested")
+        member __.DeliveryReceiptRequested = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DeliveryReceiptRequested")
+        member __.EmailSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "EmailSubcategory")
+        member __.Notifications = OptionalColumn(reader, getOrdinal, reader.GetInt32, "Notifications")
+        member __.MessageId = OptionalColumn(reader, getOrdinal, reader.GetString, "MessageId")
+        member __.Sender = OptionalColumn(reader, getOrdinal, reader.GetString, "Sender")
+        member __.ToRecipients = OptionalColumn(reader, getOrdinal, reader.GetString, "ToRecipients")
+        member __.EmailOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "EmailOverriddenCreatedOn")
+        member __.SubmittedBy = OptionalColumn(reader, getOrdinal, reader.GetString, "SubmittedBy")
+        member __.EmailImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "EmailImportSequenceNumber")
+        member __.EmailDirectionCode = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "EmailDirectionCode")
+        member __.MimeType = OptionalColumn(reader, getOrdinal, reader.GetString, "MimeType")
+        member __.MessageIdDupCheck = OptionalColumn(reader, getOrdinal, reader.GetGuid, "MessageIdDupCheck")
+        member __.DeliveryAttempts = OptionalColumn(reader, getOrdinal, reader.GetInt32, "DeliveryAttempts")
+        member __.TrackingToken = OptionalColumn(reader, getOrdinal, reader.GetString, "TrackingToken")
+        member __.EmailCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "EmailCategory")
+        member __.SvcApptImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "SvcApptImportSequenceNumber")
+        member __.SvcApptLocation = OptionalColumn(reader, getOrdinal, reader.GetString, "SvcApptLocation")
+        member __.SvcApptIsAllDayEvent = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "SvcApptIsAllDayEvent")
+        member __.SvcApptSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "SvcApptSubcategory")
+        member __.SiteId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SiteId")
+        member __.SvcApptOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "SvcApptOverriddenCreatedOn")
+        member __.SvcApptCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "SvcApptCategory")
+        member __.SvcApptSubscriptionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SvcApptSubscriptionId")
+        member __.TaskCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "TaskCategory")
+        member __.PercentComplete = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PercentComplete")
+        member __.TaskOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "TaskOverriddenCreatedOn")
+        member __.TaskSubscriptionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "TaskSubscriptionId")
+        member __.TaskSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "TaskSubcategory")
+        member __.TaskImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TaskImportSequenceNumber")
+        member __.Address = OptionalColumn(reader, getOrdinal, reader.GetString, "Address")
+        member __.LetterImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "LetterImportSequenceNumber")
+        member __.LetterSubscriptionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "LetterSubscriptionId")
+        member __.LetterCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "LetterCategory")
+        member __.LetterSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "LetterSubcategory")
+        member __.LetterDirectionCode = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "LetterDirectionCode")
+        member __.LetterOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "LetterOverriddenCreatedOn")
+        member __.PhoneOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "PhoneOverriddenCreatedOn")
+        member __.PhoneImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PhoneImportSequenceNumber")
+        member __.PhoneNumber = OptionalColumn(reader, getOrdinal, reader.GetString, "PhoneNumber")
+        member __.PhoneSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "PhoneSubcategory")
+        member __.PhoneDirectionCode = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "PhoneDirectionCode")
+        member __.PhoneSubscriptionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PhoneSubscriptionId")
+        member __.PhoneCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "PhoneCategory")
+        member __.OrdCloseSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "OrdCloseSubcategory")
+        member __.OrdCloseImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "OrdCloseImportSequenceNumber")
+        member __.OrdCloseRevision = OptionalColumn(reader, getOrdinal, reader.GetInt32, "OrdCloseRevision")
+        member __.OrderNumber = OptionalColumn(reader, getOrdinal, reader.GetString, "OrderNumber")
+        member __.OrdCloseCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "OrdCloseCategory")
+        member __.OrdCloseOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OrdCloseOverriddenCreatedOn")
+        member __.FaxNumber = OptionalColumn(reader, getOrdinal, reader.GetString, "FaxNumber")
+        member __.CoverPageName = OptionalColumn(reader, getOrdinal, reader.GetString, "CoverPageName")
+        member __.NumberOfPages = OptionalColumn(reader, getOrdinal, reader.GetInt32, "NumberOfPages")
+        member __.FaxSubscriptionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "FaxSubscriptionId")
+        member __.FaxImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "FaxImportSequenceNumber")
+        member __.BillingCode = OptionalColumn(reader, getOrdinal, reader.GetString, "BillingCode")
+        member __.Tsid = OptionalColumn(reader, getOrdinal, reader.GetString, "Tsid")
+        member __.FaxDirectionCode = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "FaxDirectionCode")
+        member __.FaxOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "FaxOverriddenCreatedOn")
+        member __.FaxSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "FaxSubcategory")
+        member __.FaxCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "FaxCategory")
+        member __.IncResSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "IncResSubcategory")
+        member __.IncResCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "IncResCategory")
+        member __.IncResImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "IncResImportSequenceNumber")
+        member __.IncResOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "IncResOverriddenCreatedOn")
+        member __.TimeSpent = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TimeSpent")
+        member __.CompetitorId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CompetitorId")
+        member __.OppCloseOverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OppCloseOverriddenCreatedOn")
+        member __.OppCloseImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "OppCloseImportSequenceNumber")
+        member __.ActualRevenue_Base = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "ActualRevenue_Base")
+        member __.ActualRevenue = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "ActualRevenue")
+        member __.OppCloseSubcategory = OptionalColumn(reader, getOrdinal, reader.GetString, "OppCloseSubcategory")
+        member __.OppCloseCategory = OptionalColumn(reader, getOrdinal, reader.GetString, "OppCloseCategory")
+        member __.EmailAttachmentCount = RequiredColumn(reader, getOrdinal, reader.GetInt32, "EmailAttachmentCount")
+        member __.ConversationIndex = OptionalColumn(reader, getOrdinal, reader.GetString, "ConversationIndex")
+        member __.InReplyTo = OptionalColumn(reader, getOrdinal, reader.GetString, "InReplyTo")
+        member __.CorrelationMethod = OptionalColumn(reader, getOrdinal, reader.GetInt32, "CorrelationMethod")
+        member __.BaseConversationIndexHash = OptionalColumn(reader, getOrdinal, reader.GetInt32, "BaseConversationIndexHash")
+        member __.ParentActivityId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ParentActivityId")
+        member __.SenderMailboxId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SenderMailboxId")
+        member __.IsMapiPrivate = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IsMapiPrivate")
+        member __.LeftVoiceMail = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "LeftVoiceMail")
+        member __.DeliveryLastAttemptedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "DeliveryLastAttemptedOn")
+        member __.StageId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "StageId")
+        member __.DeliveryPriorityCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "DeliveryPriorityCode")
+        member __.SentOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "SentOn")
+        member __.PostponeActivityProcessingUntil = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "PostponeActivityProcessingUntil")
+        member __.ProcessId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ProcessId")
+        member __.OverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OverriddenCreatedOn")
+        member __.ImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ImportSequenceNumber")
+        member __.PostURL = OptionalColumn(reader, getOrdinal, reader.GetString, "PostURL")
+        member __.PostedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "PostedOn")
+        member __.PostAuthor = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PostAuthor")
+        member __.ThreadId = OptionalColumn(reader, getOrdinal, reader.GetString, "ThreadId")
+        member __.PostMessageType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PostMessageType")
+        member __.SentimentValue = OptionalColumn(reader, getOrdinal, reader.GetDouble, "SentimentValue")
+        member __.PostId = OptionalColumn(reader, getOrdinal, reader.GetString, "PostId")
+        member __.PostFromProfileId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PostFromProfileId")
+        member __.PostToProfileId = OptionalColumn(reader, getOrdinal, reader.GetString, "PostToProfileId")
+        member __.SocialActivityDirectionCode = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "SocialActivityDirectionCode")
+        member __.InResponseTo = OptionalColumn(reader, getOrdinal, reader.GetString, "InResponseTo")
+        member __.SocialAdditionalParams = OptionalColumn(reader, getOrdinal, reader.GetString, "SocialAdditionalParams")
+        member __.PostAuthorAccount = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PostAuthorAccount")
+        member __.PostAuthorType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PostAuthorType")
+        member __.PostAuthorAccountName = OptionalColumn(reader, getOrdinal, reader.GetString, "PostAuthorAccountName")
+        member __.PostAuthorAccountType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PostAuthorAccountType")
+        member __.PostAuthorName = OptionalColumn(reader, getOrdinal, reader.GetString, "PostAuthorName")
+        member __.PostAuthorYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "PostAuthorYomiName")
+        member __.PostAuthorAccountYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "PostAuthorAccountYomiName")
+        member __.EmailSender = OptionalColumn(reader, getOrdinal, reader.GetGuid, "EmailSender")
+        member __.SendersAccount = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SendersAccount")
+        member __.EmailSenderName = OptionalColumn(reader, getOrdinal, reader.GetString, "EmailSenderName")
+        member __.SendersAccountName = OptionalColumn(reader, getOrdinal, reader.GetString, "SendersAccountName")
+        member __.EmailSenderObjectTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "EmailSenderObjectTypeCode")
+        member __.SendersAccountObjectTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "SendersAccountObjectTypeCode")
+        member __.SendersAccountYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "SendersAccountYomiName")
+        member __.EmailSenderYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "EmailSenderYomiName")
+        member __.CrmTaskAssignedUniqueId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CrmTaskAssignedUniqueId")
+        member __.Community = OptionalColumn(reader, getOrdinal, reader.GetInt32, "Community")
+        member __.TraversedPath = OptionalColumn(reader, getOrdinal, reader.GetString, "TraversedPath")
+        member __.AttachmentErrors = OptionalColumn(reader, getOrdinal, reader.GetInt32, "AttachmentErrors")
+        member __.IsUnsafe = OptionalColumn(reader, getOrdinal, reader.GetInt32, "IsUnsafe")
+        member __.CreatedByExternalParty = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedByExternalParty")
+        member __.ModifiedByExternalParty = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedByExternalParty")
+        member __.ActivityAdditionalParams = OptionalColumn(reader, getOrdinal, reader.GetString, "ActivityAdditionalParams")
+        member __.OnHoldTime = OptionalColumn(reader, getOrdinal, reader.GetInt32, "OnHoldTime")
+        member __.SLAInvokedId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SLAInvokedId")
+        member __.SLAId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SLAId")
+        member __.LastOnHoldTime = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "LastOnHoldTime")
+        member __.ImportSequenceNumber_10107 = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ImportSequenceNumber_10107")
+        member __.OverriddenCreatedOn_10107 = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OverriddenCreatedOn_10107")
+        member __.SortDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "SortDate")
+        member __.ExchangeWebLink = OptionalColumn(reader, getOrdinal, reader.GetString, "ExchangeWebLink")
+        member __.ExchangeItemId = OptionalColumn(reader, getOrdinal, reader.GetString, "ExchangeItemId")
+        member __.FollowEmailUserPreference = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "FollowEmailUserPreference")
+        member __.IsEmailFollowed = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IsEmailFollowed")
+        member __.EmailTrackingId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "EmailTrackingId")
+        member __.ReplyCount = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ReplyCount")
+        member __.EmailReminderStatus = OptionalColumn(reader, getOrdinal, reader.GetInt32, "EmailReminderStatus")
+        member __.EmailReminderType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "EmailReminderType")
+        member __.DelayedEmailSendTime = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "DelayedEmailSendTime")
+        member __.ReminderActionCardId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ReminderActionCardId")
+        member __.OpenCount = OptionalColumn(reader, getOrdinal, reader.GetInt32, "OpenCount")
+        member __.EmailReminderExpiryTime = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "EmailReminderExpiryTime")
+        member __.LastOpenedTime = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "LastOpenedTime")
+        member __.TemplateId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "TemplateId")
+        member __.LinksClickedCount = OptionalColumn(reader, getOrdinal, reader.GetInt32, "LinksClickedCount")
+        member __.AttachmentOpenCount = OptionalColumn(reader, getOrdinal, reader.GetInt32, "AttachmentOpenCount")
+        member __.EmailReminderText = OptionalColumn(reader, getOrdinal, reader.GetString, "EmailReminderText")
+        member __.ConversationTrackingId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ConversationTrackingId")
+        member __.ImportSequenceNumber_10124 = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ImportSequenceNumber_10124")
+        member __.OverriddenCreatedOn_10124 = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OverriddenCreatedOn_10124")
+        member __.ImportSequenceNumber_10147 = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ImportSequenceNumber_10147")
+        member __.OverriddenCreatedOn_10147 = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OverriddenCreatedOn_10147")
+
+        member __.Read() =
+            { OwningBusinessUnit = __.OwningBusinessUnit.Read()
+              ActualEnd = __.ActualEnd.Read()
+              ActivityId = __.ActivityId.Read()
+              IsBilled = __.IsBilled.Read()
+              CreatedBy = __.CreatedBy.Read()
+              Description = __.Description.Read()
+              ModifiedOn = __.ModifiedOn.Read()
+              ServiceId = __.ServiceId.Read()
+              ActivityTypeCode = __.ActivityTypeCode.Read()
+              StateCode = __.StateCode.Read()
+              ScheduledEnd = __.ScheduledEnd.Read()
+              ScheduledDurationMinutes = __.ScheduledDurationMinutes.Read()
+              ActualDurationMinutes = __.ActualDurationMinutes.Read()
+              StatusCode = __.StatusCode.Read()
+              ActualStart = __.ActualStart.Read()
+              CreatedOn = __.CreatedOn.Read()
+              PriorityCode = __.PriorityCode.Read()
+              RegardingObjectId = __.RegardingObjectId.Read()
+              Subject = __.Subject.Read()
+              IsWorkflowCreated = __.IsWorkflowCreated.Read()
+              ScheduledStart = __.ScheduledStart.Read()
+              ModifiedBy = __.ModifiedBy.Read()
+              RegardingObjectTypeCode = __.RegardingObjectTypeCode.Read()
+              RegardingObjectIdName = __.RegardingObjectIdName.Read()
+              TimeZoneRuleVersionNumber = __.TimeZoneRuleVersionNumber.Read()
+              UTCConversionTimeZoneCode = __.UTCConversionTimeZoneCode.Read()
+              RegardingObjectIdYomiName = __.RegardingObjectIdYomiName.Read()
+              RecApptMstrOverriddenCreatedOn = __.RecApptMstrOverriddenCreatedOn.Read()
+              RecApptMstrGlobalObjectId = __.RecApptMstrGlobalObjectId.Read()
+              SeriesStatus = __.SeriesStatus.Read()
+              RecApptMstrOutlookOwnerApptId = __.RecApptMstrOutlookOwnerApptId.Read()
+              DeletedExceptionsList = __.DeletedExceptionsList.Read()
+              NextExpansionInstanceDate = __.NextExpansionInstanceDate.Read()
+              RecApptMstrLocation = __.RecApptMstrLocation.Read()
+              GroupId = __.GroupId.Read()
+              LastExpandedInstanceDate = __.LastExpandedInstanceDate.Read()
+              ExpansionStateCode = __.ExpansionStateCode.Read()
+              RecApptMstrCategory = __.RecApptMstrCategory.Read()
+              RecApptMstrIsAllDayEvent = __.RecApptMstrIsAllDayEvent.Read()
+              RecApptMstrSubcategory = __.RecApptMstrSubcategory.Read()
+              RecApptMstrSubscriptionId = __.RecApptMstrSubscriptionId.Read()
+              RecApptMstrImportSequenceNumber = __.RecApptMstrImportSequenceNumber.Read()
+              ModifiedFieldsMask = __.ModifiedFieldsMask.Read()
+              CreatedOnBehalfBy = __.CreatedOnBehalfBy.Read()
+              OwnerId = __.OwnerId.Read()
+              InstanceTypeCode = __.InstanceTypeCode.Read()
+              SeriesId = __.SeriesId.Read()
+              TransactionCurrencyId = __.TransactionCurrencyId.Read()
+              ExchangeRate = __.ExchangeRate.Read()
+              IsRegularActivity = __.IsRegularActivity.Read()
+              OriginalStartDate = __.OriginalStartDate.Read()
+              ModifiedOnBehalfBy = __.ModifiedOnBehalfBy.Read()
+              OwnerIdType = __.OwnerIdType.Read()
+              QteCloseOverriddenCreatedOn = __.QteCloseOverriddenCreatedOn.Read()
+              QuoteNumber = __.QuoteNumber.Read()
+              QteCloseImportSequenceNumber = __.QteCloseImportSequenceNumber.Read()
+              QteCloseCategory = __.QteCloseCategory.Read()
+              QteCloseRevision = __.QteCloseRevision.Read()
+              QteCloseSubcategory = __.QteCloseSubcategory.Read()
+              ApptCategory = __.ApptCategory.Read()
+              ApptGlobalObjectId = __.ApptGlobalObjectId.Read()
+              ApptIsAllDayEvent = __.ApptIsAllDayEvent.Read()
+              ApptImportSequenceNumber = __.ApptImportSequenceNumber.Read()
+              ApptOutlookOwnerApptId = __.ApptOutlookOwnerApptId.Read()
+              ApptOverriddenCreatedOn = __.ApptOverriddenCreatedOn.Read()
+              ApptSubcategory = __.ApptSubcategory.Read()
+              ApptSubscriptionId = __.ApptSubscriptionId.Read()
+              ApptLocation = __.ApptLocation.Read()
+              ActualCost_Base = __.ActualCost_Base.Read()
+              CampActImportSequenceNumber = __.CampActImportSequenceNumber.Read()
+              BudgetedCost_Base = __.BudgetedCost_Base.Read()
+              ActualCost = __.ActualCost.Read()
+              IgnoreInactiveListMembers = __.IgnoreInactiveListMembers.Read()
+              DoNotSendOnOptOut = __.DoNotSendOnOptOut.Read()
+              TypeCode = __.TypeCode.Read()
+              CampActSubcategory = __.CampActSubcategory.Read()
+              CampActOverriddenCreatedOn = __.CampActOverriddenCreatedOn.Read()
+              ExcludeIfContactedInXDays = __.ExcludeIfContactedInXDays.Read()
+              CampActCategory = __.CampActCategory.Read()
+              BudgetedCost = __.BudgetedCost.Read()
+              CampActChannelTypeCode = __.CampActChannelTypeCode.Read()
+              FirstName = __.FirstName.Read()
+              ReceivedOn = __.ReceivedOn.Read()
+              ResponseCode = __.ResponseCode.Read()
+              YomiLastName = __.YomiLastName.Read()
+              CampResOverriddenCreatedOn = __.CampResOverriddenCreatedOn.Read()
+              YomiFirstName = __.YomiFirstName.Read()
+              CompanyName = __.CompanyName.Read()
+              CampResCategory = __.CampResCategory.Read()
+              Telephone = __.Telephone.Read()
+              OriginatingActivityId = __.OriginatingActivityId.Read()
+              Fax = __.Fax.Read()
+              LastName = __.LastName.Read()
+              CampResImportSequenceNumber = __.CampResImportSequenceNumber.Read()
+              OriginatingActivityIdTypeCode = __.OriginatingActivityIdTypeCode.Read()
+              EMailAddress = __.EMailAddress.Read()
+              CampResChannelTypeCode = __.CampResChannelTypeCode.Read()
+              YomiCompanyName = __.YomiCompanyName.Read()
+              PromotionCodeName = __.PromotionCodeName.Read()
+              CampResSubcategory = __.CampResSubcategory.Read()
+              SuccessCount = __.SuccessCount.Read()
+              OperationTypeCode = __.OperationTypeCode.Read()
+              BulkOperationNumber = __.BulkOperationNumber.Read()
+              TargetMembersCount = __.TargetMembersCount.Read()
+              CreatedRecordTypeCode = __.CreatedRecordTypeCode.Read()
+              Parameters = __.Parameters.Read()
+              ErrorNumber = __.ErrorNumber.Read()
+              TargetedRecordTypeCode = __.TargetedRecordTypeCode.Read()
+              FailureCount = __.FailureCount.Read()
+              Compressed = __.Compressed.Read()
+              ReadReceiptRequested = __.ReadReceiptRequested.Read()
+              DeliveryReceiptRequested = __.DeliveryReceiptRequested.Read()
+              EmailSubcategory = __.EmailSubcategory.Read()
+              Notifications = __.Notifications.Read()
+              MessageId = __.MessageId.Read()
+              Sender = __.Sender.Read()
+              ToRecipients = __.ToRecipients.Read()
+              EmailOverriddenCreatedOn = __.EmailOverriddenCreatedOn.Read()
+              SubmittedBy = __.SubmittedBy.Read()
+              EmailImportSequenceNumber = __.EmailImportSequenceNumber.Read()
+              EmailDirectionCode = __.EmailDirectionCode.Read()
+              MimeType = __.MimeType.Read()
+              MessageIdDupCheck = __.MessageIdDupCheck.Read()
+              DeliveryAttempts = __.DeliveryAttempts.Read()
+              TrackingToken = __.TrackingToken.Read()
+              EmailCategory = __.EmailCategory.Read()
+              SvcApptImportSequenceNumber = __.SvcApptImportSequenceNumber.Read()
+              SvcApptLocation = __.SvcApptLocation.Read()
+              SvcApptIsAllDayEvent = __.SvcApptIsAllDayEvent.Read()
+              SvcApptSubcategory = __.SvcApptSubcategory.Read()
+              SiteId = __.SiteId.Read()
+              SvcApptOverriddenCreatedOn = __.SvcApptOverriddenCreatedOn.Read()
+              SvcApptCategory = __.SvcApptCategory.Read()
+              SvcApptSubscriptionId = __.SvcApptSubscriptionId.Read()
+              TaskCategory = __.TaskCategory.Read()
+              PercentComplete = __.PercentComplete.Read()
+              TaskOverriddenCreatedOn = __.TaskOverriddenCreatedOn.Read()
+              TaskSubscriptionId = __.TaskSubscriptionId.Read()
+              TaskSubcategory = __.TaskSubcategory.Read()
+              TaskImportSequenceNumber = __.TaskImportSequenceNumber.Read()
+              Address = __.Address.Read()
+              LetterImportSequenceNumber = __.LetterImportSequenceNumber.Read()
+              LetterSubscriptionId = __.LetterSubscriptionId.Read()
+              LetterCategory = __.LetterCategory.Read()
+              LetterSubcategory = __.LetterSubcategory.Read()
+              LetterDirectionCode = __.LetterDirectionCode.Read()
+              LetterOverriddenCreatedOn = __.LetterOverriddenCreatedOn.Read()
+              PhoneOverriddenCreatedOn = __.PhoneOverriddenCreatedOn.Read()
+              PhoneImportSequenceNumber = __.PhoneImportSequenceNumber.Read()
+              PhoneNumber = __.PhoneNumber.Read()
+              PhoneSubcategory = __.PhoneSubcategory.Read()
+              PhoneDirectionCode = __.PhoneDirectionCode.Read()
+              PhoneSubscriptionId = __.PhoneSubscriptionId.Read()
+              PhoneCategory = __.PhoneCategory.Read()
+              OrdCloseSubcategory = __.OrdCloseSubcategory.Read()
+              OrdCloseImportSequenceNumber = __.OrdCloseImportSequenceNumber.Read()
+              OrdCloseRevision = __.OrdCloseRevision.Read()
+              OrderNumber = __.OrderNumber.Read()
+              OrdCloseCategory = __.OrdCloseCategory.Read()
+              OrdCloseOverriddenCreatedOn = __.OrdCloseOverriddenCreatedOn.Read()
+              FaxNumber = __.FaxNumber.Read()
+              CoverPageName = __.CoverPageName.Read()
+              NumberOfPages = __.NumberOfPages.Read()
+              FaxSubscriptionId = __.FaxSubscriptionId.Read()
+              FaxImportSequenceNumber = __.FaxImportSequenceNumber.Read()
+              BillingCode = __.BillingCode.Read()
+              Tsid = __.Tsid.Read()
+              FaxDirectionCode = __.FaxDirectionCode.Read()
+              FaxOverriddenCreatedOn = __.FaxOverriddenCreatedOn.Read()
+              FaxSubcategory = __.FaxSubcategory.Read()
+              FaxCategory = __.FaxCategory.Read()
+              IncResSubcategory = __.IncResSubcategory.Read()
+              IncResCategory = __.IncResCategory.Read()
+              IncResImportSequenceNumber = __.IncResImportSequenceNumber.Read()
+              IncResOverriddenCreatedOn = __.IncResOverriddenCreatedOn.Read()
+              TimeSpent = __.TimeSpent.Read()
+              CompetitorId = __.CompetitorId.Read()
+              OppCloseOverriddenCreatedOn = __.OppCloseOverriddenCreatedOn.Read()
+              OppCloseImportSequenceNumber = __.OppCloseImportSequenceNumber.Read()
+              ActualRevenue_Base = __.ActualRevenue_Base.Read()
+              ActualRevenue = __.ActualRevenue.Read()
+              OppCloseSubcategory = __.OppCloseSubcategory.Read()
+              OppCloseCategory = __.OppCloseCategory.Read()
+              EmailAttachmentCount = __.EmailAttachmentCount.Read()
+              ConversationIndex = __.ConversationIndex.Read()
+              InReplyTo = __.InReplyTo.Read()
+              CorrelationMethod = __.CorrelationMethod.Read()
+              BaseConversationIndexHash = __.BaseConversationIndexHash.Read()
+              ParentActivityId = __.ParentActivityId.Read()
+              SenderMailboxId = __.SenderMailboxId.Read()
+              IsMapiPrivate = __.IsMapiPrivate.Read()
+              LeftVoiceMail = __.LeftVoiceMail.Read()
+              DeliveryLastAttemptedOn = __.DeliveryLastAttemptedOn.Read()
+              StageId = __.StageId.Read()
+              DeliveryPriorityCode = __.DeliveryPriorityCode.Read()
+              SentOn = __.SentOn.Read()
+              PostponeActivityProcessingUntil = __.PostponeActivityProcessingUntil.Read()
+              ProcessId = __.ProcessId.Read()
+              OverriddenCreatedOn = __.OverriddenCreatedOn.Read()
+              ImportSequenceNumber = __.ImportSequenceNumber.Read()
+              PostURL = __.PostURL.Read()
+              PostedOn = __.PostedOn.Read()
+              PostAuthor = __.PostAuthor.Read()
+              ThreadId = __.ThreadId.Read()
+              PostMessageType = __.PostMessageType.Read()
+              SentimentValue = __.SentimentValue.Read()
+              PostId = __.PostId.Read()
+              PostFromProfileId = __.PostFromProfileId.Read()
+              PostToProfileId = __.PostToProfileId.Read()
+              SocialActivityDirectionCode = __.SocialActivityDirectionCode.Read()
+              InResponseTo = __.InResponseTo.Read()
+              SocialAdditionalParams = __.SocialAdditionalParams.Read()
+              PostAuthorAccount = __.PostAuthorAccount.Read()
+              PostAuthorType = __.PostAuthorType.Read()
+              PostAuthorAccountName = __.PostAuthorAccountName.Read()
+              PostAuthorAccountType = __.PostAuthorAccountType.Read()
+              PostAuthorName = __.PostAuthorName.Read()
+              PostAuthorYomiName = __.PostAuthorYomiName.Read()
+              PostAuthorAccountYomiName = __.PostAuthorAccountYomiName.Read()
+              EmailSender = __.EmailSender.Read()
+              SendersAccount = __.SendersAccount.Read()
+              EmailSenderName = __.EmailSenderName.Read()
+              SendersAccountName = __.SendersAccountName.Read()
+              EmailSenderObjectTypeCode = __.EmailSenderObjectTypeCode.Read()
+              SendersAccountObjectTypeCode = __.SendersAccountObjectTypeCode.Read()
+              SendersAccountYomiName = __.SendersAccountYomiName.Read()
+              EmailSenderYomiName = __.EmailSenderYomiName.Read()
+              CrmTaskAssignedUniqueId = __.CrmTaskAssignedUniqueId.Read()
+              Community = __.Community.Read()
+              TraversedPath = __.TraversedPath.Read()
+              AttachmentErrors = __.AttachmentErrors.Read()
+              IsUnsafe = __.IsUnsafe.Read()
+              CreatedByExternalParty = __.CreatedByExternalParty.Read()
+              ModifiedByExternalParty = __.ModifiedByExternalParty.Read()
+              ActivityAdditionalParams = __.ActivityAdditionalParams.Read()
+              OnHoldTime = __.OnHoldTime.Read()
+              SLAInvokedId = __.SLAInvokedId.Read()
+              SLAId = __.SLAId.Read()
+              LastOnHoldTime = __.LastOnHoldTime.Read()
+              ImportSequenceNumber_10107 = __.ImportSequenceNumber_10107.Read()
+              OverriddenCreatedOn_10107 = __.OverriddenCreatedOn_10107.Read()
+              SortDate = __.SortDate.Read()
+              ExchangeWebLink = __.ExchangeWebLink.Read()
+              ExchangeItemId = __.ExchangeItemId.Read()
+              FollowEmailUserPreference = __.FollowEmailUserPreference.Read()
+              IsEmailFollowed = __.IsEmailFollowed.Read()
+              EmailTrackingId = __.EmailTrackingId.Read()
+              ReplyCount = __.ReplyCount.Read()
+              EmailReminderStatus = __.EmailReminderStatus.Read()
+              EmailReminderType = __.EmailReminderType.Read()
+              DelayedEmailSendTime = __.DelayedEmailSendTime.Read()
+              ReminderActionCardId = __.ReminderActionCardId.Read()
+              OpenCount = __.OpenCount.Read()
+              EmailReminderExpiryTime = __.EmailReminderExpiryTime.Read()
+              LastOpenedTime = __.LastOpenedTime.Read()
+              TemplateId = __.TemplateId.Read()
+              LinksClickedCount = __.LinksClickedCount.Read()
+              AttachmentOpenCount = __.AttachmentOpenCount.Read()
+              EmailReminderText = __.EmailReminderText.Read()
+              ConversationTrackingId = __.ConversationTrackingId.Read()
+              ImportSequenceNumber_10124 = __.ImportSequenceNumber_10124.Read()
+              OverriddenCreatedOn_10124 = __.OverriddenCreatedOn_10124.Read()
+              ImportSequenceNumber_10147 = __.ImportSequenceNumber_10147.Read()
+              OverriddenCreatedOn_10147 = __.OverriddenCreatedOn_10147.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.ActivityId.IsNull() then None else Some(__.Read())
 
     [<CLIMutable>]
     type Contact =
@@ -2242,6 +3138,268 @@ module dbo =
             if __.SystemUserId.IsNull() then None else Some(__.Read())
 
     [<CLIMutable>]
+    type SystemUserBase =
+        { SystemUserId: System.Guid
+          TerritoryId: Option<System.Guid>
+          OrganizationId: System.Guid
+          BusinessUnitId: System.Guid
+          ParentSystemUserId: Option<System.Guid>
+          FirstName: Option<string>
+          Salutation: Option<string>
+          MiddleName: Option<string>
+          LastName: Option<string>
+          PersonalEMailAddress: Option<string>
+          FullName: Option<string>
+          NickName: Option<string>
+          Title: Option<string>
+          InternalEMailAddress: Option<string>
+          JobTitle: Option<string>
+          MobileAlertEMail: Option<string>
+          PreferredEmailCode: Option<int>
+          HomePhone: Option<string>
+          MobilePhone: Option<string>
+          PreferredPhoneCode: Option<int>
+          PreferredAddressCode: Option<int>
+          PhotoUrl: Option<string>
+          DomainName: string
+          PassportLo: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          CreatedOn: Option<System.DateTime>
+          PassportHi: Option<int>
+          DisabledReason: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ModifiedOn: Option<System.DateTime>
+          CreatedBy: Option<System.Guid>
+          EmployeeId: Option<string>
+          ModifiedBy: Option<System.Guid>
+          IsDisabled: Option<bool>
+          GovernmentId: Option<string>
+          Skills: Option<string>
+          DisplayInServiceViews: Option<bool>
+          CalendarId: Option<System.Guid>
+          ActiveDirectoryGuid: Option<System.Guid>
+          SetupUser: bool
+          SiteId: Option<System.Guid>
+          WindowsLiveID: Option<string>
+          IncomingEmailDeliveryMethod: int
+          OutgoingEmailDeliveryMethod: int
+          ImportSequenceNumber: Option<int>
+          AccessMode: int
+          InviteStatusCode: Option<int>
+          IsActiveDirectoryUser: bool
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OverriddenCreatedOn: Option<System.DateTime>
+          UTCConversionTimeZoneCode: Option<int>
+          TimeZoneRuleVersionNumber: Option<int>
+          YomiFullName: Option<string>
+          YomiLastName: Option<string>
+          YomiMiddleName: Option<string>
+          YomiFirstName: Option<string>
+          CreatedOnBehalfBy: Option<System.Guid>
+          ExchangeRate: Option<decimal>
+          IsIntegrationUser: bool
+          ModifiedOnBehalfBy: Option<System.Guid>
+          EmailRouterAccessApproval: int
+          DefaultFiltersPopulated: bool
+          CALType: int
+          QueueId: Option<System.Guid>
+          TransactionCurrencyId: Option<System.Guid>
+          YammerEmailAddress: Option<string>
+          IsSyncWithDirectory: bool
+          DefaultMailbox: Option<System.Guid>
+          ProcessId: Option<System.Guid>
+          UserLicenseType: int
+          IsEmailAddressApprovedByO365Admin: bool
+          YammerUserId: Option<string>
+          EntityImageId: Option<System.Guid>
+          IsLicensed: bool
+          StageId: Option<System.Guid>
+          PositionId: Option<System.Guid>
+          TraversedPath: Option<string>
+          dgs_integrationserviceaccount: Option<bool>
+          dgs_ssid: Option<string>
+          dgs_Telemarketer: Option<bool>
+          MobileOfflineProfileId: Option<System.Guid>
+          DefaultOdbFolderName: string
+          SharePointEmailAddress: Option<string>
+          ApplicationIdUri: Option<string>
+          AzureActiveDirectoryObjectId: Option<System.Guid>
+          ApplicationId: Option<System.Guid> }
+
+    type SystemUserBaseReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.SystemUserId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "SystemUserId")
+        member __.TerritoryId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "TerritoryId")
+        member __.OrganizationId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "OrganizationId")
+        member __.BusinessUnitId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "BusinessUnitId")
+        member __.ParentSystemUserId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ParentSystemUserId")
+        member __.FirstName = OptionalColumn(reader, getOrdinal, reader.GetString, "FirstName")
+        member __.Salutation = OptionalColumn(reader, getOrdinal, reader.GetString, "Salutation")
+        member __.MiddleName = OptionalColumn(reader, getOrdinal, reader.GetString, "MiddleName")
+        member __.LastName = OptionalColumn(reader, getOrdinal, reader.GetString, "LastName")
+        member __.PersonalEMailAddress = OptionalColumn(reader, getOrdinal, reader.GetString, "PersonalEMailAddress")
+        member __.FullName = OptionalColumn(reader, getOrdinal, reader.GetString, "FullName")
+        member __.NickName = OptionalColumn(reader, getOrdinal, reader.GetString, "NickName")
+        member __.Title = OptionalColumn(reader, getOrdinal, reader.GetString, "Title")
+        member __.InternalEMailAddress = OptionalColumn(reader, getOrdinal, reader.GetString, "InternalEMailAddress")
+        member __.JobTitle = OptionalColumn(reader, getOrdinal, reader.GetString, "JobTitle")
+        member __.MobileAlertEMail = OptionalColumn(reader, getOrdinal, reader.GetString, "MobileAlertEMail")
+        member __.PreferredEmailCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PreferredEmailCode")
+        member __.HomePhone = OptionalColumn(reader, getOrdinal, reader.GetString, "HomePhone")
+        member __.MobilePhone = OptionalColumn(reader, getOrdinal, reader.GetString, "MobilePhone")
+        member __.PreferredPhoneCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PreferredPhoneCode")
+        member __.PreferredAddressCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PreferredAddressCode")
+        member __.PhotoUrl = OptionalColumn(reader, getOrdinal, reader.GetString, "PhotoUrl")
+        member __.DomainName = RequiredColumn(reader, getOrdinal, reader.GetString, "DomainName")
+        member __.PassportLo = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PassportLo")
+        member __.CreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "CreatedOn")
+        member __.PassportHi = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PassportHi")
+        member __.DisabledReason = OptionalColumn(reader, getOrdinal, reader.GetString, "DisabledReason")
+        member __.ModifiedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ModifiedOn")
+        member __.CreatedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedBy")
+        member __.EmployeeId = OptionalColumn(reader, getOrdinal, reader.GetString, "EmployeeId")
+        member __.ModifiedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedBy")
+        member __.IsDisabled = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IsDisabled")
+        member __.GovernmentId = OptionalColumn(reader, getOrdinal, reader.GetString, "GovernmentId")
+        member __.Skills = OptionalColumn(reader, getOrdinal, reader.GetString, "Skills")
+        member __.DisplayInServiceViews = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DisplayInServiceViews")
+        member __.CalendarId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CalendarId")
+        member __.ActiveDirectoryGuid = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ActiveDirectoryGuid")
+        member __.SetupUser = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "SetupUser")
+        member __.SiteId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SiteId")
+        member __.WindowsLiveID = OptionalColumn(reader, getOrdinal, reader.GetString, "WindowsLiveID")
+        member __.IncomingEmailDeliveryMethod = RequiredColumn(reader, getOrdinal, reader.GetInt32, "IncomingEmailDeliveryMethod")
+        member __.OutgoingEmailDeliveryMethod = RequiredColumn(reader, getOrdinal, reader.GetInt32, "OutgoingEmailDeliveryMethod")
+        member __.ImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ImportSequenceNumber")
+        member __.AccessMode = RequiredColumn(reader, getOrdinal, reader.GetInt32, "AccessMode")
+        member __.InviteStatusCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "InviteStatusCode")
+        member __.IsActiveDirectoryUser = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "IsActiveDirectoryUser")
+        member __.OverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OverriddenCreatedOn")
+        member __.UTCConversionTimeZoneCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "UTCConversionTimeZoneCode")
+        member __.TimeZoneRuleVersionNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TimeZoneRuleVersionNumber")
+        member __.YomiFullName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiFullName")
+        member __.YomiLastName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiLastName")
+        member __.YomiMiddleName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiMiddleName")
+        member __.YomiFirstName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiFirstName")
+        member __.CreatedOnBehalfBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedOnBehalfBy")
+        member __.ExchangeRate = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "ExchangeRate")
+        member __.IsIntegrationUser = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "IsIntegrationUser")
+        member __.ModifiedOnBehalfBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedOnBehalfBy")
+        member __.EmailRouterAccessApproval = RequiredColumn(reader, getOrdinal, reader.GetInt32, "EmailRouterAccessApproval")
+        member __.DefaultFiltersPopulated = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "DefaultFiltersPopulated")
+        member __.CALType = RequiredColumn(reader, getOrdinal, reader.GetInt32, "CALType")
+        member __.QueueId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "QueueId")
+        member __.TransactionCurrencyId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "TransactionCurrencyId")
+        member __.YammerEmailAddress = OptionalColumn(reader, getOrdinal, reader.GetString, "YammerEmailAddress")
+        member __.IsSyncWithDirectory = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "IsSyncWithDirectory")
+        member __.DefaultMailbox = OptionalColumn(reader, getOrdinal, reader.GetGuid, "DefaultMailbox")
+        member __.ProcessId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ProcessId")
+        member __.UserLicenseType = RequiredColumn(reader, getOrdinal, reader.GetInt32, "UserLicenseType")
+        member __.IsEmailAddressApprovedByO365Admin = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "IsEmailAddressApprovedByO365Admin")
+        member __.YammerUserId = OptionalColumn(reader, getOrdinal, reader.GetString, "YammerUserId")
+        member __.EntityImageId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "EntityImageId")
+        member __.IsLicensed = RequiredColumn(reader, getOrdinal, reader.GetBoolean, "IsLicensed")
+        member __.StageId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "StageId")
+        member __.PositionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PositionId")
+        member __.TraversedPath = OptionalColumn(reader, getOrdinal, reader.GetString, "TraversedPath")
+        member __.dgs_integrationserviceaccount = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_integrationserviceaccount")
+        member __.dgs_ssid = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ssid")
+        member __.dgs_Telemarketer = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_Telemarketer")
+        member __.MobileOfflineProfileId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "MobileOfflineProfileId")
+        member __.DefaultOdbFolderName = RequiredColumn(reader, getOrdinal, reader.GetString, "DefaultOdbFolderName")
+        member __.SharePointEmailAddress = OptionalColumn(reader, getOrdinal, reader.GetString, "SharePointEmailAddress")
+        member __.ApplicationIdUri = OptionalColumn(reader, getOrdinal, reader.GetString, "ApplicationIdUri")
+        member __.AzureActiveDirectoryObjectId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "AzureActiveDirectoryObjectId")
+        member __.ApplicationId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ApplicationId")
+
+        member __.Read() =
+            { SystemUserId = __.SystemUserId.Read()
+              TerritoryId = __.TerritoryId.Read()
+              OrganizationId = __.OrganizationId.Read()
+              BusinessUnitId = __.BusinessUnitId.Read()
+              ParentSystemUserId = __.ParentSystemUserId.Read()
+              FirstName = __.FirstName.Read()
+              Salutation = __.Salutation.Read()
+              MiddleName = __.MiddleName.Read()
+              LastName = __.LastName.Read()
+              PersonalEMailAddress = __.PersonalEMailAddress.Read()
+              FullName = __.FullName.Read()
+              NickName = __.NickName.Read()
+              Title = __.Title.Read()
+              InternalEMailAddress = __.InternalEMailAddress.Read()
+              JobTitle = __.JobTitle.Read()
+              MobileAlertEMail = __.MobileAlertEMail.Read()
+              PreferredEmailCode = __.PreferredEmailCode.Read()
+              HomePhone = __.HomePhone.Read()
+              MobilePhone = __.MobilePhone.Read()
+              PreferredPhoneCode = __.PreferredPhoneCode.Read()
+              PreferredAddressCode = __.PreferredAddressCode.Read()
+              PhotoUrl = __.PhotoUrl.Read()
+              DomainName = __.DomainName.Read()
+              PassportLo = __.PassportLo.Read()
+              CreatedOn = __.CreatedOn.Read()
+              PassportHi = __.PassportHi.Read()
+              DisabledReason = __.DisabledReason.Read()
+              ModifiedOn = __.ModifiedOn.Read()
+              CreatedBy = __.CreatedBy.Read()
+              EmployeeId = __.EmployeeId.Read()
+              ModifiedBy = __.ModifiedBy.Read()
+              IsDisabled = __.IsDisabled.Read()
+              GovernmentId = __.GovernmentId.Read()
+              Skills = __.Skills.Read()
+              DisplayInServiceViews = __.DisplayInServiceViews.Read()
+              CalendarId = __.CalendarId.Read()
+              ActiveDirectoryGuid = __.ActiveDirectoryGuid.Read()
+              SetupUser = __.SetupUser.Read()
+              SiteId = __.SiteId.Read()
+              WindowsLiveID = __.WindowsLiveID.Read()
+              IncomingEmailDeliveryMethod = __.IncomingEmailDeliveryMethod.Read()
+              OutgoingEmailDeliveryMethod = __.OutgoingEmailDeliveryMethod.Read()
+              ImportSequenceNumber = __.ImportSequenceNumber.Read()
+              AccessMode = __.AccessMode.Read()
+              InviteStatusCode = __.InviteStatusCode.Read()
+              IsActiveDirectoryUser = __.IsActiveDirectoryUser.Read()
+              OverriddenCreatedOn = __.OverriddenCreatedOn.Read()
+              UTCConversionTimeZoneCode = __.UTCConversionTimeZoneCode.Read()
+              TimeZoneRuleVersionNumber = __.TimeZoneRuleVersionNumber.Read()
+              YomiFullName = __.YomiFullName.Read()
+              YomiLastName = __.YomiLastName.Read()
+              YomiMiddleName = __.YomiMiddleName.Read()
+              YomiFirstName = __.YomiFirstName.Read()
+              CreatedOnBehalfBy = __.CreatedOnBehalfBy.Read()
+              ExchangeRate = __.ExchangeRate.Read()
+              IsIntegrationUser = __.IsIntegrationUser.Read()
+              ModifiedOnBehalfBy = __.ModifiedOnBehalfBy.Read()
+              EmailRouterAccessApproval = __.EmailRouterAccessApproval.Read()
+              DefaultFiltersPopulated = __.DefaultFiltersPopulated.Read()
+              CALType = __.CALType.Read()
+              QueueId = __.QueueId.Read()
+              TransactionCurrencyId = __.TransactionCurrencyId.Read()
+              YammerEmailAddress = __.YammerEmailAddress.Read()
+              IsSyncWithDirectory = __.IsSyncWithDirectory.Read()
+              DefaultMailbox = __.DefaultMailbox.Read()
+              ProcessId = __.ProcessId.Read()
+              UserLicenseType = __.UserLicenseType.Read()
+              IsEmailAddressApprovedByO365Admin = __.IsEmailAddressApprovedByO365Admin.Read()
+              YammerUserId = __.YammerUserId.Read()
+              EntityImageId = __.EntityImageId.Read()
+              IsLicensed = __.IsLicensed.Read()
+              StageId = __.StageId.Read()
+              PositionId = __.PositionId.Read()
+              TraversedPath = __.TraversedPath.Read()
+              dgs_integrationserviceaccount = __.dgs_integrationserviceaccount.Read()
+              dgs_ssid = __.dgs_ssid.Read()
+              dgs_Telemarketer = __.dgs_Telemarketer.Read()
+              MobileOfflineProfileId = __.MobileOfflineProfileId.Read()
+              DefaultOdbFolderName = __.DefaultOdbFolderName.Read()
+              SharePointEmailAddress = __.SharePointEmailAddress.Read()
+              ApplicationIdUri = __.ApplicationIdUri.Read()
+              AzureActiveDirectoryObjectId = __.AzureActiveDirectoryObjectId.Read()
+              ApplicationId = __.ApplicationId.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.SystemUserId.IsNull() then None else Some(__.Read())
+
+    [<CLIMutable>]
     type SystemUserBusinessUnitEntityMap =
         { ReadPrivilegeDepth: Option<int>
           SystemUserBusinessUnitEntityMapId: System.Guid
@@ -2540,6 +3698,118 @@ module dbo =
         member __.ReadIfNotNull() =
             if __.OwnerId.IsNull() then None else Some(__.Read())
 
+    [<CLIMutable>]
+    type dgs_systemlogentryBase =
+        { dgs_systemlogentryId: System.Guid
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          CreatedOn: Option<System.DateTime>
+          CreatedBy: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ModifiedOn: Option<System.DateTime>
+          ModifiedBy: Option<System.Guid>
+          CreatedOnBehalfBy: Option<System.Guid>
+          ModifiedOnBehalfBy: Option<System.Guid>
+          OwnerId: System.Guid
+          OwnerIdType: int
+          OwningBusinessUnit: Option<System.Guid>
+          statecode: int
+          statuscode: Option<int>
+          ImportSequenceNumber: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OverriddenCreatedOn: Option<System.DateTime>
+          TimeZoneRuleVersionNumber: Option<int>
+          UTCConversionTimeZoneCode: Option<int>
+          dgs_name: Option<string>
+          dgs_ActingOnBehalfOf: Option<string>
+          dgs_ApplicationArea: Option<string>
+          dgs_ErrorCode: Option<string>
+          dgs_ErrorMessage: Option<string>
+          dgs_ErrorSource: Option<string>
+          dgs_ErrorTrace: Option<string>
+          dgs_ExceptionType: Option<string>
+          dgs_Message: Option<string>
+          dgs_Severity: Option<int>
+          dgs_Source: Option<string>
+          dgs_Type: Option<int>
+          dgs_UserContext: Option<System.Guid>
+          dgs_transactionid: Option<string>
+          dgs_companyid: Option<string>
+          dgs_messageid: Option<string>
+          dgs_publishingsystem: Option<string> }
+
+    type dgs_systemlogentryBaseReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.dgs_systemlogentryId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "dgs_systemlogentryId")
+        member __.CreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "CreatedOn")
+        member __.CreatedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedBy")
+        member __.ModifiedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ModifiedOn")
+        member __.ModifiedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedBy")
+        member __.CreatedOnBehalfBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedOnBehalfBy")
+        member __.ModifiedOnBehalfBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedOnBehalfBy")
+        member __.OwnerId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "OwnerId")
+        member __.OwnerIdType = RequiredColumn(reader, getOrdinal, reader.GetInt32, "OwnerIdType")
+        member __.OwningBusinessUnit = OptionalColumn(reader, getOrdinal, reader.GetGuid, "OwningBusinessUnit")
+        member __.statecode = RequiredColumn(reader, getOrdinal, reader.GetInt32, "statecode")
+        member __.statuscode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "statuscode")
+        member __.ImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ImportSequenceNumber")
+        member __.OverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OverriddenCreatedOn")
+        member __.TimeZoneRuleVersionNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TimeZoneRuleVersionNumber")
+        member __.UTCConversionTimeZoneCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "UTCConversionTimeZoneCode")
+        member __.dgs_name = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_name")
+        member __.dgs_ActingOnBehalfOf = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ActingOnBehalfOf")
+        member __.dgs_ApplicationArea = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ApplicationArea")
+        member __.dgs_ErrorCode = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ErrorCode")
+        member __.dgs_ErrorMessage = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ErrorMessage")
+        member __.dgs_ErrorSource = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ErrorSource")
+        member __.dgs_ErrorTrace = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ErrorTrace")
+        member __.dgs_ExceptionType = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ExceptionType")
+        member __.dgs_Message = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Message")
+        member __.dgs_Severity = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_Severity")
+        member __.dgs_Source = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Source")
+        member __.dgs_Type = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_Type")
+        member __.dgs_UserContext = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_UserContext")
+        member __.dgs_transactionid = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_transactionid")
+        member __.dgs_companyid = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_companyid")
+        member __.dgs_messageid = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_messageid")
+        member __.dgs_publishingsystem = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_publishingsystem")
+
+        member __.Read() =
+            { dgs_systemlogentryId = __.dgs_systemlogentryId.Read()
+              CreatedOn = __.CreatedOn.Read()
+              CreatedBy = __.CreatedBy.Read()
+              ModifiedOn = __.ModifiedOn.Read()
+              ModifiedBy = __.ModifiedBy.Read()
+              CreatedOnBehalfBy = __.CreatedOnBehalfBy.Read()
+              ModifiedOnBehalfBy = __.ModifiedOnBehalfBy.Read()
+              OwnerId = __.OwnerId.Read()
+              OwnerIdType = __.OwnerIdType.Read()
+              OwningBusinessUnit = __.OwningBusinessUnit.Read()
+              statecode = __.statecode.Read()
+              statuscode = __.statuscode.Read()
+              ImportSequenceNumber = __.ImportSequenceNumber.Read()
+              OverriddenCreatedOn = __.OverriddenCreatedOn.Read()
+              TimeZoneRuleVersionNumber = __.TimeZoneRuleVersionNumber.Read()
+              UTCConversionTimeZoneCode = __.UTCConversionTimeZoneCode.Read()
+              dgs_name = __.dgs_name.Read()
+              dgs_ActingOnBehalfOf = __.dgs_ActingOnBehalfOf.Read()
+              dgs_ApplicationArea = __.dgs_ApplicationArea.Read()
+              dgs_ErrorCode = __.dgs_ErrorCode.Read()
+              dgs_ErrorMessage = __.dgs_ErrorMessage.Read()
+              dgs_ErrorSource = __.dgs_ErrorSource.Read()
+              dgs_ErrorTrace = __.dgs_ErrorTrace.Read()
+              dgs_ExceptionType = __.dgs_ExceptionType.Read()
+              dgs_Message = __.dgs_Message.Read()
+              dgs_Severity = __.dgs_Severity.Read()
+              dgs_Source = __.dgs_Source.Read()
+              dgs_Type = __.dgs_Type.Read()
+              dgs_UserContext = __.dgs_UserContext.Read()
+              dgs_transactionid = __.dgs_transactionid.Read()
+              dgs_companyid = __.dgs_companyid.Read()
+              dgs_messageid = __.dgs_messageid.Read()
+              dgs_publishingsystem = __.dgs_publishingsystem.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.dgs_systemlogentryId.IsNull() then None else Some(__.Read())
+
 type HydraReader(reader: Microsoft.Data.SqlClient.SqlDataReader) =
     let mutable accFieldCount = 0
     let buildGetOrdinal fieldCount =
@@ -2554,9 +3824,12 @@ type HydraReader(reader: Microsoft.Data.SqlClient.SqlDataReader) =
         fun col -> dictionary.Item col
         
     let lazydboActivityParty = lazy (dbo.ActivityPartyReader(reader, buildGetOrdinal 28))
+    let lazydboActivityPartyBase = lazy (dbo.ActivityPartyBaseReader(reader, buildGetOrdinal 16))
     let lazydboActivityPointer = lazy (dbo.ActivityPointerReader(reader, buildGetOrdinal 74))
+    let lazydboActivityPointerBase = lazy (dbo.ActivityPointerBaseReader(reader, buildGetOrdinal 265))
     let lazydboContact = lazy (dbo.ContactReader(reader, buildGetOrdinal 456))
     let lazydboSystemUser = lazy (dbo.SystemUserReader(reader, buildGetOrdinal 150))
+    let lazydboSystemUserBase = lazy (dbo.SystemUserBaseReader(reader, buildGetOrdinal 84))
     let lazydboSystemUserBusinessUnitEntityMap = lazy (dbo.SystemUserBusinessUnitEntityMapReader(reader, buildGetOrdinal 6))
     let lazydboSystemUserLicenses = lazy (dbo.SystemUserLicensesReader(reader, buildGetOrdinal 4))
     let lazydboSystemUserManagerMap = lazy (dbo.SystemUserManagerMapReader(reader, buildGetOrdinal 5))
@@ -2565,10 +3838,14 @@ type HydraReader(reader: Microsoft.Data.SqlClient.SqlDataReader) =
     let lazydboSystemUserRoles = lazy (dbo.SystemUserRolesReader(reader, buildGetOrdinal 4))
     let lazydboSystemUserSyncMappingProfiles = lazy (dbo.SystemUserSyncMappingProfilesReader(reader, buildGetOrdinal 4))
     let lazydbodgs_systemlogentry = lazy (dbo.dgs_systemlogentryReader (reader, buildGetOrdinal 49))
+    let lazydbodgs_systemlogentryBase = lazy (dbo.dgs_systemlogentryBaseReader (reader, buildGetOrdinal 34))
     member __.``dbo.ActivityParty`` = lazydboActivityParty.Value
+    member __.``dbo.ActivityPartyBase`` = lazydboActivityPartyBase.Value
     member __.``dbo.ActivityPointer`` = lazydboActivityPointer.Value
+    member __.``dbo.ActivityPointerBase`` = lazydboActivityPointerBase.Value
     member __.``dbo.Contact`` = lazydboContact.Value
     member __.``dbo.SystemUser`` = lazydboSystemUser.Value
+    member __.``dbo.SystemUserBase`` = lazydboSystemUserBase.Value
     member __.``dbo.SystemUserBusinessUnitEntityMap`` = lazydboSystemUserBusinessUnitEntityMap.Value
     member __.``dbo.SystemUserLicenses`` = lazydboSystemUserLicenses.Value
     member __.``dbo.SystemUserManagerMap`` = lazydboSystemUserManagerMap.Value
@@ -2577,18 +3854,25 @@ type HydraReader(reader: Microsoft.Data.SqlClient.SqlDataReader) =
     member __.``dbo.SystemUserRoles`` = lazydboSystemUserRoles.Value
     member __.``dbo.SystemUserSyncMappingProfiles`` = lazydboSystemUserSyncMappingProfiles.Value
     member __.``dbo.dgs_systemlogentry`` = lazydbodgs_systemlogentry.Value
+    member __.``dbo.dgs_systemlogentryBase`` = lazydbodgs_systemlogentryBase.Value
     member private __.AccFieldCount with get () = accFieldCount and set (value) = accFieldCount <- value
 
     member private __.GetReaderByName(entity: string, isOption: bool) =
         match entity, isOption with
         | "dbo.ActivityParty", false -> __.``dbo.ActivityParty``.Read >> box
         | "dbo.ActivityParty", true -> __.``dbo.ActivityParty``.ReadIfNotNull >> box
+        | "dbo.ActivityPartyBase", false -> __.``dbo.ActivityPartyBase``.Read >> box
+        | "dbo.ActivityPartyBase", true -> __.``dbo.ActivityPartyBase``.ReadIfNotNull >> box
         | "dbo.ActivityPointer", false -> __.``dbo.ActivityPointer``.Read >> box
         | "dbo.ActivityPointer", true -> __.``dbo.ActivityPointer``.ReadIfNotNull >> box
+        | "dbo.ActivityPointerBase", false -> __.``dbo.ActivityPointerBase``.Read >> box
+        | "dbo.ActivityPointerBase", true -> __.``dbo.ActivityPointerBase``.ReadIfNotNull >> box
         | "dbo.Contact", false -> __.``dbo.Contact``.Read >> box
         | "dbo.Contact", true -> __.``dbo.Contact``.ReadIfNotNull >> box
         | "dbo.SystemUser", false -> __.``dbo.SystemUser``.Read >> box
         | "dbo.SystemUser", true -> __.``dbo.SystemUser``.ReadIfNotNull >> box
+        | "dbo.SystemUserBase", false -> __.``dbo.SystemUserBase``.Read >> box
+        | "dbo.SystemUserBase", true -> __.``dbo.SystemUserBase``.ReadIfNotNull >> box
         | "dbo.SystemUserBusinessUnitEntityMap", false -> __.``dbo.SystemUserBusinessUnitEntityMap``.Read >> box
         | "dbo.SystemUserBusinessUnitEntityMap", true -> __.``dbo.SystemUserBusinessUnitEntityMap``.ReadIfNotNull >> box
         | "dbo.SystemUserLicenses", false -> __.``dbo.SystemUserLicenses``.Read >> box
@@ -2605,6 +3889,8 @@ type HydraReader(reader: Microsoft.Data.SqlClient.SqlDataReader) =
         | "dbo.SystemUserSyncMappingProfiles", true -> __.``dbo.SystemUserSyncMappingProfiles``.ReadIfNotNull >> box
         | "dbo.dgs_systemlogentry", false -> __.``dbo.dgs_systemlogentry``.Read >> box
         | "dbo.dgs_systemlogentry", true -> __.``dbo.dgs_systemlogentry``.ReadIfNotNull >> box
+        | "dbo.dgs_systemlogentryBase", false -> __.``dbo.dgs_systemlogentryBase``.Read >> box
+        | "dbo.dgs_systemlogentryBase", true -> __.``dbo.dgs_systemlogentryBase``.ReadIfNotNull >> box
         | _ -> failwith $"Could not read type '{entity}' because no generated reader exists."
 
     static member private GetPrimitiveReader(t: System.Type, reader: Microsoft.Data.SqlClient.SqlDataReader, isOpt: bool) =

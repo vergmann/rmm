@@ -4,7 +4,7 @@ printfn "Hello from F#"
 open Rmm
 
 let endResult = async {
-    let! result = Logs.latest
+    let! result = Data.Logs.latest
     result
     |> Array.iter (fun l -> printfn $"%A{l}")
     return 0
