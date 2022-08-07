@@ -9,6 +9,7 @@
         <Compile Include="Crm.fs">
             <Visible>False</Visible>
         </Compile>
+        <Compile Include="Domain.fs" />
         <Compile Include="DB.fs" />
         <Compile Include="Data.fs" />
         <Compile Include="Program.fs" />

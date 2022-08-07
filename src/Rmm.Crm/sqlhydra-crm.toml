@@ -7,7 +7,7 @@ cli_mutable = true
 reader_type = "Microsoft.Data.SqlClient.SqlDataReader"
 [filters]
 include = [
-    "dbo/Contact",
+    "dbo/Contact*",
     "dbo/dgs_systemlogentry*",
     "dbo/ActivityP*",
     "dbo/SystemUser*"

@@ -1,21 +1,21 @@
-namespace Rmm
+namespace Rmm.SqlServer
 
 open Microsoft.Data.SqlClient
 open SqlHydra.Query
 
 type DB(connectionString: string) =
-    let getConnection = new SqlConnection(connectionString)
+    let getConnection () = new SqlConnection(connectionString)
 
-    let openConnection =
-        let conn = getConnection 
+    let openConnection () =
+        let conn = getConnection  ()
         conn.Open()
         conn
 
     let compiler =
         SqlKata.Compilers.SqlServerCompiler()
 
-    let getContext =
-        let conn = openConnection
+    let openContext () =
+        let conn = openConnection ()
         new QueryContext(conn, compiler)
 
     member this.toSql(query: SqlKata.Query) =
@@ -23,7 +23,7 @@ type DB(connectionString: string) =
         compiler.Compile(query).Sql
 
     member this.ConnectionString = connectionString
-    member this.GetContext() = getContext
+    member this.OpenContext() = openContext ()
 
 
 

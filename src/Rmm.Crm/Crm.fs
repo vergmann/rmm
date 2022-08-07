@@ -193,19 +193,19 @@ module dbo =
 
     [<CLIMutable>]
     type ActivityPointer =
-        { ModifiedOnBehalfByName: Option<string>
-          CreatedOnBehalfByYomiName: Option<string>
+        { CreatedOnBehalfByYomiName: Option<string>
           CreatedByName: Option<string>
-          ModifiedByName: Option<string>
-          ModifiedOnBehalfByYomiName: Option<string>
-          ServiceIdName: Option<string>
-          CreatedByYomiName: Option<string>
-          TransactionCurrencyIdName: Option<string>
+          ModifiedOnBehalfByName: Option<string>
           SenderMailboxIdName: Option<string>
           ModifiedByYomiName: Option<string>
+          ModifiedOnBehalfByYomiName: Option<string>
+          ServiceIdName: Option<string>
           CreatedOnBehalfByName: Option<string>
           SLAName: Option<string>
+          CreatedByYomiName: Option<string>
+          TransactionCurrencyIdName: Option<string>
           SLAInvokedIdName: Option<string>
+          ModifiedByName: Option<string>
           OwnerId: System.Guid
           OwnerIdName: Option<string>
           OwnerIdYomiName: Option<string>
@@ -279,19 +279,19 @@ module dbo =
           SortDate: Option<System.DateTime> }
 
     type ActivityPointerReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
-        member __.ModifiedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByName")
         member __.CreatedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByYomiName")
         member __.CreatedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByName")
-        member __.ModifiedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByName")
-        member __.ModifiedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByYomiName")
-        member __.ServiceIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "ServiceIdName")
-        member __.CreatedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByYomiName")
-        member __.TransactionCurrencyIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "TransactionCurrencyIdName")
+        member __.ModifiedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByName")
         member __.SenderMailboxIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "SenderMailboxIdName")
         member __.ModifiedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByYomiName")
+        member __.ModifiedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByYomiName")
+        member __.ServiceIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "ServiceIdName")
         member __.CreatedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByName")
         member __.SLAName = OptionalColumn(reader, getOrdinal, reader.GetString, "SLAName")
+        member __.CreatedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByYomiName")
+        member __.TransactionCurrencyIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "TransactionCurrencyIdName")
         member __.SLAInvokedIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "SLAInvokedIdName")
+        member __.ModifiedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByName")
         member __.OwnerId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "OwnerId")
         member __.OwnerIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "OwnerIdName")
         member __.OwnerIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "OwnerIdYomiName")
@@ -354,19 +354,19 @@ module dbo =
         member __.SortDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "SortDate")
 
         member __.Read() =
-            { ModifiedOnBehalfByName = __.ModifiedOnBehalfByName.Read()
-              CreatedOnBehalfByYomiName = __.CreatedOnBehalfByYomiName.Read()
+            { CreatedOnBehalfByYomiName = __.CreatedOnBehalfByYomiName.Read()
               CreatedByName = __.CreatedByName.Read()
-              ModifiedByName = __.ModifiedByName.Read()
-              ModifiedOnBehalfByYomiName = __.ModifiedOnBehalfByYomiName.Read()
-              ServiceIdName = __.ServiceIdName.Read()
-              CreatedByYomiName = __.CreatedByYomiName.Read()
-              TransactionCurrencyIdName = __.TransactionCurrencyIdName.Read()
+              ModifiedOnBehalfByName = __.ModifiedOnBehalfByName.Read()
               SenderMailboxIdName = __.SenderMailboxIdName.Read()
               ModifiedByYomiName = __.ModifiedByYomiName.Read()
+              ModifiedOnBehalfByYomiName = __.ModifiedOnBehalfByYomiName.Read()
+              ServiceIdName = __.ServiceIdName.Read()
               CreatedOnBehalfByName = __.CreatedOnBehalfByName.Read()
               SLAName = __.SLAName.Read()
+              CreatedByYomiName = __.CreatedByYomiName.Read()
+              TransactionCurrencyIdName = __.TransactionCurrencyIdName.Read()
               SLAInvokedIdName = __.SLAInvokedIdName.Read()
+              ModifiedByName = __.ModifiedByName.Read()
               OwnerId = __.OwnerId.Read()
               OwnerIdName = __.OwnerIdName.Read()
               OwnerIdYomiName = __.OwnerIdYomiName.Read()
@@ -1272,45 +1272,10 @@ module dbo =
 
     [<CLIMutable>]
     type Contact =
-        { cdi_TalDisplayName: Option<string>
-          MasterContactIdName: Option<string>
-          dgs_Address2CountryIdName: Option<string>
-          dgs_LastAppointmentTrackingCodeName: Option<string>
-          PreferredServiceIdName: Option<string>
-          DefaultPriceLevelIdName: Option<string>
-          dgs_HomeClinicName: Option<string>
-          OriginatingLeadIdYomiName: Option<string>
-          PreferredEquipmentIdName: Option<string>
-          dgs_lastinboundphonecalltrackingactivitycodeName: Option<string>
-          dgs_LastAppointmentClinicIdName: Option<string>
-          dgs_InitialTrackingActivityCodeIdName: Option<string>
-          dgs_ProductStyleIdName: Option<string>
-          dgs_LongtermfollowupbyYomiName: Option<string>
-          dgs_ReferralcapturedbyName: Option<string>
-          dgs_LongtermfollowupbyName: Option<string>
-          dgs_latesttestappointmentName: Option<string>
-          ModifiedByExternalPartyName: Option<string>
-          dgs_LastOutboundTMTrackingActivityCodeName: Option<string>
-          dgs_duplicateofidYomiName: Option<string>
-          ModifiedOnBehalfByYomiName: Option<string>
-          dgs_doctoridName: Option<string>
-          CreatedByExternalPartyName: Option<string>
-          dgs_WDHBrandIdName: Option<string>
-          EntityImage_Timestamp: Option<int64>
-          SLAInvokedIdName: Option<string>
-          ModifiedByName: Option<string>
-          dgs_duplicateofidName: Option<string>
-          dgs_nearestupcommingappointmentName: Option<string>
-          dgs_AdvancedSegmentationDataName: Option<string>
-          OriginatingLeadIdName: Option<string>
-          SLAName: Option<string>
-          dgs_latestcompletedappointmentName: Option<string>
-          CreatedOnBehalfByName: Option<string>
-          dgs_LastAppointmentTrackingActivityCodeName: Option<string>
-          CreatedByYomiName: Option<string>
-          ModifiedByYomiName: Option<string>
+        { dgs_latesttestappointmentName: Option<string>
           TransactionCurrencyIdName: Option<string>
           PreferredSystemUserIdName: Option<string>
+          dgs_LongtermfollowupbyYomiName: Option<string>
           dgs_ProductModelIdName: Option<string>
           dgs_Address1StateIdName: Option<string>
           dgs_ProductBrandIdName: Option<string>
@@ -1320,33 +1285,68 @@ module dbo =
           dgs_ProductFamilyIdName: Option<string>
           dgs_RMMOwnerName: Option<string>
           dgs_DispenserIdName: Option<string>
+          CreatedOnBehalfByName: Option<string>
+          dgs_ReferralcapturedbyName: Option<string>
+          dgs_LastAppointmentTrackingActivityCodeName: Option<string>
+          CreatedByYomiName: Option<string>
+          dgs_LongtermfollowupbyName: Option<string>
+          dgs_duplicateofidName: Option<string>
           dgs_preferredvisitingsiteIdName: Option<string>
           CreatedByExternalPartyYomiName: Option<string>
           dgs_Address1CountryIdName: Option<string>
           MasterContactIdYomiName: Option<string>
           dgs_OutboundTMCallReservedByYomiName: Option<string>
+          dgs_productidName: Option<string>
+          dgs_doctoridName: Option<string>
+          PreferredEquipmentIdName: Option<string>
+          dgs_AdvancedSegmentationDataName: Option<string>
+          CreatedByExternalPartyName: Option<string>
+          dgs_lastinboundphonecalltrackingactivitycodeName: Option<string>
           PreferredSystemUserIdYomiName: Option<string>
+          MasterContactIdName: Option<string>
+          dgs_Address2CountryIdName: Option<string>
           dgs_latestinsuranceplaninsurancecompanygroupName: Option<string>
           dgs_NextAppointmentTrackingActivityCodeName: Option<string>
+          dgs_HomeClinicName: Option<string>
+          OriginatingLeadIdYomiName: Option<string>
           ModifiedByExternalPartyYomiName: Option<string>
+          cdi_TalDisplayName: Option<string>
           cdi_TalDoNotDisplayName: Option<string>
+          EntityImage_Timestamp: Option<int64>
+          SLAInvokedIdName: Option<string>
+          ModifiedByName: Option<string>
+          dgs_ProductStyleIdName: Option<string>
           dgs_LastOutboundTMTrackingCodeName: Option<string>
           dgs_NextAppointmentTrackingCodeName: Option<string>
-          dgs_ReferredbyName: Option<string>
-          dgs_doctoridYomiName: Option<string>
-          EntityImage: Option<byte []>
-          dgs_Address2_ZipCodeIdName: Option<string>
-          dgs_lastinboundphonecalltrackingcodeName: Option<string>
-          dgs_latestworkcoverinsurancecompanygroupName: Option<string>
-          dgs_ReferralcapturedbyYomiName: Option<string>
-          dgs_DispenserIdYomiName: Option<string>
-          CreatedByName: Option<string>
-          dgs_RMMOwnerYomiName: Option<string>
-          CreatedOnBehalfByYomiName: Option<string>
+          dgs_WDHBrandIdName: Option<string>
           dgs_Address1_ZipCodeIdName: Option<string>
+          dgs_ReferredbyName: Option<string>
+          dgs_RMMOwnerYomiName: Option<string>
+          dgs_nearestupcommingappointmentName: Option<string>
           dgs_Address2StateIdName: Option<string>
           ModifiedOnBehalfByName: Option<string>
-          dgs_productidName: Option<string>
+          dgs_doctoridYomiName: Option<string>
+          CreatedOnBehalfByYomiName: Option<string>
+          dgs_latestcompletedappointmentName: Option<string>
+          EntityImage: Option<byte []>
+          ModifiedByExternalPartyName: Option<string>
+          dgs_LastOutboundTMTrackingActivityCodeName: Option<string>
+          dgs_duplicateofidYomiName: Option<string>
+          ModifiedOnBehalfByYomiName: Option<string>
+          dgs_LastAppointmentTrackingCodeName: Option<string>
+          dgs_Address2_ZipCodeIdName: Option<string>
+          dgs_lastinboundphonecalltrackingcodeName: Option<string>
+          PreferredServiceIdName: Option<string>
+          DefaultPriceLevelIdName: Option<string>
+          dgs_latestworkcoverinsurancecompanygroupName: Option<string>
+          dgs_ReferralcapturedbyYomiName: Option<string>
+          OriginatingLeadIdName: Option<string>
+          SLAName: Option<string>
+          dgs_DispenserIdYomiName: Option<string>
+          dgs_LastAppointmentClinicIdName: Option<string>
+          CreatedByName: Option<string>
+          ModifiedByYomiName: Option<string>
+          dgs_InitialTrackingActivityCodeIdName: Option<string>
           dgs_ReferredbyYomiName: Option<string>
           Address1_AddressTypeCode: Option<int>
           Address1_City: Option<string>
@@ -1758,48 +1758,14 @@ module dbo =
           dgs_latestworkcoverinsurancecompanygroup: Option<System.Guid>
           dgs_latestworkcoverplantype: Option<int>
           [<SqlHydra.ProviderDbType("DateTime")>]
-          dgs_latestworkcoverstartdate: Option<System.DateTime> }
+          dgs_latestworkcoverstartdate: Option<System.DateTime>
+          cdi_timezones: Option<int> }
 
     type ContactReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
-        member __.cdi_TalDisplayName = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_TalDisplayName")
-        member __.MasterContactIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "MasterContactIdName")
-        member __.dgs_Address2CountryIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address2CountryIdName")
-        member __.dgs_LastAppointmentTrackingCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastAppointmentTrackingCodeName")
-        member __.PreferredServiceIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "PreferredServiceIdName")
-        member __.DefaultPriceLevelIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "DefaultPriceLevelIdName")
-        member __.dgs_HomeClinicName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_HomeClinicName")
-        member __.OriginatingLeadIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "OriginatingLeadIdYomiName")
-        member __.PreferredEquipmentIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "PreferredEquipmentIdName")
-        member __.dgs_lastinboundphonecalltrackingactivitycodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_lastinboundphonecalltrackingactivitycodeName")
-        member __.dgs_LastAppointmentClinicIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastAppointmentClinicIdName")
-        member __.dgs_InitialTrackingActivityCodeIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_InitialTrackingActivityCodeIdName")
-        member __.dgs_ProductStyleIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ProductStyleIdName")
-        member __.dgs_LongtermfollowupbyYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LongtermfollowupbyYomiName")
-        member __.dgs_ReferralcapturedbyName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ReferralcapturedbyName")
-        member __.dgs_LongtermfollowupbyName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LongtermfollowupbyName")
         member __.dgs_latesttestappointmentName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_latesttestappointmentName")
-        member __.ModifiedByExternalPartyName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByExternalPartyName")
-        member __.dgs_LastOutboundTMTrackingActivityCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastOutboundTMTrackingActivityCodeName")
-        member __.dgs_duplicateofidYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_duplicateofidYomiName")
-        member __.ModifiedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByYomiName")
-        member __.dgs_doctoridName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_doctoridName")
-        member __.CreatedByExternalPartyName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByExternalPartyName")
-        member __.dgs_WDHBrandIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_WDHBrandIdName")
-        member __.EntityImage_Timestamp = OptionalColumn(reader, getOrdinal, reader.GetInt64, "EntityImage_Timestamp")
-        member __.SLAInvokedIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "SLAInvokedIdName")
-        member __.ModifiedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByName")
-        member __.dgs_duplicateofidName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_duplicateofidName")
-        member __.dgs_nearestupcommingappointmentName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_nearestupcommingappointmentName")
-        member __.dgs_AdvancedSegmentationDataName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_AdvancedSegmentationDataName")
-        member __.OriginatingLeadIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "OriginatingLeadIdName")
-        member __.SLAName = OptionalColumn(reader, getOrdinal, reader.GetString, "SLAName")
-        member __.dgs_latestcompletedappointmentName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_latestcompletedappointmentName")
-        member __.CreatedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByName")
-        member __.dgs_LastAppointmentTrackingActivityCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastAppointmentTrackingActivityCodeName")
-        member __.CreatedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByYomiName")
-        member __.ModifiedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByYomiName")
         member __.TransactionCurrencyIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "TransactionCurrencyIdName")
         member __.PreferredSystemUserIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "PreferredSystemUserIdName")
+        member __.dgs_LongtermfollowupbyYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LongtermfollowupbyYomiName")
         member __.dgs_ProductModelIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ProductModelIdName")
         member __.dgs_Address1StateIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address1StateIdName")
         member __.dgs_ProductBrandIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ProductBrandIdName")
@@ -1809,33 +1775,68 @@ module dbo =
         member __.dgs_ProductFamilyIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ProductFamilyIdName")
         member __.dgs_RMMOwnerName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_RMMOwnerName")
         member __.dgs_DispenserIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_DispenserIdName")
+        member __.CreatedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByName")
+        member __.dgs_ReferralcapturedbyName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ReferralcapturedbyName")
+        member __.dgs_LastAppointmentTrackingActivityCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastAppointmentTrackingActivityCodeName")
+        member __.CreatedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByYomiName")
+        member __.dgs_LongtermfollowupbyName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LongtermfollowupbyName")
+        member __.dgs_duplicateofidName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_duplicateofidName")
         member __.dgs_preferredvisitingsiteIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_preferredvisitingsiteIdName")
         member __.CreatedByExternalPartyYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByExternalPartyYomiName")
         member __.dgs_Address1CountryIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address1CountryIdName")
         member __.MasterContactIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "MasterContactIdYomiName")
         member __.dgs_OutboundTMCallReservedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_OutboundTMCallReservedByYomiName")
+        member __.dgs_productidName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_productidName")
+        member __.dgs_doctoridName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_doctoridName")
+        member __.PreferredEquipmentIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "PreferredEquipmentIdName")
+        member __.dgs_AdvancedSegmentationDataName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_AdvancedSegmentationDataName")
+        member __.CreatedByExternalPartyName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByExternalPartyName")
+        member __.dgs_lastinboundphonecalltrackingactivitycodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_lastinboundphonecalltrackingactivitycodeName")
         member __.PreferredSystemUserIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "PreferredSystemUserIdYomiName")
+        member __.MasterContactIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "MasterContactIdName")
+        member __.dgs_Address2CountryIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address2CountryIdName")
         member __.dgs_latestinsuranceplaninsurancecompanygroupName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_latestinsuranceplaninsurancecompanygroupName")
         member __.dgs_NextAppointmentTrackingActivityCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_NextAppointmentTrackingActivityCodeName")
+        member __.dgs_HomeClinicName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_HomeClinicName")
+        member __.OriginatingLeadIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "OriginatingLeadIdYomiName")
         member __.ModifiedByExternalPartyYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByExternalPartyYomiName")
+        member __.cdi_TalDisplayName = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_TalDisplayName")
         member __.cdi_TalDoNotDisplayName = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_TalDoNotDisplayName")
+        member __.EntityImage_Timestamp = OptionalColumn(reader, getOrdinal, reader.GetInt64, "EntityImage_Timestamp")
+        member __.SLAInvokedIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "SLAInvokedIdName")
+        member __.ModifiedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByName")
+        member __.dgs_ProductStyleIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ProductStyleIdName")
         member __.dgs_LastOutboundTMTrackingCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastOutboundTMTrackingCodeName")
         member __.dgs_NextAppointmentTrackingCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_NextAppointmentTrackingCodeName")
-        member __.dgs_ReferredbyName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ReferredbyName")
-        member __.dgs_doctoridYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_doctoridYomiName")
-        member __.EntityImage = OptionalBinaryColumn(reader, getOrdinal, reader.GetValue, "EntityImage")
-        member __.dgs_Address2_ZipCodeIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address2_ZipCodeIdName")
-        member __.dgs_lastinboundphonecalltrackingcodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_lastinboundphonecalltrackingcodeName")
-        member __.dgs_latestworkcoverinsurancecompanygroupName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_latestworkcoverinsurancecompanygroupName")
-        member __.dgs_ReferralcapturedbyYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ReferralcapturedbyYomiName")
-        member __.dgs_DispenserIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_DispenserIdYomiName")
-        member __.CreatedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByName")
-        member __.dgs_RMMOwnerYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_RMMOwnerYomiName")
-        member __.CreatedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByYomiName")
+        member __.dgs_WDHBrandIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_WDHBrandIdName")
         member __.dgs_Address1_ZipCodeIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address1_ZipCodeIdName")
+        member __.dgs_ReferredbyName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ReferredbyName")
+        member __.dgs_RMMOwnerYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_RMMOwnerYomiName")
+        member __.dgs_nearestupcommingappointmentName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_nearestupcommingappointmentName")
         member __.dgs_Address2StateIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address2StateIdName")
         member __.ModifiedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByName")
-        member __.dgs_productidName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_productidName")
+        member __.dgs_doctoridYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_doctoridYomiName")
+        member __.CreatedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByYomiName")
+        member __.dgs_latestcompletedappointmentName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_latestcompletedappointmentName")
+        member __.EntityImage = OptionalBinaryColumn(reader, getOrdinal, reader.GetValue, "EntityImage")
+        member __.ModifiedByExternalPartyName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByExternalPartyName")
+        member __.dgs_LastOutboundTMTrackingActivityCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastOutboundTMTrackingActivityCodeName")
+        member __.dgs_duplicateofidYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_duplicateofidYomiName")
+        member __.ModifiedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByYomiName")
+        member __.dgs_LastAppointmentTrackingCodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastAppointmentTrackingCodeName")
+        member __.dgs_Address2_ZipCodeIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address2_ZipCodeIdName")
+        member __.dgs_lastinboundphonecalltrackingcodeName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_lastinboundphonecalltrackingcodeName")
+        member __.PreferredServiceIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "PreferredServiceIdName")
+        member __.DefaultPriceLevelIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "DefaultPriceLevelIdName")
+        member __.dgs_latestworkcoverinsurancecompanygroupName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_latestworkcoverinsurancecompanygroupName")
+        member __.dgs_ReferralcapturedbyYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ReferralcapturedbyYomiName")
+        member __.OriginatingLeadIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "OriginatingLeadIdName")
+        member __.SLAName = OptionalColumn(reader, getOrdinal, reader.GetString, "SLAName")
+        member __.dgs_DispenserIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_DispenserIdYomiName")
+        member __.dgs_LastAppointmentClinicIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_LastAppointmentClinicIdName")
+        member __.CreatedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByName")
+        member __.ModifiedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByYomiName")
+        member __.dgs_InitialTrackingActivityCodeIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_InitialTrackingActivityCodeIdName")
         member __.dgs_ReferredbyYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ReferredbyYomiName")
         member __.Address1_AddressTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "Address1_AddressTypeCode")
         member __.Address1_City = OptionalColumn(reader, getOrdinal, reader.GetString, "Address1_City")
@@ -2216,47 +2217,13 @@ module dbo =
         member __.dgs_latestworkcoverinsurancecompanygroup = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_latestworkcoverinsurancecompanygroup")
         member __.dgs_latestworkcoverplantype = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_latestworkcoverplantype")
         member __.dgs_latestworkcoverstartdate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_latestworkcoverstartdate")
+        member __.cdi_timezones = OptionalColumn(reader, getOrdinal, reader.GetInt32, "cdi_timezones")
 
         member __.Read() =
-            { cdi_TalDisplayName = __.cdi_TalDisplayName.Read()
-              MasterContactIdName = __.MasterContactIdName.Read()
-              dgs_Address2CountryIdName = __.dgs_Address2CountryIdName.Read()
-              dgs_LastAppointmentTrackingCodeName = __.dgs_LastAppointmentTrackingCodeName.Read()
-              PreferredServiceIdName = __.PreferredServiceIdName.Read()
-              DefaultPriceLevelIdName = __.DefaultPriceLevelIdName.Read()
-              dgs_HomeClinicName = __.dgs_HomeClinicName.Read()
-              OriginatingLeadIdYomiName = __.OriginatingLeadIdYomiName.Read()
-              PreferredEquipmentIdName = __.PreferredEquipmentIdName.Read()
-              dgs_lastinboundphonecalltrackingactivitycodeName = __.dgs_lastinboundphonecalltrackingactivitycodeName.Read()
-              dgs_LastAppointmentClinicIdName = __.dgs_LastAppointmentClinicIdName.Read()
-              dgs_InitialTrackingActivityCodeIdName = __.dgs_InitialTrackingActivityCodeIdName.Read()
-              dgs_ProductStyleIdName = __.dgs_ProductStyleIdName.Read()
-              dgs_LongtermfollowupbyYomiName = __.dgs_LongtermfollowupbyYomiName.Read()
-              dgs_ReferralcapturedbyName = __.dgs_ReferralcapturedbyName.Read()
-              dgs_LongtermfollowupbyName = __.dgs_LongtermfollowupbyName.Read()
-              dgs_latesttestappointmentName = __.dgs_latesttestappointmentName.Read()
-              ModifiedByExternalPartyName = __.ModifiedByExternalPartyName.Read()
-              dgs_LastOutboundTMTrackingActivityCodeName = __.dgs_LastOutboundTMTrackingActivityCodeName.Read()
-              dgs_duplicateofidYomiName = __.dgs_duplicateofidYomiName.Read()
-              ModifiedOnBehalfByYomiName = __.ModifiedOnBehalfByYomiName.Read()
-              dgs_doctoridName = __.dgs_doctoridName.Read()
-              CreatedByExternalPartyName = __.CreatedByExternalPartyName.Read()
-              dgs_WDHBrandIdName = __.dgs_WDHBrandIdName.Read()
-              EntityImage_Timestamp = __.EntityImage_Timestamp.Read()
-              SLAInvokedIdName = __.SLAInvokedIdName.Read()
-              ModifiedByName = __.ModifiedByName.Read()
-              dgs_duplicateofidName = __.dgs_duplicateofidName.Read()
-              dgs_nearestupcommingappointmentName = __.dgs_nearestupcommingappointmentName.Read()
-              dgs_AdvancedSegmentationDataName = __.dgs_AdvancedSegmentationDataName.Read()
-              OriginatingLeadIdName = __.OriginatingLeadIdName.Read()
-              SLAName = __.SLAName.Read()
-              dgs_latestcompletedappointmentName = __.dgs_latestcompletedappointmentName.Read()
-              CreatedOnBehalfByName = __.CreatedOnBehalfByName.Read()
-              dgs_LastAppointmentTrackingActivityCodeName = __.dgs_LastAppointmentTrackingActivityCodeName.Read()
-              CreatedByYomiName = __.CreatedByYomiName.Read()
-              ModifiedByYomiName = __.ModifiedByYomiName.Read()
+            { dgs_latesttestappointmentName = __.dgs_latesttestappointmentName.Read()
               TransactionCurrencyIdName = __.TransactionCurrencyIdName.Read()
               PreferredSystemUserIdName = __.PreferredSystemUserIdName.Read()
+              dgs_LongtermfollowupbyYomiName = __.dgs_LongtermfollowupbyYomiName.Read()
               dgs_ProductModelIdName = __.dgs_ProductModelIdName.Read()
               dgs_Address1StateIdName = __.dgs_Address1StateIdName.Read()
               dgs_ProductBrandIdName = __.dgs_ProductBrandIdName.Read()
@@ -2266,33 +2233,68 @@ module dbo =
               dgs_ProductFamilyIdName = __.dgs_ProductFamilyIdName.Read()
               dgs_RMMOwnerName = __.dgs_RMMOwnerName.Read()
               dgs_DispenserIdName = __.dgs_DispenserIdName.Read()
+              CreatedOnBehalfByName = __.CreatedOnBehalfByName.Read()
+              dgs_ReferralcapturedbyName = __.dgs_ReferralcapturedbyName.Read()
+              dgs_LastAppointmentTrackingActivityCodeName = __.dgs_LastAppointmentTrackingActivityCodeName.Read()
+              CreatedByYomiName = __.CreatedByYomiName.Read()
+              dgs_LongtermfollowupbyName = __.dgs_LongtermfollowupbyName.Read()
+              dgs_duplicateofidName = __.dgs_duplicateofidName.Read()
               dgs_preferredvisitingsiteIdName = __.dgs_preferredvisitingsiteIdName.Read()
               CreatedByExternalPartyYomiName = __.CreatedByExternalPartyYomiName.Read()
               dgs_Address1CountryIdName = __.dgs_Address1CountryIdName.Read()
               MasterContactIdYomiName = __.MasterContactIdYomiName.Read()
               dgs_OutboundTMCallReservedByYomiName = __.dgs_OutboundTMCallReservedByYomiName.Read()
+              dgs_productidName = __.dgs_productidName.Read()
+              dgs_doctoridName = __.dgs_doctoridName.Read()
+              PreferredEquipmentIdName = __.PreferredEquipmentIdName.Read()
+              dgs_AdvancedSegmentationDataName = __.dgs_AdvancedSegmentationDataName.Read()
+              CreatedByExternalPartyName = __.CreatedByExternalPartyName.Read()
+              dgs_lastinboundphonecalltrackingactivitycodeName = __.dgs_lastinboundphonecalltrackingactivitycodeName.Read()
               PreferredSystemUserIdYomiName = __.PreferredSystemUserIdYomiName.Read()
+              MasterContactIdName = __.MasterContactIdName.Read()
+              dgs_Address2CountryIdName = __.dgs_Address2CountryIdName.Read()
               dgs_latestinsuranceplaninsurancecompanygroupName = __.dgs_latestinsuranceplaninsurancecompanygroupName.Read()
               dgs_NextAppointmentTrackingActivityCodeName = __.dgs_NextAppointmentTrackingActivityCodeName.Read()
+              dgs_HomeClinicName = __.dgs_HomeClinicName.Read()
+              OriginatingLeadIdYomiName = __.OriginatingLeadIdYomiName.Read()
               ModifiedByExternalPartyYomiName = __.ModifiedByExternalPartyYomiName.Read()
+              cdi_TalDisplayName = __.cdi_TalDisplayName.Read()
               cdi_TalDoNotDisplayName = __.cdi_TalDoNotDisplayName.Read()
+              EntityImage_Timestamp = __.EntityImage_Timestamp.Read()
+              SLAInvokedIdName = __.SLAInvokedIdName.Read()
+              ModifiedByName = __.ModifiedByName.Read()
+              dgs_ProductStyleIdName = __.dgs_ProductStyleIdName.Read()
               dgs_LastOutboundTMTrackingCodeName = __.dgs_LastOutboundTMTrackingCodeName.Read()
               dgs_NextAppointmentTrackingCodeName = __.dgs_NextAppointmentTrackingCodeName.Read()
-              dgs_ReferredbyName = __.dgs_ReferredbyName.Read()
-              dgs_doctoridYomiName = __.dgs_doctoridYomiName.Read()
-              EntityImage = __.EntityImage.Read()
-              dgs_Address2_ZipCodeIdName = __.dgs_Address2_ZipCodeIdName.Read()
-              dgs_lastinboundphonecalltrackingcodeName = __.dgs_lastinboundphonecalltrackingcodeName.Read()
-              dgs_latestworkcoverinsurancecompanygroupName = __.dgs_latestworkcoverinsurancecompanygroupName.Read()
-              dgs_ReferralcapturedbyYomiName = __.dgs_ReferralcapturedbyYomiName.Read()
-              dgs_DispenserIdYomiName = __.dgs_DispenserIdYomiName.Read()
-              CreatedByName = __.CreatedByName.Read()
-              dgs_RMMOwnerYomiName = __.dgs_RMMOwnerYomiName.Read()
-              CreatedOnBehalfByYomiName = __.CreatedOnBehalfByYomiName.Read()
+              dgs_WDHBrandIdName = __.dgs_WDHBrandIdName.Read()
               dgs_Address1_ZipCodeIdName = __.dgs_Address1_ZipCodeIdName.Read()
+              dgs_ReferredbyName = __.dgs_ReferredbyName.Read()
+              dgs_RMMOwnerYomiName = __.dgs_RMMOwnerYomiName.Read()
+              dgs_nearestupcommingappointmentName = __.dgs_nearestupcommingappointmentName.Read()
               dgs_Address2StateIdName = __.dgs_Address2StateIdName.Read()
               ModifiedOnBehalfByName = __.ModifiedOnBehalfByName.Read()
-              dgs_productidName = __.dgs_productidName.Read()
+              dgs_doctoridYomiName = __.dgs_doctoridYomiName.Read()
+              CreatedOnBehalfByYomiName = __.CreatedOnBehalfByYomiName.Read()
+              dgs_latestcompletedappointmentName = __.dgs_latestcompletedappointmentName.Read()
+              EntityImage = __.EntityImage.Read()
+              ModifiedByExternalPartyName = __.ModifiedByExternalPartyName.Read()
+              dgs_LastOutboundTMTrackingActivityCodeName = __.dgs_LastOutboundTMTrackingActivityCodeName.Read()
+              dgs_duplicateofidYomiName = __.dgs_duplicateofidYomiName.Read()
+              ModifiedOnBehalfByYomiName = __.ModifiedOnBehalfByYomiName.Read()
+              dgs_LastAppointmentTrackingCodeName = __.dgs_LastAppointmentTrackingCodeName.Read()
+              dgs_Address2_ZipCodeIdName = __.dgs_Address2_ZipCodeIdName.Read()
+              dgs_lastinboundphonecalltrackingcodeName = __.dgs_lastinboundphonecalltrackingcodeName.Read()
+              PreferredServiceIdName = __.PreferredServiceIdName.Read()
+              DefaultPriceLevelIdName = __.DefaultPriceLevelIdName.Read()
+              dgs_latestworkcoverinsurancecompanygroupName = __.dgs_latestworkcoverinsurancecompanygroupName.Read()
+              dgs_ReferralcapturedbyYomiName = __.dgs_ReferralcapturedbyYomiName.Read()
+              OriginatingLeadIdName = __.OriginatingLeadIdName.Read()
+              SLAName = __.SLAName.Read()
+              dgs_DispenserIdYomiName = __.dgs_DispenserIdYomiName.Read()
+              dgs_LastAppointmentClinicIdName = __.dgs_LastAppointmentClinicIdName.Read()
+              CreatedByName = __.CreatedByName.Read()
+              ModifiedByYomiName = __.ModifiedByYomiName.Read()
+              dgs_InitialTrackingActivityCodeIdName = __.dgs_InitialTrackingActivityCodeIdName.Read()
               dgs_ReferredbyYomiName = __.dgs_ReferredbyYomiName.Read()
               Address1_AddressTypeCode = __.Address1_AddressTypeCode.Read()
               Address1_City = __.Address1_City.Read()
@@ -2672,34 +2674,1044 @@ module dbo =
               dgs_latestworkcoverclaimnumber = __.dgs_latestworkcoverclaimnumber.Read()
               dgs_latestworkcoverinsurancecompanygroup = __.dgs_latestworkcoverinsurancecompanygroup.Read()
               dgs_latestworkcoverplantype = __.dgs_latestworkcoverplantype.Read()
-              dgs_latestworkcoverstartdate = __.dgs_latestworkcoverstartdate.Read() }
+              dgs_latestworkcoverstartdate = __.dgs_latestworkcoverstartdate.Read()
+              cdi_timezones = __.cdi_timezones.Read() }
 
         member __.ReadIfNotNull() =
             if __.OwnerId.IsNull() then None else Some(__.Read())
 
     [<CLIMutable>]
+    type ContactBase =
+        { ContactId: System.Guid
+          DefaultPriceLevelId: Option<System.Guid>
+          CustomerSizeCode: Option<int>
+          CustomerTypeCode: Option<int>
+          PreferredContactMethodCode: Option<int>
+          LeadSourceCode: Option<int>
+          OriginatingLeadId: Option<System.Guid>
+          OwningBusinessUnit: Option<System.Guid>
+          PaymentTermsCode: Option<int>
+          ShippingMethodCode: Option<int>
+          ParticipatesInWorkflow: Option<bool>
+          IsBackofficeCustomer: Option<bool>
+          Salutation: Option<string>
+          JobTitle: Option<string>
+          FirstName: Option<string>
+          Department: Option<string>
+          NickName: Option<string>
+          MiddleName: Option<string>
+          LastName: Option<string>
+          Suffix: Option<string>
+          YomiFirstName: Option<string>
+          FullName: Option<string>
+          YomiMiddleName: Option<string>
+          YomiLastName: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          Anniversary: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          BirthDate: Option<System.DateTime>
+          GovernmentId: Option<string>
+          YomiFullName: Option<string>
+          Description: Option<string>
+          EmployeeId: Option<string>
+          GenderCode: Option<int>
+          AnnualIncome: Option<decimal>
+          HasChildrenCode: Option<int>
+          EducationCode: Option<int>
+          WebSiteUrl: Option<string>
+          FamilyStatusCode: Option<int>
+          FtpSiteUrl: Option<string>
+          EMailAddress1: Option<string>
+          SpousesName: Option<string>
+          AssistantName: Option<string>
+          EMailAddress2: Option<string>
+          AssistantPhone: Option<string>
+          EMailAddress3: Option<string>
+          DoNotPhone: Option<bool>
+          ManagerName: Option<string>
+          ManagerPhone: Option<string>
+          DoNotFax: Option<bool>
+          DoNotEMail: Option<bool>
+          DoNotPostalMail: Option<bool>
+          DoNotBulkEMail: Option<bool>
+          DoNotBulkPostalMail: Option<bool>
+          AccountRoleCode: Option<int>
+          TerritoryCode: Option<int>
+          IsPrivate: Option<bool>
+          CreditLimit: Option<decimal>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          CreatedOn: Option<System.DateTime>
+          CreditOnHold: Option<bool>
+          CreatedBy: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          ModifiedOn: Option<System.DateTime>
+          ModifiedBy: Option<System.Guid>
+          NumberOfChildren: Option<int>
+          ChildrensNames: Option<string>
+          MobilePhone: Option<string>
+          Pager: Option<string>
+          Telephone1: Option<string>
+          Telephone2: Option<string>
+          Telephone3: Option<string>
+          Fax: Option<string>
+          Aging30: Option<decimal>
+          StateCode: int
+          Aging60: Option<decimal>
+          StatusCode: Option<int>
+          Aging90: Option<decimal>
+          PreferredSystemUserId: Option<System.Guid>
+          PreferredServiceId: Option<System.Guid>
+          MasterId: Option<System.Guid>
+          PreferredAppointmentDayCode: Option<int>
+          PreferredAppointmentTimeCode: Option<int>
+          DoNotSendMM: Option<bool>
+          Merged: Option<bool>
+          ExternalUserIdentifier: Option<string>
+          SubscriptionId: Option<System.Guid>
+          PreferredEquipmentId: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          LastUsedInCampaign: Option<System.DateTime>
+          TransactionCurrencyId: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          OverriddenCreatedOn: Option<System.DateTime>
+          ExchangeRate: Option<decimal>
+          ImportSequenceNumber: Option<int>
+          TimeZoneRuleVersionNumber: Option<int>
+          UTCConversionTimeZoneCode: Option<int>
+          AnnualIncome_Base: Option<decimal>
+          CreditLimit_Base: Option<decimal>
+          Aging60_Base: Option<decimal>
+          Aging90_Base: Option<decimal>
+          Aging30_Base: Option<decimal>
+          OwnerId: System.Guid
+          CreatedOnBehalfBy: Option<System.Guid>
+          IsAutoCreate: Option<bool>
+          ModifiedOnBehalfBy: Option<System.Guid>
+          ParentCustomerId: Option<System.Guid>
+          ParentCustomerIdType: Option<int>
+          ParentCustomerIdName: Option<string>
+          OwnerIdType: int
+          ParentCustomerIdYomiName: Option<string>
+          ProcessId: Option<System.Guid>
+          EntityImageId: Option<System.Guid>
+          StageId: Option<System.Guid>
+          Business2: Option<string>
+          Company: Option<string>
+          TraversedPath: Option<string>
+          Home2: Option<string>
+          Callback: Option<string>
+          dgs_Address1Zip4: Option<string>
+          dgs_Address2AddressType: Option<int>
+          dgs_Address2Zip4: Option<string>
+          dgs_AnonymousReferral: Option<int>
+          dgs_Attention: Option<string>
+          dgs_CompetitiveHearingAidUser: Option<bool>
+          dgs_ContactNumber: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_CustomerDate: Option<System.DateTime>
+          dgs_CustomerType: Option<int>
+          dgs_DedupAddress1Line1: Option<string>
+          dgs_DedupFirstName: Option<string>
+          dgs_DedupLastName: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_ExcludedfromMarketingDate: Option<System.DateTime>
+          dgs_ExcludeReason: Option<int>
+          dgs_ExistingAidUser: Option<bool>
+          dgs_GeneralPractitionerId: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_HAFittingDate: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_HALastInvoiceDate: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_HARepairWarrantyExpiryDate: Option<System.DateTime>
+          dgs_hasphonenumber: Option<bool>
+          dgs_HCP: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_LastAppointmentDate: Option<System.DateTime>
+          dgs_LastAppointmentOutcome: Option<int>
+          dgs_LastAppointmentOutcomeReason: Option<int>
+          dgs_LastAppointmentType: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_LastOutboundTMCall: Option<System.DateTime>
+          dgs_LastOutboundTMOutcome: Option<int>
+          dgs_LastOutboundTMOutcomeReason: Option<int>
+          dgs_LastTestAppointmentThirdPartyPresent: Option<bool>
+          dgs_LastTestResult: Option<int>
+          dgs_LastTMbeforelastappointment: Option<bool>
+          dgs_LivingAtInstitution: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_Longtermfollowup: Option<System.DateTime>
+          dgs_mobilephonetrimmed: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_NextAppointmentDate: Option<System.DateTime>
+          dgs_NextAppointmentType: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_NoOutboundTMCallBefore: Option<System.DateTime>
+          dgs_OpenAppointments: Option<int>
+          dgs_OpenPhoneCalls: Option<int>
+          dgs_OutboundTMCallReservedTrackingCodeString: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_OutboundTMCallReservedUntill: Option<System.DateTime>
+          dgs_PreferredPhone: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_ProspectDate: Option<System.DateTime>
+          dgs_ReferringDoctorId: Option<string>
+          dgs_skipcontactexport: Option<bool>
+          dgs_SkipPrePlugins: Option<bool>
+          dgs_TaxExcempt: Option<bool>
+          dgs_telephone1trimmed: Option<string>
+          dgs_telephone2trimmed: Option<string>
+          dgs_TestedNotSold: Option<bool>
+          dgs_YearofBirthnumeric: Option<int>
+          dgs_YearofBirthString: Option<string>
+          dgs_Referredby: Option<System.Guid>
+          dgs_HomeClinic: Option<System.Guid>
+          dgs_Address1CountryId: Option<System.Guid>
+          dgs_Address2CountryId: Option<System.Guid>
+          dgs_InitialTrackingActivityCodeId: Option<System.Guid>
+          dgs_InitialTrackingCodeId: Option<System.Guid>
+          dgs_LastAppointmentClinicId: Option<System.Guid>
+          dgs_ProductBrandId: Option<System.Guid>
+          dgs_ProductFamilyId: Option<System.Guid>
+          dgs_ProductModelId: Option<System.Guid>
+          dgs_ProductStyleId: Option<System.Guid>
+          dgs_Address1StateId: Option<System.Guid>
+          dgs_Address2StateId: Option<System.Guid>
+          dgs_LastAppointmentTrackingActivityCode: Option<System.Guid>
+          dgs_LastOutboundTMTrackingActivityCode: Option<System.Guid>
+          dgs_NextAppointmentTrackingActivityCode: Option<System.Guid>
+          dgs_LastAppointmentTrackingCode: Option<System.Guid>
+          dgs_LastOutboundTMTrackingCode: Option<System.Guid>
+          dgs_NextAppointmentTrackingCode: Option<System.Guid>
+          dgs_WDHBrandId: Option<System.Guid>
+          dgs_Address1_ZipCodeId: Option<System.Guid>
+          dgs_Address2_ZipCodeId: Option<System.Guid>
+          dgs_DispenserId: Option<System.Guid>
+          dgs_duplicateofid: Option<System.Guid>
+          dgs_Longtermfollowupby: Option<System.Guid>
+          dgs_OutboundTMCallReservedBy: Option<System.Guid>
+          dgs_Referralcapturedby: Option<System.Guid>
+          dgs_address1_housenumber: Option<string>
+          dgs_address1_housenumberadd: Option<string>
+          dgs_address1_streetname: Option<string>
+          dgs_address2_housenumber: Option<string>
+          dgs_address2_housenumberadd: Option<string>
+          dgs_address2_streetname: Option<string>
+          dgs_donotphonereason: Option<int>
+          dgs_ondnc: Option<bool>
+          CreatedByExternalParty: Option<System.Guid>
+          ModifiedByExternalParty: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          LastOnHoldTime: Option<System.DateTime>
+          SLAId: Option<System.Guid>
+          OnHoldTime: Option<int>
+          SLAInvokedId: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_latesttestdate: Option<System.DateTime>
+          dgs_hasemailaddress: Option<bool>
+          dgs_hasmobilephonenumber: Option<bool>
+          dgs_haspostalmailingaddress: Option<bool>
+          cdi_age: Option<int>
+          cdi_allowtextmessages: Option<bool>
+          cdi_facebook: Option<string>
+          cdi_grade: Option<string>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          cdi_identifiedon: Option<System.DateTime>
+          cdi_image: Option<string>
+          cdi_ip: Option<string>
+          cdi_latitude: Option<string>
+          cdi_linkedin: Option<string>
+          cdi_Longitude: Option<string>
+          cdi_partitionkey: Option<string>
+          cdi_rowkey: Option<string>
+          cdi_score: Option<int>
+          cdi_social: Option<string>
+          cdi_totalscore: Option<int>
+          cdi_twitter: Option<string>
+          cdi_visitorkey: Option<string>
+          dgs_RMMOwner: Option<System.Guid>
+          dgs_skippostplugins: Option<bool>
+          TimeSpentByMeOnEmailAndMeetings: Option<string>
+          FollowEmail: Option<bool>
+          MarketingOnly: Option<bool>
+          dgs_socialsecuritynumber: Option<string>
+          dgs_socialsecuritynumbertype: Option<int>
+          cdi_TalDisplay: Option<System.Guid>
+          cdi_TalDoNotDisplay: Option<System.Guid>
+          dgs_preferredvisitingsiteId: Option<System.Guid>
+          dgs_lastinboundphonecallisbeforelastappt: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_lastinboundphonecallon: Option<System.DateTime>
+          dgs_lastinboundphonecalloutcome: Option<int>
+          dgs_lastinboundphonecalloutcomereason: Option<int>
+          dgs_lastinboundphonecalltrackingactivitycode: Option<System.Guid>
+          dgs_lastinboundphonecalltrackingcode: Option<System.Guid>
+          dgs_allowtextmessages: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_latestdevicereturneddate: Option<System.DateTime>
+          dgs_latestdevicestatus: Option<int>
+          dgs_latestpayertype: Option<int>
+          dgs_productid: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_warrantyend: Option<System.DateTime>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_warrantystart: Option<System.DateTime>
+          dgs_nearestupcommingappointment: Option<System.Guid>
+          dgs_latestcompletedtestoutcome: Option<int>
+          dgs_dataprivacy: Option<bool>
+          dgs_donotbulkphone: Option<bool>
+          dgs_donotbulksms: Option<bool>
+          dgs_marketingcommunication: Option<bool>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_latestreimbursementdate: Option<System.DateTime>
+          dgs_ManagedCare: Option<bool>
+          dgs_PreferredLanguage: Option<int>
+          dgs_WorkCover: Option<bool>
+          dgs_WorkCoverClaim: Option<string>
+          dgs_doctorid: Option<System.Guid>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_excludereasonmodifiedon: Option<System.DateTime>
+          dgs_activeinsuranceplans: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_activeinsuranceplans_Date: Option<System.DateTime>
+          dgs_activeinsuranceplans_State: Option<int>
+          dgs_activeserviceplan: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_activeserviceplan_Date: Option<System.DateTime>
+          dgs_activeserviceplan_State: Option<int>
+          dgs_acc: Option<bool>
+          dgs_accband: Option<int>
+          dgs_address1_addressstatus: Option<int>
+          dgs_address2_addressstatus: Option<int>
+          dgs_mobilephonecallingcode: Option<string>
+          dgs_profilingdimension1: Option<int>
+          dgs_profilingdimension3: Option<string>
+          dgs_profilingoptout: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_profillingmodifiedon: Option<System.DateTime>
+          dgs_telephone1callingcode: Option<string>
+          dgs_telephone2callingcode: Option<string>
+          dgs_profilingdimension2: Option<string>
+          dgs_AdvancedSegmentationData: Option<System.Guid>
+          dgs_latestcompletedappointment: Option<System.Guid>
+          dgs_latesttestappointment: Option<System.Guid>
+          dgs_DoNotSMS: Option<bool>
+          dgs_lastappointmentimplantcandidate: Option<int>
+          dgs_lastappointmentreferralconsent: Option<bool>
+          dgs_DaysUntilNextAppointment: Option<int>
+          dgs_latestinsuranceplanplantype: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_latestinsuranceplanstartdate: Option<System.DateTime>
+          dgs_latestinsuranceplanvouchernumber: Option<string>
+          dgs_vatnumber: Option<string>
+          dgs_latestinsuranceplaninsurancecompanygroup: Option<System.Guid>
+          dgs_latestworkcoverclaimnumber: Option<string>
+          dgs_latestworkcoverinsurancecompanygroup: Option<System.Guid>
+          dgs_latestworkcoverplantype: Option<int>
+          [<SqlHydra.ProviderDbType("DateTime")>]
+          dgs_latestworkcoverstartdate: Option<System.DateTime>
+          cdi_timezones: Option<int> }
+
+    type ContactBaseReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.ContactId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactId")
+        member __.DefaultPriceLevelId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "DefaultPriceLevelId")
+        member __.CustomerSizeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "CustomerSizeCode")
+        member __.CustomerTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "CustomerTypeCode")
+        member __.PreferredContactMethodCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PreferredContactMethodCode")
+        member __.LeadSourceCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "LeadSourceCode")
+        member __.OriginatingLeadId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "OriginatingLeadId")
+        member __.OwningBusinessUnit = OptionalColumn(reader, getOrdinal, reader.GetGuid, "OwningBusinessUnit")
+        member __.PaymentTermsCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PaymentTermsCode")
+        member __.ShippingMethodCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ShippingMethodCode")
+        member __.ParticipatesInWorkflow = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "ParticipatesInWorkflow")
+        member __.IsBackofficeCustomer = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IsBackofficeCustomer")
+        member __.Salutation = OptionalColumn(reader, getOrdinal, reader.GetString, "Salutation")
+        member __.JobTitle = OptionalColumn(reader, getOrdinal, reader.GetString, "JobTitle")
+        member __.FirstName = OptionalColumn(reader, getOrdinal, reader.GetString, "FirstName")
+        member __.Department = OptionalColumn(reader, getOrdinal, reader.GetString, "Department")
+        member __.NickName = OptionalColumn(reader, getOrdinal, reader.GetString, "NickName")
+        member __.MiddleName = OptionalColumn(reader, getOrdinal, reader.GetString, "MiddleName")
+        member __.LastName = OptionalColumn(reader, getOrdinal, reader.GetString, "LastName")
+        member __.Suffix = OptionalColumn(reader, getOrdinal, reader.GetString, "Suffix")
+        member __.YomiFirstName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiFirstName")
+        member __.FullName = OptionalColumn(reader, getOrdinal, reader.GetString, "FullName")
+        member __.YomiMiddleName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiMiddleName")
+        member __.YomiLastName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiLastName")
+        member __.Anniversary = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "Anniversary")
+        member __.BirthDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "BirthDate")
+        member __.GovernmentId = OptionalColumn(reader, getOrdinal, reader.GetString, "GovernmentId")
+        member __.YomiFullName = OptionalColumn(reader, getOrdinal, reader.GetString, "YomiFullName")
+        member __.Description = OptionalColumn(reader, getOrdinal, reader.GetString, "Description")
+        member __.EmployeeId = OptionalColumn(reader, getOrdinal, reader.GetString, "EmployeeId")
+        member __.GenderCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "GenderCode")
+        member __.AnnualIncome = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "AnnualIncome")
+        member __.HasChildrenCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "HasChildrenCode")
+        member __.EducationCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "EducationCode")
+        member __.WebSiteUrl = OptionalColumn(reader, getOrdinal, reader.GetString, "WebSiteUrl")
+        member __.FamilyStatusCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "FamilyStatusCode")
+        member __.FtpSiteUrl = OptionalColumn(reader, getOrdinal, reader.GetString, "FtpSiteUrl")
+        member __.EMailAddress1 = OptionalColumn(reader, getOrdinal, reader.GetString, "EMailAddress1")
+        member __.SpousesName = OptionalColumn(reader, getOrdinal, reader.GetString, "SpousesName")
+        member __.AssistantName = OptionalColumn(reader, getOrdinal, reader.GetString, "AssistantName")
+        member __.EMailAddress2 = OptionalColumn(reader, getOrdinal, reader.GetString, "EMailAddress2")
+        member __.AssistantPhone = OptionalColumn(reader, getOrdinal, reader.GetString, "AssistantPhone")
+        member __.EMailAddress3 = OptionalColumn(reader, getOrdinal, reader.GetString, "EMailAddress3")
+        member __.DoNotPhone = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotPhone")
+        member __.ManagerName = OptionalColumn(reader, getOrdinal, reader.GetString, "ManagerName")
+        member __.ManagerPhone = OptionalColumn(reader, getOrdinal, reader.GetString, "ManagerPhone")
+        member __.DoNotFax = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotFax")
+        member __.DoNotEMail = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotEMail")
+        member __.DoNotPostalMail = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotPostalMail")
+        member __.DoNotBulkEMail = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotBulkEMail")
+        member __.DoNotBulkPostalMail = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotBulkPostalMail")
+        member __.AccountRoleCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "AccountRoleCode")
+        member __.TerritoryCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TerritoryCode")
+        member __.IsPrivate = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IsPrivate")
+        member __.CreditLimit = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "CreditLimit")
+        member __.CreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "CreatedOn")
+        member __.CreditOnHold = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "CreditOnHold")
+        member __.CreatedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedBy")
+        member __.ModifiedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "ModifiedOn")
+        member __.ModifiedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedBy")
+        member __.NumberOfChildren = OptionalColumn(reader, getOrdinal, reader.GetInt32, "NumberOfChildren")
+        member __.ChildrensNames = OptionalColumn(reader, getOrdinal, reader.GetString, "ChildrensNames")
+        member __.MobilePhone = OptionalColumn(reader, getOrdinal, reader.GetString, "MobilePhone")
+        member __.Pager = OptionalColumn(reader, getOrdinal, reader.GetString, "Pager")
+        member __.Telephone1 = OptionalColumn(reader, getOrdinal, reader.GetString, "Telephone1")
+        member __.Telephone2 = OptionalColumn(reader, getOrdinal, reader.GetString, "Telephone2")
+        member __.Telephone3 = OptionalColumn(reader, getOrdinal, reader.GetString, "Telephone3")
+        member __.Fax = OptionalColumn(reader, getOrdinal, reader.GetString, "Fax")
+        member __.Aging30 = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "Aging30")
+        member __.StateCode = RequiredColumn(reader, getOrdinal, reader.GetInt32, "StateCode")
+        member __.Aging60 = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "Aging60")
+        member __.StatusCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "StatusCode")
+        member __.Aging90 = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "Aging90")
+        member __.PreferredSystemUserId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PreferredSystemUserId")
+        member __.PreferredServiceId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PreferredServiceId")
+        member __.MasterId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "MasterId")
+        member __.PreferredAppointmentDayCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PreferredAppointmentDayCode")
+        member __.PreferredAppointmentTimeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "PreferredAppointmentTimeCode")
+        member __.DoNotSendMM = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "DoNotSendMM")
+        member __.Merged = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "Merged")
+        member __.ExternalUserIdentifier = OptionalColumn(reader, getOrdinal, reader.GetString, "ExternalUserIdentifier")
+        member __.SubscriptionId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SubscriptionId")
+        member __.PreferredEquipmentId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "PreferredEquipmentId")
+        member __.LastUsedInCampaign = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "LastUsedInCampaign")
+        member __.TransactionCurrencyId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "TransactionCurrencyId")
+        member __.OverriddenCreatedOn = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "OverriddenCreatedOn")
+        member __.ExchangeRate = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "ExchangeRate")
+        member __.ImportSequenceNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ImportSequenceNumber")
+        member __.TimeZoneRuleVersionNumber = OptionalColumn(reader, getOrdinal, reader.GetInt32, "TimeZoneRuleVersionNumber")
+        member __.UTCConversionTimeZoneCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "UTCConversionTimeZoneCode")
+        member __.AnnualIncome_Base = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "AnnualIncome_Base")
+        member __.CreditLimit_Base = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "CreditLimit_Base")
+        member __.Aging60_Base = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "Aging60_Base")
+        member __.Aging90_Base = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "Aging90_Base")
+        member __.Aging30_Base = OptionalColumn(reader, getOrdinal, reader.GetDecimal, "Aging30_Base")
+        member __.OwnerId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "OwnerId")
+        member __.CreatedOnBehalfBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedOnBehalfBy")
+        member __.IsAutoCreate = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "IsAutoCreate")
+        member __.ModifiedOnBehalfBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedOnBehalfBy")
+        member __.ParentCustomerId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ParentCustomerId")
+        member __.ParentCustomerIdType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "ParentCustomerIdType")
+        member __.ParentCustomerIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "ParentCustomerIdName")
+        member __.OwnerIdType = RequiredColumn(reader, getOrdinal, reader.GetInt32, "OwnerIdType")
+        member __.ParentCustomerIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ParentCustomerIdYomiName")
+        member __.ProcessId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ProcessId")
+        member __.EntityImageId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "EntityImageId")
+        member __.StageId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "StageId")
+        member __.Business2 = OptionalColumn(reader, getOrdinal, reader.GetString, "Business2")
+        member __.Company = OptionalColumn(reader, getOrdinal, reader.GetString, "Company")
+        member __.TraversedPath = OptionalColumn(reader, getOrdinal, reader.GetString, "TraversedPath")
+        member __.Home2 = OptionalColumn(reader, getOrdinal, reader.GetString, "Home2")
+        member __.Callback = OptionalColumn(reader, getOrdinal, reader.GetString, "Callback")
+        member __.dgs_Address1Zip4 = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address1Zip4")
+        member __.dgs_Address2AddressType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_Address2AddressType")
+        member __.dgs_Address2Zip4 = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Address2Zip4")
+        member __.dgs_AnonymousReferral = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_AnonymousReferral")
+        member __.dgs_Attention = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_Attention")
+        member __.dgs_CompetitiveHearingAidUser = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_CompetitiveHearingAidUser")
+        member __.dgs_ContactNumber = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ContactNumber")
+        member __.dgs_CustomerDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_CustomerDate")
+        member __.dgs_CustomerType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_CustomerType")
+        member __.dgs_DedupAddress1Line1 = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_DedupAddress1Line1")
+        member __.dgs_DedupFirstName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_DedupFirstName")
+        member __.dgs_DedupLastName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_DedupLastName")
+        member __.dgs_ExcludedfromMarketingDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_ExcludedfromMarketingDate")
+        member __.dgs_ExcludeReason = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_ExcludeReason")
+        member __.dgs_ExistingAidUser = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_ExistingAidUser")
+        member __.dgs_GeneralPractitionerId = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_GeneralPractitionerId")
+        member __.dgs_HAFittingDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_HAFittingDate")
+        member __.dgs_HALastInvoiceDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_HALastInvoiceDate")
+        member __.dgs_HARepairWarrantyExpiryDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_HARepairWarrantyExpiryDate")
+        member __.dgs_hasphonenumber = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_hasphonenumber")
+        member __.dgs_HCP = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_HCP")
+        member __.dgs_LastAppointmentDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_LastAppointmentDate")
+        member __.dgs_LastAppointmentOutcome = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_LastAppointmentOutcome")
+        member __.dgs_LastAppointmentOutcomeReason = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_LastAppointmentOutcomeReason")
+        member __.dgs_LastAppointmentType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_LastAppointmentType")
+        member __.dgs_LastOutboundTMCall = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_LastOutboundTMCall")
+        member __.dgs_LastOutboundTMOutcome = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_LastOutboundTMOutcome")
+        member __.dgs_LastOutboundTMOutcomeReason = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_LastOutboundTMOutcomeReason")
+        member __.dgs_LastTestAppointmentThirdPartyPresent = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_LastTestAppointmentThirdPartyPresent")
+        member __.dgs_LastTestResult = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_LastTestResult")
+        member __.dgs_LastTMbeforelastappointment = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_LastTMbeforelastappointment")
+        member __.dgs_LivingAtInstitution = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_LivingAtInstitution")
+        member __.dgs_Longtermfollowup = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_Longtermfollowup")
+        member __.dgs_mobilephonetrimmed = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_mobilephonetrimmed")
+        member __.dgs_NextAppointmentDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_NextAppointmentDate")
+        member __.dgs_NextAppointmentType = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_NextAppointmentType")
+        member __.dgs_NoOutboundTMCallBefore = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_NoOutboundTMCallBefore")
+        member __.dgs_OpenAppointments = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_OpenAppointments")
+        member __.dgs_OpenPhoneCalls = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_OpenPhoneCalls")
+        member __.dgs_OutboundTMCallReservedTrackingCodeString = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_OutboundTMCallReservedTrackingCodeString")
+        member __.dgs_OutboundTMCallReservedUntill = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_OutboundTMCallReservedUntill")
+        member __.dgs_PreferredPhone = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_PreferredPhone")
+        member __.dgs_ProspectDate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_ProspectDate")
+        member __.dgs_ReferringDoctorId = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_ReferringDoctorId")
+        member __.dgs_skipcontactexport = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_skipcontactexport")
+        member __.dgs_SkipPrePlugins = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_SkipPrePlugins")
+        member __.dgs_TaxExcempt = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_TaxExcempt")
+        member __.dgs_telephone1trimmed = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_telephone1trimmed")
+        member __.dgs_telephone2trimmed = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_telephone2trimmed")
+        member __.dgs_TestedNotSold = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_TestedNotSold")
+        member __.dgs_YearofBirthnumeric = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_YearofBirthnumeric")
+        member __.dgs_YearofBirthString = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_YearofBirthString")
+        member __.dgs_Referredby = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Referredby")
+        member __.dgs_HomeClinic = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_HomeClinic")
+        member __.dgs_Address1CountryId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Address1CountryId")
+        member __.dgs_Address2CountryId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Address2CountryId")
+        member __.dgs_InitialTrackingActivityCodeId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_InitialTrackingActivityCodeId")
+        member __.dgs_InitialTrackingCodeId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_InitialTrackingCodeId")
+        member __.dgs_LastAppointmentClinicId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_LastAppointmentClinicId")
+        member __.dgs_ProductBrandId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_ProductBrandId")
+        member __.dgs_ProductFamilyId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_ProductFamilyId")
+        member __.dgs_ProductModelId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_ProductModelId")
+        member __.dgs_ProductStyleId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_ProductStyleId")
+        member __.dgs_Address1StateId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Address1StateId")
+        member __.dgs_Address2StateId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Address2StateId")
+        member __.dgs_LastAppointmentTrackingActivityCode = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_LastAppointmentTrackingActivityCode")
+        member __.dgs_LastOutboundTMTrackingActivityCode = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_LastOutboundTMTrackingActivityCode")
+        member __.dgs_NextAppointmentTrackingActivityCode = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_NextAppointmentTrackingActivityCode")
+        member __.dgs_LastAppointmentTrackingCode = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_LastAppointmentTrackingCode")
+        member __.dgs_LastOutboundTMTrackingCode = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_LastOutboundTMTrackingCode")
+        member __.dgs_NextAppointmentTrackingCode = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_NextAppointmentTrackingCode")
+        member __.dgs_WDHBrandId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_WDHBrandId")
+        member __.dgs_Address1_ZipCodeId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Address1_ZipCodeId")
+        member __.dgs_Address2_ZipCodeId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Address2_ZipCodeId")
+        member __.dgs_DispenserId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_DispenserId")
+        member __.dgs_duplicateofid = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_duplicateofid")
+        member __.dgs_Longtermfollowupby = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Longtermfollowupby")
+        member __.dgs_OutboundTMCallReservedBy = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_OutboundTMCallReservedBy")
+        member __.dgs_Referralcapturedby = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_Referralcapturedby")
+        member __.dgs_address1_housenumber = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_address1_housenumber")
+        member __.dgs_address1_housenumberadd = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_address1_housenumberadd")
+        member __.dgs_address1_streetname = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_address1_streetname")
+        member __.dgs_address2_housenumber = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_address2_housenumber")
+        member __.dgs_address2_housenumberadd = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_address2_housenumberadd")
+        member __.dgs_address2_streetname = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_address2_streetname")
+        member __.dgs_donotphonereason = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_donotphonereason")
+        member __.dgs_ondnc = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_ondnc")
+        member __.CreatedByExternalParty = OptionalColumn(reader, getOrdinal, reader.GetGuid, "CreatedByExternalParty")
+        member __.ModifiedByExternalParty = OptionalColumn(reader, getOrdinal, reader.GetGuid, "ModifiedByExternalParty")
+        member __.LastOnHoldTime = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "LastOnHoldTime")
+        member __.SLAId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SLAId")
+        member __.OnHoldTime = OptionalColumn(reader, getOrdinal, reader.GetInt32, "OnHoldTime")
+        member __.SLAInvokedId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "SLAInvokedId")
+        member __.dgs_latesttestdate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_latesttestdate")
+        member __.dgs_hasemailaddress = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_hasemailaddress")
+        member __.dgs_hasmobilephonenumber = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_hasmobilephonenumber")
+        member __.dgs_haspostalmailingaddress = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_haspostalmailingaddress")
+        member __.cdi_age = OptionalColumn(reader, getOrdinal, reader.GetInt32, "cdi_age")
+        member __.cdi_allowtextmessages = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "cdi_allowtextmessages")
+        member __.cdi_facebook = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_facebook")
+        member __.cdi_grade = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_grade")
+        member __.cdi_identifiedon = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "cdi_identifiedon")
+        member __.cdi_image = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_image")
+        member __.cdi_ip = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_ip")
+        member __.cdi_latitude = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_latitude")
+        member __.cdi_linkedin = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_linkedin")
+        member __.cdi_Longitude = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_Longitude")
+        member __.cdi_partitionkey = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_partitionkey")
+        member __.cdi_rowkey = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_rowkey")
+        member __.cdi_score = OptionalColumn(reader, getOrdinal, reader.GetInt32, "cdi_score")
+        member __.cdi_social = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_social")
+        member __.cdi_totalscore = OptionalColumn(reader, getOrdinal, reader.GetInt32, "cdi_totalscore")
+        member __.cdi_twitter = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_twitter")
+        member __.cdi_visitorkey = OptionalColumn(reader, getOrdinal, reader.GetString, "cdi_visitorkey")
+        member __.dgs_RMMOwner = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_RMMOwner")
+        member __.dgs_skippostplugins = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_skippostplugins")
+        member __.TimeSpentByMeOnEmailAndMeetings = OptionalColumn(reader, getOrdinal, reader.GetString, "TimeSpentByMeOnEmailAndMeetings")
+        member __.FollowEmail = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "FollowEmail")
+        member __.MarketingOnly = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "MarketingOnly")
+        member __.dgs_socialsecuritynumber = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_socialsecuritynumber")
+        member __.dgs_socialsecuritynumbertype = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_socialsecuritynumbertype")
+        member __.cdi_TalDisplay = OptionalColumn(reader, getOrdinal, reader.GetGuid, "cdi_TalDisplay")
+        member __.cdi_TalDoNotDisplay = OptionalColumn(reader, getOrdinal, reader.GetGuid, "cdi_TalDoNotDisplay")
+        member __.dgs_preferredvisitingsiteId = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_preferredvisitingsiteId")
+        member __.dgs_lastinboundphonecallisbeforelastappt = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_lastinboundphonecallisbeforelastappt")
+        member __.dgs_lastinboundphonecallon = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_lastinboundphonecallon")
+        member __.dgs_lastinboundphonecalloutcome = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_lastinboundphonecalloutcome")
+        member __.dgs_lastinboundphonecalloutcomereason = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_lastinboundphonecalloutcomereason")
+        member __.dgs_lastinboundphonecalltrackingactivitycode = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_lastinboundphonecalltrackingactivitycode")
+        member __.dgs_lastinboundphonecalltrackingcode = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_lastinboundphonecalltrackingcode")
+        member __.dgs_allowtextmessages = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_allowtextmessages")
+        member __.dgs_latestdevicereturneddate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_latestdevicereturneddate")
+        member __.dgs_latestdevicestatus = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_latestdevicestatus")
+        member __.dgs_latestpayertype = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_latestpayertype")
+        member __.dgs_productid = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_productid")
+        member __.dgs_warrantyend = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_warrantyend")
+        member __.dgs_warrantystart = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_warrantystart")
+        member __.dgs_nearestupcommingappointment = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_nearestupcommingappointment")
+        member __.dgs_latestcompletedtestoutcome = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_latestcompletedtestoutcome")
+        member __.dgs_dataprivacy = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_dataprivacy")
+        member __.dgs_donotbulkphone = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_donotbulkphone")
+        member __.dgs_donotbulksms = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_donotbulksms")
+        member __.dgs_marketingcommunication = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_marketingcommunication")
+        member __.dgs_latestreimbursementdate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_latestreimbursementdate")
+        member __.dgs_ManagedCare = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_ManagedCare")
+        member __.dgs_PreferredLanguage = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_PreferredLanguage")
+        member __.dgs_WorkCover = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_WorkCover")
+        member __.dgs_WorkCoverClaim = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_WorkCoverClaim")
+        member __.dgs_doctorid = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_doctorid")
+        member __.dgs_excludereasonmodifiedon = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_excludereasonmodifiedon")
+        member __.dgs_activeinsuranceplans = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_activeinsuranceplans")
+        member __.dgs_activeinsuranceplans_Date = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_activeinsuranceplans_Date")
+        member __.dgs_activeinsuranceplans_State = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_activeinsuranceplans_State")
+        member __.dgs_activeserviceplan = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_activeserviceplan")
+        member __.dgs_activeserviceplan_Date = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_activeserviceplan_Date")
+        member __.dgs_activeserviceplan_State = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_activeserviceplan_State")
+        member __.dgs_acc = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_acc")
+        member __.dgs_accband = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_accband")
+        member __.dgs_address1_addressstatus = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_address1_addressstatus")
+        member __.dgs_address2_addressstatus = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_address2_addressstatus")
+        member __.dgs_mobilephonecallingcode = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_mobilephonecallingcode")
+        member __.dgs_profilingdimension1 = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_profilingdimension1")
+        member __.dgs_profilingdimension3 = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_profilingdimension3")
+        member __.dgs_profilingoptout = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_profilingoptout")
+        member __.dgs_profillingmodifiedon = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_profillingmodifiedon")
+        member __.dgs_telephone1callingcode = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_telephone1callingcode")
+        member __.dgs_telephone2callingcode = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_telephone2callingcode")
+        member __.dgs_profilingdimension2 = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_profilingdimension2")
+        member __.dgs_AdvancedSegmentationData = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_AdvancedSegmentationData")
+        member __.dgs_latestcompletedappointment = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_latestcompletedappointment")
+        member __.dgs_latesttestappointment = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_latesttestappointment")
+        member __.dgs_DoNotSMS = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_DoNotSMS")
+        member __.dgs_lastappointmentimplantcandidate = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_lastappointmentimplantcandidate")
+        member __.dgs_lastappointmentreferralconsent = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_lastappointmentreferralconsent")
+        member __.dgs_DaysUntilNextAppointment = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_DaysUntilNextAppointment")
+        member __.dgs_latestinsuranceplanplantype = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_latestinsuranceplanplantype")
+        member __.dgs_latestinsuranceplanstartdate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_latestinsuranceplanstartdate")
+        member __.dgs_latestinsuranceplanvouchernumber = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_latestinsuranceplanvouchernumber")
+        member __.dgs_vatnumber = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_vatnumber")
+        member __.dgs_latestinsuranceplaninsurancecompanygroup = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_latestinsuranceplaninsurancecompanygroup")
+        member __.dgs_latestworkcoverclaimnumber = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_latestworkcoverclaimnumber")
+        member __.dgs_latestworkcoverinsurancecompanygroup = OptionalColumn(reader, getOrdinal, reader.GetGuid, "dgs_latestworkcoverinsurancecompanygroup")
+        member __.dgs_latestworkcoverplantype = OptionalColumn(reader, getOrdinal, reader.GetInt32, "dgs_latestworkcoverplantype")
+        member __.dgs_latestworkcoverstartdate = OptionalColumn(reader, getOrdinal, reader.GetDateTime, "dgs_latestworkcoverstartdate")
+        member __.cdi_timezones = OptionalColumn(reader, getOrdinal, reader.GetInt32, "cdi_timezones")
+
+        member __.Read() =
+            { ContactId = __.ContactId.Read()
+              DefaultPriceLevelId = __.DefaultPriceLevelId.Read()
+              CustomerSizeCode = __.CustomerSizeCode.Read()
+              CustomerTypeCode = __.CustomerTypeCode.Read()
+              PreferredContactMethodCode = __.PreferredContactMethodCode.Read()
+              LeadSourceCode = __.LeadSourceCode.Read()
+              OriginatingLeadId = __.OriginatingLeadId.Read()
+              OwningBusinessUnit = __.OwningBusinessUnit.Read()
+              PaymentTermsCode = __.PaymentTermsCode.Read()
+              ShippingMethodCode = __.ShippingMethodCode.Read()
+              ParticipatesInWorkflow = __.ParticipatesInWorkflow.Read()
+              IsBackofficeCustomer = __.IsBackofficeCustomer.Read()
+              Salutation = __.Salutation.Read()
+              JobTitle = __.JobTitle.Read()
+              FirstName = __.FirstName.Read()
+              Department = __.Department.Read()
+              NickName = __.NickName.Read()
+              MiddleName = __.MiddleName.Read()
+              LastName = __.LastName.Read()
+              Suffix = __.Suffix.Read()
+              YomiFirstName = __.YomiFirstName.Read()
+              FullName = __.FullName.Read()
+              YomiMiddleName = __.YomiMiddleName.Read()
+              YomiLastName = __.YomiLastName.Read()
+              Anniversary = __.Anniversary.Read()
+              BirthDate = __.BirthDate.Read()
+              GovernmentId = __.GovernmentId.Read()
+              YomiFullName = __.YomiFullName.Read()
+              Description = __.Description.Read()
+              EmployeeId = __.EmployeeId.Read()
+              GenderCode = __.GenderCode.Read()
+              AnnualIncome = __.AnnualIncome.Read()
+              HasChildrenCode = __.HasChildrenCode.Read()
+              EducationCode = __.EducationCode.Read()
+              WebSiteUrl = __.WebSiteUrl.Read()
+              FamilyStatusCode = __.FamilyStatusCode.Read()
+              FtpSiteUrl = __.FtpSiteUrl.Read()
+              EMailAddress1 = __.EMailAddress1.Read()
+              SpousesName = __.SpousesName.Read()
+              AssistantName = __.AssistantName.Read()
+              EMailAddress2 = __.EMailAddress2.Read()
+              AssistantPhone = __.AssistantPhone.Read()
+              EMailAddress3 = __.EMailAddress3.Read()
+              DoNotPhone = __.DoNotPhone.Read()
+              ManagerName = __.ManagerName.Read()
+              ManagerPhone = __.ManagerPhone.Read()
+              DoNotFax = __.DoNotFax.Read()
+              DoNotEMail = __.DoNotEMail.Read()
+              DoNotPostalMail = __.DoNotPostalMail.Read()
+              DoNotBulkEMail = __.DoNotBulkEMail.Read()
+              DoNotBulkPostalMail = __.DoNotBulkPostalMail.Read()
+              AccountRoleCode = __.AccountRoleCode.Read()
+              TerritoryCode = __.TerritoryCode.Read()
+              IsPrivate = __.IsPrivate.Read()
+              CreditLimit = __.CreditLimit.Read()
+              CreatedOn = __.CreatedOn.Read()
+              CreditOnHold = __.CreditOnHold.Read()
+              CreatedBy = __.CreatedBy.Read()
+              ModifiedOn = __.ModifiedOn.Read()
+              ModifiedBy = __.ModifiedBy.Read()
+              NumberOfChildren = __.NumberOfChildren.Read()
+              ChildrensNames = __.ChildrensNames.Read()
+              MobilePhone = __.MobilePhone.Read()
+              Pager = __.Pager.Read()
+              Telephone1 = __.Telephone1.Read()
+              Telephone2 = __.Telephone2.Read()
+              Telephone3 = __.Telephone3.Read()
+              Fax = __.Fax.Read()
+              Aging30 = __.Aging30.Read()
+              StateCode = __.StateCode.Read()
+              Aging60 = __.Aging60.Read()
+              StatusCode = __.StatusCode.Read()
+              Aging90 = __.Aging90.Read()
+              PreferredSystemUserId = __.PreferredSystemUserId.Read()
+              PreferredServiceId = __.PreferredServiceId.Read()
+              MasterId = __.MasterId.Read()
+              PreferredAppointmentDayCode = __.PreferredAppointmentDayCode.Read()
+              PreferredAppointmentTimeCode = __.PreferredAppointmentTimeCode.Read()
+              DoNotSendMM = __.DoNotSendMM.Read()
+              Merged = __.Merged.Read()
+              ExternalUserIdentifier = __.ExternalUserIdentifier.Read()
+              SubscriptionId = __.SubscriptionId.Read()
+              PreferredEquipmentId = __.PreferredEquipmentId.Read()
+              LastUsedInCampaign = __.LastUsedInCampaign.Read()
+              TransactionCurrencyId = __.TransactionCurrencyId.Read()
+              OverriddenCreatedOn = __.OverriddenCreatedOn.Read()
+              ExchangeRate = __.ExchangeRate.Read()
+              ImportSequenceNumber = __.ImportSequenceNumber.Read()
+              TimeZoneRuleVersionNumber = __.TimeZoneRuleVersionNumber.Read()
+              UTCConversionTimeZoneCode = __.UTCConversionTimeZoneCode.Read()
+              AnnualIncome_Base = __.AnnualIncome_Base.Read()
+              CreditLimit_Base = __.CreditLimit_Base.Read()
+              Aging60_Base = __.Aging60_Base.Read()
+              Aging90_Base = __.Aging90_Base.Read()
+              Aging30_Base = __.Aging30_Base.Read()
+              OwnerId = __.OwnerId.Read()
+              CreatedOnBehalfBy = __.CreatedOnBehalfBy.Read()
+              IsAutoCreate = __.IsAutoCreate.Read()
+              ModifiedOnBehalfBy = __.ModifiedOnBehalfBy.Read()
+              ParentCustomerId = __.ParentCustomerId.Read()
+              ParentCustomerIdType = __.ParentCustomerIdType.Read()
+              ParentCustomerIdName = __.ParentCustomerIdName.Read()
+              OwnerIdType = __.OwnerIdType.Read()
+              ParentCustomerIdYomiName = __.ParentCustomerIdYomiName.Read()
+              ProcessId = __.ProcessId.Read()
+              EntityImageId = __.EntityImageId.Read()
+              StageId = __.StageId.Read()
+              Business2 = __.Business2.Read()
+              Company = __.Company.Read()
+              TraversedPath = __.TraversedPath.Read()
+              Home2 = __.Home2.Read()
+              Callback = __.Callback.Read()
+              dgs_Address1Zip4 = __.dgs_Address1Zip4.Read()
+              dgs_Address2AddressType = __.dgs_Address2AddressType.Read()
+              dgs_Address2Zip4 = __.dgs_Address2Zip4.Read()
+              dgs_AnonymousReferral = __.dgs_AnonymousReferral.Read()
+              dgs_Attention = __.dgs_Attention.Read()
+              dgs_CompetitiveHearingAidUser = __.dgs_CompetitiveHearingAidUser.Read()
+              dgs_ContactNumber = __.dgs_ContactNumber.Read()
+              dgs_CustomerDate = __.dgs_CustomerDate.Read()
+              dgs_CustomerType = __.dgs_CustomerType.Read()
+              dgs_DedupAddress1Line1 = __.dgs_DedupAddress1Line1.Read()
+              dgs_DedupFirstName = __.dgs_DedupFirstName.Read()
+              dgs_DedupLastName = __.dgs_DedupLastName.Read()
+              dgs_ExcludedfromMarketingDate = __.dgs_ExcludedfromMarketingDate.Read()
+              dgs_ExcludeReason = __.dgs_ExcludeReason.Read()
+              dgs_ExistingAidUser = __.dgs_ExistingAidUser.Read()
+              dgs_GeneralPractitionerId = __.dgs_GeneralPractitionerId.Read()
+              dgs_HAFittingDate = __.dgs_HAFittingDate.Read()
+              dgs_HALastInvoiceDate = __.dgs_HALastInvoiceDate.Read()
+              dgs_HARepairWarrantyExpiryDate = __.dgs_HARepairWarrantyExpiryDate.Read()
+              dgs_hasphonenumber = __.dgs_hasphonenumber.Read()
+              dgs_HCP = __.dgs_HCP.Read()
+              dgs_LastAppointmentDate = __.dgs_LastAppointmentDate.Read()
+              dgs_LastAppointmentOutcome = __.dgs_LastAppointmentOutcome.Read()
+              dgs_LastAppointmentOutcomeReason = __.dgs_LastAppointmentOutcomeReason.Read()
+              dgs_LastAppointmentType = __.dgs_LastAppointmentType.Read()
+              dgs_LastOutboundTMCall = __.dgs_LastOutboundTMCall.Read()
+              dgs_LastOutboundTMOutcome = __.dgs_LastOutboundTMOutcome.Read()
+              dgs_LastOutboundTMOutcomeReason = __.dgs_LastOutboundTMOutcomeReason.Read()
+              dgs_LastTestAppointmentThirdPartyPresent = __.dgs_LastTestAppointmentThirdPartyPresent.Read()
+              dgs_LastTestResult = __.dgs_LastTestResult.Read()
+              dgs_LastTMbeforelastappointment = __.dgs_LastTMbeforelastappointment.Read()
+              dgs_LivingAtInstitution = __.dgs_LivingAtInstitution.Read()
+              dgs_Longtermfollowup = __.dgs_Longtermfollowup.Read()
+              dgs_mobilephonetrimmed = __.dgs_mobilephonetrimmed.Read()
+              dgs_NextAppointmentDate = __.dgs_NextAppointmentDate.Read()
+              dgs_NextAppointmentType = __.dgs_NextAppointmentType.Read()
+              dgs_NoOutboundTMCallBefore = __.dgs_NoOutboundTMCallBefore.Read()
+              dgs_OpenAppointments = __.dgs_OpenAppointments.Read()
+              dgs_OpenPhoneCalls = __.dgs_OpenPhoneCalls.Read()
+              dgs_OutboundTMCallReservedTrackingCodeString = __.dgs_OutboundTMCallReservedTrackingCodeString.Read()
+              dgs_OutboundTMCallReservedUntill = __.dgs_OutboundTMCallReservedUntill.Read()
+              dgs_PreferredPhone = __.dgs_PreferredPhone.Read()
+              dgs_ProspectDate = __.dgs_ProspectDate.Read()
+              dgs_ReferringDoctorId = __.dgs_ReferringDoctorId.Read()
+              dgs_skipcontactexport = __.dgs_skipcontactexport.Read()
+              dgs_SkipPrePlugins = __.dgs_SkipPrePlugins.Read()
+              dgs_TaxExcempt = __.dgs_TaxExcempt.Read()
+              dgs_telephone1trimmed = __.dgs_telephone1trimmed.Read()
+              dgs_telephone2trimmed = __.dgs_telephone2trimmed.Read()
+              dgs_TestedNotSold = __.dgs_TestedNotSold.Read()
+              dgs_YearofBirthnumeric = __.dgs_YearofBirthnumeric.Read()
+              dgs_YearofBirthString = __.dgs_YearofBirthString.Read()
+              dgs_Referredby = __.dgs_Referredby.Read()
+              dgs_HomeClinic = __.dgs_HomeClinic.Read()
+              dgs_Address1CountryId = __.dgs_Address1CountryId.Read()
+              dgs_Address2CountryId = __.dgs_Address2CountryId.Read()
+              dgs_InitialTrackingActivityCodeId = __.dgs_InitialTrackingActivityCodeId.Read()
+              dgs_InitialTrackingCodeId = __.dgs_InitialTrackingCodeId.Read()
+              dgs_LastAppointmentClinicId = __.dgs_LastAppointmentClinicId.Read()
+              dgs_ProductBrandId = __.dgs_ProductBrandId.Read()
+              dgs_ProductFamilyId = __.dgs_ProductFamilyId.Read()
+              dgs_ProductModelId = __.dgs_ProductModelId.Read()
+              dgs_ProductStyleId = __.dgs_ProductStyleId.Read()
+              dgs_Address1StateId = __.dgs_Address1StateId.Read()
+              dgs_Address2StateId = __.dgs_Address2StateId.Read()
+              dgs_LastAppointmentTrackingActivityCode = __.dgs_LastAppointmentTrackingActivityCode.Read()
+              dgs_LastOutboundTMTrackingActivityCode = __.dgs_LastOutboundTMTrackingActivityCode.Read()
+              dgs_NextAppointmentTrackingActivityCode = __.dgs_NextAppointmentTrackingActivityCode.Read()
+              dgs_LastAppointmentTrackingCode = __.dgs_LastAppointmentTrackingCode.Read()
+              dgs_LastOutboundTMTrackingCode = __.dgs_LastOutboundTMTrackingCode.Read()
+              dgs_NextAppointmentTrackingCode = __.dgs_NextAppointmentTrackingCode.Read()
+              dgs_WDHBrandId = __.dgs_WDHBrandId.Read()
+              dgs_Address1_ZipCodeId = __.dgs_Address1_ZipCodeId.Read()
+              dgs_Address2_ZipCodeId = __.dgs_Address2_ZipCodeId.Read()
+              dgs_DispenserId = __.dgs_DispenserId.Read()
+              dgs_duplicateofid = __.dgs_duplicateofid.Read()
+              dgs_Longtermfollowupby = __.dgs_Longtermfollowupby.Read()
+              dgs_OutboundTMCallReservedBy = __.dgs_OutboundTMCallReservedBy.Read()
+              dgs_Referralcapturedby = __.dgs_Referralcapturedby.Read()
+              dgs_address1_housenumber = __.dgs_address1_housenumber.Read()
+              dgs_address1_housenumberadd = __.dgs_address1_housenumberadd.Read()
+              dgs_address1_streetname = __.dgs_address1_streetname.Read()
+              dgs_address2_housenumber = __.dgs_address2_housenumber.Read()
+              dgs_address2_housenumberadd = __.dgs_address2_housenumberadd.Read()
+              dgs_address2_streetname = __.dgs_address2_streetname.Read()
+              dgs_donotphonereason = __.dgs_donotphonereason.Read()
+              dgs_ondnc = __.dgs_ondnc.Read()
+              CreatedByExternalParty = __.CreatedByExternalParty.Read()
+              ModifiedByExternalParty = __.ModifiedByExternalParty.Read()
+              LastOnHoldTime = __.LastOnHoldTime.Read()
+              SLAId = __.SLAId.Read()
+              OnHoldTime = __.OnHoldTime.Read()
+              SLAInvokedId = __.SLAInvokedId.Read()
+              dgs_latesttestdate = __.dgs_latesttestdate.Read()
+              dgs_hasemailaddress = __.dgs_hasemailaddress.Read()
+              dgs_hasmobilephonenumber = __.dgs_hasmobilephonenumber.Read()
+              dgs_haspostalmailingaddress = __.dgs_haspostalmailingaddress.Read()
+              cdi_age = __.cdi_age.Read()
+              cdi_allowtextmessages = __.cdi_allowtextmessages.Read()
+              cdi_facebook = __.cdi_facebook.Read()
+              cdi_grade = __.cdi_grade.Read()
+              cdi_identifiedon = __.cdi_identifiedon.Read()
+              cdi_image = __.cdi_image.Read()
+              cdi_ip = __.cdi_ip.Read()
+              cdi_latitude = __.cdi_latitude.Read()
+              cdi_linkedin = __.cdi_linkedin.Read()
+              cdi_Longitude = __.cdi_Longitude.Read()
+              cdi_partitionkey = __.cdi_partitionkey.Read()
+              cdi_rowkey = __.cdi_rowkey.Read()
+              cdi_score = __.cdi_score.Read()
+              cdi_social = __.cdi_social.Read()
+              cdi_totalscore = __.cdi_totalscore.Read()
+              cdi_twitter = __.cdi_twitter.Read()
+              cdi_visitorkey = __.cdi_visitorkey.Read()
+              dgs_RMMOwner = __.dgs_RMMOwner.Read()
+              dgs_skippostplugins = __.dgs_skippostplugins.Read()
+              TimeSpentByMeOnEmailAndMeetings = __.TimeSpentByMeOnEmailAndMeetings.Read()
+              FollowEmail = __.FollowEmail.Read()
+              MarketingOnly = __.MarketingOnly.Read()
+              dgs_socialsecuritynumber = __.dgs_socialsecuritynumber.Read()
+              dgs_socialsecuritynumbertype = __.dgs_socialsecuritynumbertype.Read()
+              cdi_TalDisplay = __.cdi_TalDisplay.Read()
+              cdi_TalDoNotDisplay = __.cdi_TalDoNotDisplay.Read()
+              dgs_preferredvisitingsiteId = __.dgs_preferredvisitingsiteId.Read()
+              dgs_lastinboundphonecallisbeforelastappt = __.dgs_lastinboundphonecallisbeforelastappt.Read()
+              dgs_lastinboundphonecallon = __.dgs_lastinboundphonecallon.Read()
+              dgs_lastinboundphonecalloutcome = __.dgs_lastinboundphonecalloutcome.Read()
+              dgs_lastinboundphonecalloutcomereason = __.dgs_lastinboundphonecalloutcomereason.Read()
+              dgs_lastinboundphonecalltrackingactivitycode = __.dgs_lastinboundphonecalltrackingactivitycode.Read()
+              dgs_lastinboundphonecalltrackingcode = __.dgs_lastinboundphonecalltrackingcode.Read()
+              dgs_allowtextmessages = __.dgs_allowtextmessages.Read()
+              dgs_latestdevicereturneddate = __.dgs_latestdevicereturneddate.Read()
+              dgs_latestdevicestatus = __.dgs_latestdevicestatus.Read()
+              dgs_latestpayertype = __.dgs_latestpayertype.Read()
+              dgs_productid = __.dgs_productid.Read()
+              dgs_warrantyend = __.dgs_warrantyend.Read()
+              dgs_warrantystart = __.dgs_warrantystart.Read()
+              dgs_nearestupcommingappointment = __.dgs_nearestupcommingappointment.Read()
+              dgs_latestcompletedtestoutcome = __.dgs_latestcompletedtestoutcome.Read()
+              dgs_dataprivacy = __.dgs_dataprivacy.Read()
+              dgs_donotbulkphone = __.dgs_donotbulkphone.Read()
+              dgs_donotbulksms = __.dgs_donotbulksms.Read()
+              dgs_marketingcommunication = __.dgs_marketingcommunication.Read()
+              dgs_latestreimbursementdate = __.dgs_latestreimbursementdate.Read()
+              dgs_ManagedCare = __.dgs_ManagedCare.Read()
+              dgs_PreferredLanguage = __.dgs_PreferredLanguage.Read()
+              dgs_WorkCover = __.dgs_WorkCover.Read()
+              dgs_WorkCoverClaim = __.dgs_WorkCoverClaim.Read()
+              dgs_doctorid = __.dgs_doctorid.Read()
+              dgs_excludereasonmodifiedon = __.dgs_excludereasonmodifiedon.Read()
+              dgs_activeinsuranceplans = __.dgs_activeinsuranceplans.Read()
+              dgs_activeinsuranceplans_Date = __.dgs_activeinsuranceplans_Date.Read()
+              dgs_activeinsuranceplans_State = __.dgs_activeinsuranceplans_State.Read()
+              dgs_activeserviceplan = __.dgs_activeserviceplan.Read()
+              dgs_activeserviceplan_Date = __.dgs_activeserviceplan_Date.Read()
+              dgs_activeserviceplan_State = __.dgs_activeserviceplan_State.Read()
+              dgs_acc = __.dgs_acc.Read()
+              dgs_accband = __.dgs_accband.Read()
+              dgs_address1_addressstatus = __.dgs_address1_addressstatus.Read()
+              dgs_address2_addressstatus = __.dgs_address2_addressstatus.Read()
+              dgs_mobilephonecallingcode = __.dgs_mobilephonecallingcode.Read()
+              dgs_profilingdimension1 = __.dgs_profilingdimension1.Read()
+              dgs_profilingdimension3 = __.dgs_profilingdimension3.Read()
+              dgs_profilingoptout = __.dgs_profilingoptout.Read()
+              dgs_profillingmodifiedon = __.dgs_profillingmodifiedon.Read()
+              dgs_telephone1callingcode = __.dgs_telephone1callingcode.Read()
+              dgs_telephone2callingcode = __.dgs_telephone2callingcode.Read()
+              dgs_profilingdimension2 = __.dgs_profilingdimension2.Read()
+              dgs_AdvancedSegmentationData = __.dgs_AdvancedSegmentationData.Read()
+              dgs_latestcompletedappointment = __.dgs_latestcompletedappointment.Read()
+              dgs_latesttestappointment = __.dgs_latesttestappointment.Read()
+              dgs_DoNotSMS = __.dgs_DoNotSMS.Read()
+              dgs_lastappointmentimplantcandidate = __.dgs_lastappointmentimplantcandidate.Read()
+              dgs_lastappointmentreferralconsent = __.dgs_lastappointmentreferralconsent.Read()
+              dgs_DaysUntilNextAppointment = __.dgs_DaysUntilNextAppointment.Read()
+              dgs_latestinsuranceplanplantype = __.dgs_latestinsuranceplanplantype.Read()
+              dgs_latestinsuranceplanstartdate = __.dgs_latestinsuranceplanstartdate.Read()
+              dgs_latestinsuranceplanvouchernumber = __.dgs_latestinsuranceplanvouchernumber.Read()
+              dgs_vatnumber = __.dgs_vatnumber.Read()
+              dgs_latestinsuranceplaninsurancecompanygroup = __.dgs_latestinsuranceplaninsurancecompanygroup.Read()
+              dgs_latestworkcoverclaimnumber = __.dgs_latestworkcoverclaimnumber.Read()
+              dgs_latestworkcoverinsurancecompanygroup = __.dgs_latestworkcoverinsurancecompanygroup.Read()
+              dgs_latestworkcoverplantype = __.dgs_latestworkcoverplantype.Read()
+              dgs_latestworkcoverstartdate = __.dgs_latestworkcoverstartdate.Read()
+              cdi_timezones = __.cdi_timezones.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.ContactId.IsNull() then None else Some(__.Read())
+
+    [<CLIMutable>]
+    type ContactInvoices =
+        { ContactId: System.Guid
+          InvoiceId: System.Guid
+          ContactInvoiceId: System.Guid }
+
+    type ContactInvoicesReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.ContactId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactId")
+        member __.InvoiceId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "InvoiceId")
+        member __.ContactInvoiceId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactInvoiceId")
+
+        member __.Read() =
+            { ContactId = __.ContactId.Read()
+              InvoiceId = __.InvoiceId.Read()
+              ContactInvoiceId = __.ContactInvoiceId.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.ContactInvoiceId.IsNull() then None else Some(__.Read())
+
+    [<CLIMutable>]
+    type ContactLeads =
+        { ContactId: System.Guid
+          LeadId: System.Guid
+          ContactLeadId: System.Guid }
+
+    type ContactLeadsReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.ContactId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactId")
+        member __.LeadId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "LeadId")
+        member __.ContactLeadId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactLeadId")
+
+        member __.Read() =
+            { ContactId = __.ContactId.Read()
+              LeadId = __.LeadId.Read()
+              ContactLeadId = __.ContactLeadId.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.ContactLeadId.IsNull() then None else Some(__.Read())
+
+    [<CLIMutable>]
+    type ContactOrders =
+        { SalesOrderId: System.Guid
+          ContactId: System.Guid
+          ContactOrderId: System.Guid }
+
+    type ContactOrdersReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.SalesOrderId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "SalesOrderId")
+        member __.ContactId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactId")
+        member __.ContactOrderId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactOrderId")
+
+        member __.Read() =
+            { SalesOrderId = __.SalesOrderId.Read()
+              ContactId = __.ContactId.Read()
+              ContactOrderId = __.ContactOrderId.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.ContactOrderId.IsNull() then None else Some(__.Read())
+
+    [<CLIMutable>]
+    type ContactQuotes =
+        { ContactId: System.Guid
+          QuoteId: System.Guid
+          ContactQuoteId: System.Guid }
+
+    type ContactQuotesReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
+        member __.ContactId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactId")
+        member __.QuoteId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "QuoteId")
+        member __.ContactQuoteId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "ContactQuoteId")
+
+        member __.Read() =
+            { ContactId = __.ContactId.Read()
+              QuoteId = __.QuoteId.Read()
+              ContactQuoteId = __.ContactQuoteId.Read() }
+
+        member __.ReadIfNotNull() =
+            if __.ContactQuoteId.IsNull() then None else Some(__.Read())
+
+    [<CLIMutable>]
     type SystemUser =
-        { ParentSystemUserIdYomiName: Option<string>
-          SiteIdName: Option<string>
-          CreatedOnBehalfByName: Option<string>
-          OrganizationIdName: Option<string>
-          EntityImage_Timestamp: Option<int64>
-          EntityImage: Option<byte []>
-          TransactionCurrencyIdName: Option<string>
-          ModifiedByYomiName: Option<string>
-          MobileOfflineProfileIdName: Option<string>
+        { MobileOfflineProfileIdName: Option<string>
           BusinessUnitIdName: Option<string>
           TerritoryIdName: Option<string>
           ParentSystemUserIdName: Option<string>
           CreatedByYomiName: Option<string>
           ModifiedOnBehalfByName: Option<string>
           DefaultMailboxName: Option<string>
+          SiteIdName: Option<string>
+          ModifiedByYomiName: Option<string>
+          CreatedOnBehalfByName: Option<string>
+          OrganizationIdName: Option<string>
+          EntityImage_Timestamp: Option<int64>
+          EntityImage: Option<byte []>
           ModifiedOnBehalfByYomiName: Option<string>
           CreatedByName: Option<string>
           QueueIdName: Option<string>
+          ModifiedByName: Option<string>
+          ParentSystemUserIdYomiName: Option<string>
+          TransactionCurrencyIdName: Option<string>
           PositionIdName: Option<string>
           EntityImage_URL: Option<string>
-          ModifiedByName: Option<string>
           CreatedOnBehalfByYomiName: Option<string>
           Address1_AddressTypeCode: Option<int>
           Address1_City: Option<string>
@@ -2833,14 +3845,6 @@ module dbo =
           dgs_Telemarketer: Option<bool> }
 
     type SystemUserReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
-        member __.ParentSystemUserIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ParentSystemUserIdYomiName")
-        member __.SiteIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "SiteIdName")
-        member __.CreatedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByName")
-        member __.OrganizationIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "OrganizationIdName")
-        member __.EntityImage_Timestamp = OptionalColumn(reader, getOrdinal, reader.GetInt64, "EntityImage_Timestamp")
-        member __.EntityImage = OptionalBinaryColumn(reader, getOrdinal, reader.GetValue, "EntityImage")
-        member __.TransactionCurrencyIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "TransactionCurrencyIdName")
-        member __.ModifiedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByYomiName")
         member __.MobileOfflineProfileIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "MobileOfflineProfileIdName")
         member __.BusinessUnitIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "BusinessUnitIdName")
         member __.TerritoryIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "TerritoryIdName")
@@ -2848,12 +3852,20 @@ module dbo =
         member __.CreatedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByYomiName")
         member __.ModifiedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByName")
         member __.DefaultMailboxName = OptionalColumn(reader, getOrdinal, reader.GetString, "DefaultMailboxName")
+        member __.SiteIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "SiteIdName")
+        member __.ModifiedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByYomiName")
+        member __.CreatedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByName")
+        member __.OrganizationIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "OrganizationIdName")
+        member __.EntityImage_Timestamp = OptionalColumn(reader, getOrdinal, reader.GetInt64, "EntityImage_Timestamp")
+        member __.EntityImage = OptionalBinaryColumn(reader, getOrdinal, reader.GetValue, "EntityImage")
         member __.ModifiedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByYomiName")
         member __.CreatedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByName")
         member __.QueueIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "QueueIdName")
+        member __.ModifiedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByName")
+        member __.ParentSystemUserIdYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ParentSystemUserIdYomiName")
+        member __.TransactionCurrencyIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "TransactionCurrencyIdName")
         member __.PositionIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "PositionIdName")
         member __.EntityImage_URL = OptionalColumn(reader, getOrdinal, reader.GetString, "EntityImage_URL")
-        member __.ModifiedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByName")
         member __.CreatedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByYomiName")
         member __.Address1_AddressTypeCode = OptionalColumn(reader, getOrdinal, reader.GetInt32, "Address1_AddressTypeCode")
         member __.Address1_City = OptionalColumn(reader, getOrdinal, reader.GetString, "Address1_City")
@@ -2984,27 +3996,27 @@ module dbo =
         member __.dgs_Telemarketer = OptionalColumn(reader, getOrdinal, reader.GetBoolean, "dgs_Telemarketer")
 
         member __.Read() =
-            { ParentSystemUserIdYomiName = __.ParentSystemUserIdYomiName.Read()
-              SiteIdName = __.SiteIdName.Read()
-              CreatedOnBehalfByName = __.CreatedOnBehalfByName.Read()
-              OrganizationIdName = __.OrganizationIdName.Read()
-              EntityImage_Timestamp = __.EntityImage_Timestamp.Read()
-              EntityImage = __.EntityImage.Read()
-              TransactionCurrencyIdName = __.TransactionCurrencyIdName.Read()
-              ModifiedByYomiName = __.ModifiedByYomiName.Read()
-              MobileOfflineProfileIdName = __.MobileOfflineProfileIdName.Read()
+            { MobileOfflineProfileIdName = __.MobileOfflineProfileIdName.Read()
               BusinessUnitIdName = __.BusinessUnitIdName.Read()
               TerritoryIdName = __.TerritoryIdName.Read()
               ParentSystemUserIdName = __.ParentSystemUserIdName.Read()
               CreatedByYomiName = __.CreatedByYomiName.Read()
               ModifiedOnBehalfByName = __.ModifiedOnBehalfByName.Read()
               DefaultMailboxName = __.DefaultMailboxName.Read()
+              SiteIdName = __.SiteIdName.Read()
+              ModifiedByYomiName = __.ModifiedByYomiName.Read()
+              CreatedOnBehalfByName = __.CreatedOnBehalfByName.Read()
+              OrganizationIdName = __.OrganizationIdName.Read()
+              EntityImage_Timestamp = __.EntityImage_Timestamp.Read()
+              EntityImage = __.EntityImage.Read()
               ModifiedOnBehalfByYomiName = __.ModifiedOnBehalfByYomiName.Read()
               CreatedByName = __.CreatedByName.Read()
               QueueIdName = __.QueueIdName.Read()
+              ModifiedByName = __.ModifiedByName.Read()
+              ParentSystemUserIdYomiName = __.ParentSystemUserIdYomiName.Read()
+              TransactionCurrencyIdName = __.TransactionCurrencyIdName.Read()
               PositionIdName = __.PositionIdName.Read()
               EntityImage_URL = __.EntityImage_URL.Read()
-              ModifiedByName = __.ModifiedByName.Read()
               CreatedOnBehalfByYomiName = __.CreatedOnBehalfByYomiName.Read()
               Address1_AddressTypeCode = __.Address1_AddressTypeCode.Read()
               Address1_City = __.Address1_City.Read()
@@ -3543,8 +4555,7 @@ module dbo =
 
     [<CLIMutable>]
     type dgs_systemlogentry =
-        { dgs_UserContextName: Option<string>
-          CreatedByName: Option<string>
+        { CreatedByName: Option<string>
           CreatedByYomiName: Option<string>
           CreatedOnBehalfByName: Option<string>
           CreatedOnBehalfByYomiName: Option<string>
@@ -3552,6 +4563,7 @@ module dbo =
           ModifiedByYomiName: Option<string>
           ModifiedOnBehalfByName: Option<string>
           ModifiedOnBehalfByYomiName: Option<string>
+          dgs_UserContextName: Option<string>
           dgs_UserContextYomiName: Option<string>
           OwnerId: System.Guid
           OwnerIdName: Option<string>
@@ -3596,7 +4608,6 @@ module dbo =
           dgs_publishingsystem: Option<string> }
 
     type dgs_systemlogentryReader(reader: Microsoft.Data.SqlClient.SqlDataReader, getOrdinal) =
-        member __.dgs_UserContextName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_UserContextName")
         member __.CreatedByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByName")
         member __.CreatedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedByYomiName")
         member __.CreatedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "CreatedOnBehalfByName")
@@ -3605,6 +4616,7 @@ module dbo =
         member __.ModifiedByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedByYomiName")
         member __.ModifiedOnBehalfByName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByName")
         member __.ModifiedOnBehalfByYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "ModifiedOnBehalfByYomiName")
+        member __.dgs_UserContextName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_UserContextName")
         member __.dgs_UserContextYomiName = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_UserContextYomiName")
         member __.OwnerId = RequiredColumn(reader, getOrdinal, reader.GetGuid, "OwnerId")
         member __.OwnerIdName = OptionalColumn(reader, getOrdinal, reader.GetString, "OwnerIdName")
@@ -3646,8 +4658,7 @@ module dbo =
         member __.dgs_publishingsystem = OptionalColumn(reader, getOrdinal, reader.GetString, "dgs_publishingsystem")
 
         member __.Read() =
-            { dgs_UserContextName = __.dgs_UserContextName.Read()
-              CreatedByName = __.CreatedByName.Read()
+            { CreatedByName = __.CreatedByName.Read()
               CreatedByYomiName = __.CreatedByYomiName.Read()
               CreatedOnBehalfByName = __.CreatedOnBehalfByName.Read()
               CreatedOnBehalfByYomiName = __.CreatedOnBehalfByYomiName.Read()
@@ -3655,6 +4666,7 @@ module dbo =
               ModifiedByYomiName = __.ModifiedByYomiName.Read()
               ModifiedOnBehalfByName = __.ModifiedOnBehalfByName.Read()
               ModifiedOnBehalfByYomiName = __.ModifiedOnBehalfByYomiName.Read()
+              dgs_UserContextName = __.dgs_UserContextName.Read()
               dgs_UserContextYomiName = __.dgs_UserContextYomiName.Read()
               OwnerId = __.OwnerId.Read()
               OwnerIdName = __.OwnerIdName.Read()
@@ -3827,7 +4839,12 @@ type HydraReader(reader: Microsoft.Data.SqlClient.SqlDataReader) =
     let lazydboActivityPartyBase = lazy (dbo.ActivityPartyBaseReader(reader, buildGetOrdinal 16))
     let lazydboActivityPointer = lazy (dbo.ActivityPointerReader(reader, buildGetOrdinal 74))
     let lazydboActivityPointerBase = lazy (dbo.ActivityPointerBaseReader(reader, buildGetOrdinal 265))
-    let lazydboContact = lazy (dbo.ContactReader(reader, buildGetOrdinal 456))
+    let lazydboContact = lazy (dbo.ContactReader(reader, buildGetOrdinal 457))
+    let lazydboContactBase = lazy (dbo.ContactBaseReader(reader, buildGetOrdinal 298))
+    let lazydboContactInvoices = lazy (dbo.ContactInvoicesReader(reader, buildGetOrdinal 4))
+    let lazydboContactLeads = lazy (dbo.ContactLeadsReader(reader, buildGetOrdinal 4))
+    let lazydboContactOrders = lazy (dbo.ContactOrdersReader(reader, buildGetOrdinal 4))
+    let lazydboContactQuotes = lazy (dbo.ContactQuotesReader(reader, buildGetOrdinal 4))
     let lazydboSystemUser = lazy (dbo.SystemUserReader(reader, buildGetOrdinal 150))
     let lazydboSystemUserBase = lazy (dbo.SystemUserBaseReader(reader, buildGetOrdinal 84))
     let lazydboSystemUserBusinessUnitEntityMap = lazy (dbo.SystemUserBusinessUnitEntityMapReader(reader, buildGetOrdinal 6))
@@ -3844,6 +4861,11 @@ type HydraReader(reader: Microsoft.Data.SqlClient.SqlDataReader) =
     member __.``dbo.ActivityPointer`` = lazydboActivityPointer.Value
     member __.``dbo.ActivityPointerBase`` = lazydboActivityPointerBase.Value
     member __.``dbo.Contact`` = lazydboContact.Value
+    member __.``dbo.ContactBase`` = lazydboContactBase.Value
+    member __.``dbo.ContactInvoices`` = lazydboContactInvoices.Value
+    member __.``dbo.ContactLeads`` = lazydboContactLeads.Value
+    member __.``dbo.ContactOrders`` = lazydboContactOrders.Value
+    member __.``dbo.ContactQuotes`` = lazydboContactQuotes.Value
     member __.``dbo.SystemUser`` = lazydboSystemUser.Value
     member __.``dbo.SystemUserBase`` = lazydboSystemUserBase.Value
     member __.``dbo.SystemUserBusinessUnitEntityMap`` = lazydboSystemUserBusinessUnitEntityMap.Value
@@ -3869,6 +4891,16 @@ type HydraReader(reader: Microsoft.Data.SqlClient.SqlDataReader) =
         | "dbo.ActivityPointerBase", true -> __.``dbo.ActivityPointerBase``.ReadIfNotNull >> box
         | "dbo.Contact", false -> __.``dbo.Contact``.Read >> box
         | "dbo.Contact", true -> __.``dbo.Contact``.ReadIfNotNull >> box
+        | "dbo.ContactBase", false -> __.``dbo.ContactBase``.Read >> box
+        | "dbo.ContactBase", true -> __.``dbo.ContactBase``.ReadIfNotNull >> box
+        | "dbo.ContactInvoices", false -> __.``dbo.ContactInvoices``.Read >> box
+        | "dbo.ContactInvoices", true -> __.``dbo.ContactInvoices``.ReadIfNotNull >> box
+        | "dbo.ContactLeads", false -> __.``dbo.ContactLeads``.Read >> box
+        | "dbo.ContactLeads", true -> __.``dbo.ContactLeads``.ReadIfNotNull >> box
+        | "dbo.ContactOrders", false -> __.``dbo.ContactOrders``.Read >> box
+        | "dbo.ContactOrders", true -> __.``dbo.ContactOrders``.ReadIfNotNull >> box
+        | "dbo.ContactQuotes", false -> __.``dbo.ContactQuotes``.Read >> box
+        | "dbo.ContactQuotes", true -> __.``dbo.ContactQuotes``.ReadIfNotNull >> box
         | "dbo.SystemUser", false -> __.``dbo.SystemUser``.Read >> box
         | "dbo.SystemUser", true -> __.``dbo.SystemUser``.ReadIfNotNull >> box
         | "dbo.SystemUserBase", false -> __.``dbo.SystemUserBase``.Read >> box
