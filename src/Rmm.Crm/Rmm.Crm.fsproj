@@ -6,7 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="sqlhydra-rmm_mscrm.toml" />
         <Compile Include="Crm.fs">
             <Visible>False</Visible>
         </Compile>
