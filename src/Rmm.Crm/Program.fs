@@ -5,7 +5,6 @@ open Microsoft.FSharp.Control
 open Rmm.Crm.Domain
 open Rmm.Crm.dbo
 open Rmm.Data
-open Rmm.Data.Activities
 
 printfn "Start of execution"
 
@@ -27,56 +26,30 @@ let getUser =
     SystemUser.whereDomainName env userName
 
 let user = getUser.Result
-printfn $"User: %s{SystemUser.showSystemUser user}"
+printfn $"Pre-User: %s{SystemUser.showSystemUser user}"
 
+let newChUser = Option.map (SystemUser.copyWith "CH Retail Integration-User" "sa_crm_rmm_ch1@demant.com")
+let updUser = newChUser user
+printfn $"Post-User: %s{SystemUser.showSystemUser updUser}"
 let activitiesCount =
     Activities.countWhereUser env (SystemUser.getId user)
 
 printfn $"Activities: {activitiesCount.Result}"
 
-let printAct (apy: ActivityPartyBase) = printfn $"apy: {Activities.show apy}"
+let showActivity (apy: ActivityPartyBase) = printfn $"apy: {Activities.show apy}"
 
 let printAll (acts: ActivityPartyBase array) =
-    acts |> Array.iter printAct
+    acts |> Array.iter showActivity
     printfn $"{acts.Length}----------------------------"
 
-let createUpdate (user: SystemUserBase option) (rows: Guid array) =
-    user
-    |> Option.map (fun u ->
-        { PartyIdName = u.FullName
-          AddressUsed = u.InternalEMailAddress
-          AddressUsedEmailColumnNumber = 15 |> Some
-          RowIds = rows })
-
-let updateActivities db systemUser =
-    let createUpdateRec = createUpdate systemUser
-    let doUpdate = Activities.updateUsersInfo db
-    
-    Activities.idsWhereUser db (SystemUser.getId systemUser)
-    |> Async.RunSynchronously
-    |> Seq.cache
-    |> Seq.chunkBySize 50
-    |> Seq.map createUpdateRec
-    |> Seq.choose id
-    |> Seq.map doUpdate
-    |> Async.Parallel
-    |> Async.RunSynchronously
-    |> Seq.sum
-
-let updated = updateActivities env user
-printfn $"Updated: {updated}"
-// let endResult = async {
-//     let! result = Data.Logs.latest env
-//     result
-//     |> Array.iter (fun l -> printfn $"%A{l}")
-//     return 0
-// }
+// let updatedActivities = Activities.updateUserInfo env user
+// printfn $"Updated: {updatedActivities}"
 
 let cNo = "C10488788"
 let contactNo = ContactNumber cNo
 
 let endResult =
-    Contacts.getContactByNo env contactNo
+    Contacts.getByNo env contactNo
 
 let contactId =
     task {
