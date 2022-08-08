@@ -1,9 +1,11 @@
 ﻿// For more information see https://aka.ms/fsharp-console-apps
 
 open System
+open Microsoft.FSharp.Control
 open Rmm.Crm.Domain
 open Rmm.Crm.dbo
 open Rmm.Data
+open Rmm.Data.Activities
 
 printfn "Start of execution"
 
@@ -21,11 +23,14 @@ let env = dv80
 
 let userName = @"DEMANT\sa_crm_rmm_ch"
 
-let getUser = SystemUser.whereDomainName env userName
+let getUser =
+    SystemUser.whereDomainName env userName
+
 let user = getUser.Result
 printfn $"User: %s{SystemUser.showSystemUser user}"
 
-let activitiesCount = Activities.countWhereUser env (SystemUser.getId user)
+let activitiesCount =
+    Activities.countWhereUser env (SystemUser.getId user)
 
 printfn $"Activities: {activitiesCount.Result}"
 
@@ -35,13 +40,31 @@ let printAll (acts: ActivityPartyBase array) =
     acts |> Array.iter printAct
     printfn $"{acts.Length}----------------------------"
 
-let activities =
-    Activities.whereUser env (SystemUser.getId user)
+let createUpdate (user: SystemUserBase option) (rows: Guid array) =
+    user
+    |> Option.map (fun u ->
+        { PartyIdName = u.FullName
+          AddressUsed = u.InternalEMailAddress
+          AddressUsedEmailColumnNumber = 15 |> Some
+          RowIds = rows })
+
+let updateActivities db systemUser =
+    let createUpdateRec = createUpdate systemUser
+    let doUpdate = Activities.updateUsersInfo db
+    
+    Activities.idsWhereUser db (SystemUser.getId systemUser)
     |> Async.RunSynchronously
     |> Seq.cache
     |> Seq.chunkBySize 50
-    |> Seq.iter printAll
+    |> Seq.map createUpdateRec
+    |> Seq.choose id
+    |> Seq.map doUpdate
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> Seq.sum
 
+let updated = updateActivities env user
+printfn $"Updated: {updated}"
 // let endResult = async {
 //     let! result = Data.Logs.latest env
 //     result
@@ -51,7 +74,9 @@ let activities =
 
 let cNo = "C10488788"
 let contactNo = ContactNumber cNo
-let endResult = Contacts.getContactByNo env contactNo
+
+let endResult =
+    Contacts.getContactByNo env contactNo
 
 let contactId =
     task {

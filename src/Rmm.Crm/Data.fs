@@ -1,5 +1,6 @@
 namespace Rmm
 
+open System
 open SqlHydra.Query
 open Rmm.Crm.Domain
 open Rmm.Crm
@@ -12,6 +13,7 @@ module Data =
     let selectTaskNew (db: DB) = selectTask' (Create db.OpenContext)
     let selectAsync' ct = selectAsync HydraReader.Read ct
     let selectAsyncNew (db: DB) = selectAsync' (Create db.OpenContext)
+    let updateTask' (db: DB) = updateTask (Create db.OpenContext)
     let fallback value = Option.defaultValue value
     let idStr userId = userId.ToString()
     let emailStr = fallback "NO EmailAddress"
@@ -21,7 +23,9 @@ module Data =
     let posInt = fallback -1
 
     module SystemUser =
-        let userTable = table<dbo.SystemUserBase> |> inSchema (nameof dbo)
+        let userTable =
+            table<dbo.SystemUserBase> |> inSchema (nameof dbo)
+
         let otc = 8
 
         let showSystemUser (userOpt: dbo.SystemUserBase option) =
@@ -79,7 +83,8 @@ module Data =
             }
 
     module Contacts =
-        let contactBaseTable = table<dbo.ContactBase> |> inSchema (nameof dbo)
+        let contactBaseTable =
+            table<dbo.ContactBase> |> inSchema (nameof dbo)
 
         let toContact (ct: dbo.ContactBase) : Contact =
             { Id = ContactId ct.ContactId
@@ -123,6 +128,12 @@ module Data =
             }
 
     module Activities =
+        type UpdateUserInfo =
+            { PartyIdName: string option
+              AddressUsed: string option
+              AddressUsedEmailColumnNumber: int option
+              RowIds: Guid array }
+
         let activityPartyTable =
             table<dbo.ActivityPartyBase>
             |> inSchema (nameof dbo)
@@ -145,6 +156,18 @@ module Data =
                         && apy.PartyObjectTypeCode = otc
                     )
             }
+        
+        let idsWhereUser db userId =
+            let otc = SystemUser.otc
+            
+            selectAsyncNew db {
+                 for apy in activityPartyTable do
+                    where (
+                        apy.PartyId = userId
+                        && apy.PartyObjectTypeCode = otc
+                    )
+                    select apy.ActivityPartyId
+           }
 
         let countWhereUser db userId =
             let otc = SystemUser.otc
@@ -158,3 +181,35 @@ module Data =
 
                     count
             }
+
+        let updateUserInfo db (party: dbo.ActivityPartyBase) =
+            updateTask' db {
+                for apy in activityPartyTable do
+                    set apy.AddressUsed party.AddressUsed
+                    set apy.AddressUsedEmailColumnNumber party.AddressUsedEmailColumnNumber
+                    set apy.PartyIdName party.PartyIdName
+                    where (apy.ActivityPartyId = party.ActivityPartyId)
+            }
+
+        let updateUsersInfo (db: DB) (party: UpdateUserInfo) = async {
+            use ctx = db.OpenContext()
+            // ctx.BeginTransaction()
+            // let update' = updateTask (Shared ctx)
+
+            let updated =
+                update {
+                    for apy in activityPartyTable do
+                        set apy.AddressUsed party.AddressUsed
+                        set apy.AddressUsedEmailColumnNumber party.AddressUsedEmailColumnNumber
+                        set apy.PartyIdName party.PartyIdName
+                        where (apy.ActivityPartyId |=| party.RowIds)
+                }
+            let sql =
+                updated.ToKataQuery()
+                |> DB.toSql
+            printfn $"%s{sql}"
+
+            // ctx.CommitTransaction()
+            return party.RowIds.Length
+           
+        }

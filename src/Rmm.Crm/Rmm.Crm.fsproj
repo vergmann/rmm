@@ -1,23 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <Compile Include="Crm.fs">
-            <Visible>False</Visible>
-        </Compile>
-        <Compile Include="Domain.fs" />
-        <Compile Include="DB.fs" />
-        <Compile Include="Data.fs" />
-        <Compile Include="Program.fs" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
-      <PackageReference Include="SqlHydra.Query" Version="1.0.3" />
-    </ItemGroup>
-
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Crm.fs">
+      <Visible>False</Visible>
+    </Compile>
+    <Compile Include="Domain.fs" />
+    <Compile Include="DB.fs" />
+    <Compile Include="Data.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
+    <PackageReference Include="SqlHydra.Query" Version="1.0.3" />
+  </ItemGroup>
 </Project>
