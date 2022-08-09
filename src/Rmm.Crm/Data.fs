@@ -1,6 +1,8 @@
 namespace Rmm
 
 open System
+open System.Diagnostics
+open Microsoft.FSharp.Core
 open SqlHydra.Query
 open Rmm.Crm.Domain
 open Rmm.Crm
@@ -8,7 +10,43 @@ open Rmm.Crm
 open Rmm.SqlServer
 
 module Data =
+    type OperationResult =
+        { Selected: int
+          Inserted: int
+          Updated: int
+          Deleted: int
+          Chunks: int
+          ExecutionTime: TimeSpan
+          Elapsed: TimeSpan }
+        static member (+) (x: OperationResult, y: OperationResult) =
+            { Selected = x.Selected + y.Selected
+              Inserted = x.Inserted + y.Inserted
+              Updated = x.Updated + y.Updated
+              Deleted = x.Deleted + y.Deleted
+              Chunks = x.Chunks + y.Chunks
+              ExecutionTime = x.ExecutionTime + y.ExecutionTime
+              Elapsed = x.Elapsed + y.Elapsed
+            }
+        static member Zero =
+            { Selected = 0
+              Inserted = 0
+              Updated = 0
+              Deleted = 0
+              Chunks = 0
+              ExecutionTime = TimeSpan.Zero
+              Elapsed = TimeSpan.Zero }
+        
+        module OperationResult =
+            let total results : OperationResult =
+                let sum =
+                    results
+                    |> Array.sum
+                
+                { sum with
+                    ExecutionTime = sum.Elapsed
+                    Elapsed = TimeSpan.Zero }
 
+ 
     let selectTask' ct = selectTask HydraReader.Read ct
     let selectTaskNew (db: DB) = selectTask' (Create db.OpenContext)
     let selectAsync' ct = selectAsync HydraReader.Read ct
@@ -22,6 +60,17 @@ module Data =
     let cNoStr = fallback "NO Contact Number"
     let posInt = fallback -1
 
+    let createFullName firstName middleName lastName =
+        match firstName, middleName, lastName with
+        | Some f, Some m, Some l -> $"{f} {m} {l}" |> Some
+        | Some f, None, Some l -> $"%s{f} %s{l}" |> Some
+        | Some f, Some m, None -> $"%s{f} %s{m}" |> Some
+        | Some f, None, None -> $"%s{f}" |> Some
+        | None, Some m, Some l -> $"%s{m} %s{l}" |> Some
+        | None, None, Some l -> $"%s{l}" |> Some
+        | None, Some m, None -> $"%s{m}" |> Some
+        | None, None, None -> None
+
     [<RequireQualifiedAccess>]
     module SystemUser =
         let userTable =
@@ -29,10 +78,13 @@ module Data =
 
         let otc = 8
 
-        let copyWith fullName email user : dbo.SystemUserBase =
+        let copyWith firstName middleName lastName email user : dbo.SystemUserBase =
             { user with
-                InternalEMailAddress = Some "sa_crm_rmm_ch1@demant.com"
-                FullName = Some "CH Retail Integration-Account" }
+                InternalEMailAddress = email
+                FirstName = firstName
+                MiddleName = middleName
+                LastName = lastName
+                FullName = createFullName firstName middleName lastName }
 
         let showSystemUser (userOpt: dbo.SystemUserBase option) =
 
@@ -69,6 +121,14 @@ module Data =
             match systemUser with
             | Some su -> Some su.SystemUserId
             | None -> None
+        
+        let update (db: DB) (systemUser: dbo.SystemUserBase) =
+            updateAsync (Create db.OpenContext) {
+                for u in userTable do
+                entity systemUser
+                excludeColumn u.SystemUserId
+                where (u.SystemUserId = systemUser.SystemUserId)
+            }
 
     [<RequireQualifiedAccess>]
     module Logs =
@@ -203,12 +263,13 @@ module Data =
 
         let private updateUserInfoAsync (db: DB) (party: UserInfoUpdate) =
             async {
+                let sw = Stopwatch.StartNew()
                 use ctx = db.OpenContext()
-                ctx.BeginTransaction()
+                do ctx.BeginTransaction()
                 let update' = updateAsync (Shared ctx)
 
                 let! updated =
-                    updateAsync (Shared ctx) {
+                    update' {
                         for apy in activityPartyTable do
                             set apy.AddressUsed party.AddressUsed
                             set apy.AddressUsedEmailColumnNumber party.AddressUsedEmailColumnNumber
@@ -219,28 +280,47 @@ module Data =
                 // let sql = updated.ToKataQuery() |> DB.toSql
                 // printfn $"%s{sql}"
 
-                ctx.CommitTransaction()
+                do ctx.CommitTransaction()
 
                 // return party.RowIds.Length
-                return updated
+                do sw.Stop()
+
+                let result =
+                    { OperationResult.Zero with
+                        Updated = party.RowIds.Length
+                        Elapsed = sw.Elapsed }
+
+                return result
             }
 
         /// New info must be in 'systemUser'
-        let updateUserInfoBatch chunkSize db systemUser =
+        let updateUserInfoBatch (chunkSize: int) (db: DB) (systemUser: dbo.SystemUserBase option) =
+            let sw = Stopwatch.StartNew()
+
             let createUpdateRec =
                 UserInfoUpdate.create systemUser
 
             let doUpdate = updateUserInfoAsync db
 
-            idsWhereUser db (SystemUser.getId systemUser)
-            |> Async.RunSynchronously
-            |> Seq.cache
-            |> Seq.chunkBySize chunkSize
-            |> Seq.map createUpdateRec
-            |> Seq.choose id
-            |> Seq.map doUpdate
-            |> Async.Parallel
-            |> Async.RunSynchronously
-            |> Seq.sum
+            let chunkResults =
+                idsWhereUser db (SystemUser.getId systemUser)
+                |> Async.RunSynchronously
+                |> Seq.cache
+                |> Seq.chunkBySize chunkSize
+                |> Seq.map createUpdateRec
+                |> Seq.choose id
+                |> Seq.map doUpdate
+                |> Async.Parallel
+                |> Async.RunSynchronously
+            
+            do sw.Stop()
+            
+            let executionResult =
+                let totals = OperationResult.total chunkResults
+                { totals with
+                    Elapsed = sw.Elapsed }
+            let result = (executionResult, chunkResults)
+
+            result
 
         let updateUserInfo db user = updateUserInfoBatch 1000 db user
