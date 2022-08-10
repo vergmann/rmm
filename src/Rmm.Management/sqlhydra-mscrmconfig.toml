@@ -1,0 +1,10 @@
+[general]
+connection = "Data Source=KBNDVCRM80\\DEV01;Initial Catalog=MSCRM_CONFIG;Integrated Security=SSPI;TrustServerCertificate=True"
+output = "MsCrmConfig.fs"
+namespace = "Rmm.Management.MsCrmConfig"
+cli_mutable = true
+[readers]
+reader_type = "Microsoft.Data.SqlClient.SqlDataReader"
+[filters]
+include = []
+exclude = []

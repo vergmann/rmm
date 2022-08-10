@@ -1,4 +1,4 @@
-namespace Rmm.SqlServer
+namespace Rmm.Management.SqlServer
 
 open Microsoft.Data.SqlClient
 open SqlHydra.Query

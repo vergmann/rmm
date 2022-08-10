@@ -2,9 +2,14 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>Rmm.Management</AssemblyName>
+    <RootNamespace>Rmm.Management</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Crm.fs">
+    <Compile Include="MsCrmConfig.fs">
+      <Visible>False</Visible>
+    </Compile>
+    <Compile Include="RmmMsCrm.fs">
       <Visible>False</Visible>
     </Compile>
     <Compile Include="Domain.fs" />

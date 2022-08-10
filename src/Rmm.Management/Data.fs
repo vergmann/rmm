@@ -1,78 +1,93 @@
-namespace Rmm
+namespace Rmm.Management
 
 open System
 open System.Diagnostics
 open Microsoft.FSharp.Core
 open SqlHydra.Query
-open Rmm.Crm.Domain
-open Rmm.Crm
-// open Rmm.Crm.dbo
-open Rmm.SqlServer
+open Rmm.Management
+open Rmm.Management.Domain
+open Rmm.Management.SqlServer
 
 module Data =
-    type OperationResult =
-        { Selected: int
-          Inserted: int
-          Updated: int
-          Deleted: int
-          Chunks: int
-          ExecutionTime: TimeSpan
-          Elapsed: TimeSpan }
-        static member (+) (x: OperationResult, y: OperationResult) =
-            { Selected = x.Selected + y.Selected
-              Inserted = x.Inserted + y.Inserted
-              Updated = x.Updated + y.Updated
-              Deleted = x.Deleted + y.Deleted
-              Chunks = x.Chunks + y.Chunks
-              ExecutionTime = x.ExecutionTime + y.ExecutionTime
-              Elapsed = x.Elapsed + y.Elapsed
-            }
-        static member Zero =
-            { Selected = 0
-              Inserted = 0
-              Updated = 0
-              Deleted = 0
-              Chunks = 0
-              ExecutionTime = TimeSpan.Zero
-              Elapsed = TimeSpan.Zero }
-        
+    module Common =
+        type OperationResult =
+            { Selected: int
+              Inserted: int
+              Updated: int
+              Deleted: int
+              Chunks: int
+              ExecutionTime: TimeSpan
+              Elapsed: TimeSpan }
+            static member (+)(x: OperationResult, y: OperationResult) =
+                { Selected = x.Selected + y.Selected
+                  Inserted = x.Inserted + y.Inserted
+                  Updated = x.Updated + y.Updated
+                  Deleted = x.Deleted + y.Deleted
+                  Chunks = x.Chunks + y.Chunks
+                  ExecutionTime = x.ExecutionTime + y.ExecutionTime
+                  Elapsed = x.Elapsed + y.Elapsed }
+
+            static member Zero =
+                { Selected = 0
+                  Inserted = 0
+                  Updated = 0
+                  Deleted = 0
+                  Chunks = 0
+                  ExecutionTime = TimeSpan.Zero
+                  Elapsed = TimeSpan.Zero }
+
         module OperationResult =
             let total results : OperationResult =
-                let sum =
-                    results
-                    |> Array.sum
-                
+                let sum = results |> Array.sum
+
                 { sum with
                     ExecutionTime = sum.Elapsed
                     Elapsed = TimeSpan.Zero }
 
- 
-    let selectTask' ct = selectTask HydraReader.Read ct
-    let selectTaskNew (db: DB) = selectTask' (Create db.OpenContext)
-    let selectAsync' ct = selectAsync HydraReader.Read ct
-    let selectAsyncNew (db: DB) = selectAsync' (Create db.OpenContext)
-    let updateTask' (db: DB) = updateTask (Create db.OpenContext)
-    let fallback value = Option.defaultValue value
-    let idStr userId = userId.ToString()
-    let emailStr = fallback "NO EmailAddress"
-    let fnStr = fallback "NO Full Name"
-    let dnStr = fallback "NO Domain Name"
-    let cNoStr = fallback "NO Contact Number"
-    let posInt = fallback -1
+        let fallback value = Option.defaultValue value
+        let idStr userId = userId.ToString()
+        let emailStr = fallback "NO EmailAddress"
+        let fnStr = fallback "NO Full Name"
+        let dnStr = fallback "NO Domain Name"
+        let cNoStr = fallback "NO Contact Number"
+        let posInt = fallback -1
+        let updateAsync' (db: DB) = updateAsync (Create db.OpenContext)
 
-    let createFullName firstName middleName lastName =
-        match firstName, middleName, lastName with
-        | Some f, Some m, Some l -> $"{f} {m} {l}" |> Some
-        | Some f, None, Some l -> $"%s{f} %s{l}" |> Some
-        | Some f, Some m, None -> $"%s{f} %s{m}" |> Some
-        | Some f, None, None -> $"%s{f}" |> Some
-        | None, Some m, Some l -> $"%s{m} %s{l}" |> Some
-        | None, None, Some l -> $"%s{l}" |> Some
-        | None, Some m, None -> $"%s{m}" |> Some
-        | None, None, None -> None
+        let createFullName firstName middleName lastName =
+            match firstName, middleName, lastName with
+            | Some f, Some m, Some l -> $"{f} {m} {l}" |> Some
+            | Some f, None, Some l -> $"%s{f} %s{l}" |> Some
+            | Some f, Some m, None -> $"%s{f} %s{m}" |> Some
+            | Some f, None, None -> $"%s{f}" |> Some
+            | None, Some m, Some l -> $"%s{m} %s{l}" |> Some
+            | None, None, Some l -> $"%s{l}" |> Some
+            | None, Some m, None -> $"%s{m}" |> Some
+            | None, None, None -> None
+
+        module MsCrm =
+            open Rmm.Management.RmmMsCrm
+
+            let selectTask' ct = selectTask HydraReader.Read ct
+            let selectTaskNew (db: DB) = selectTask' (Create db.OpenContext)
+            let selectAsync' ct = selectAsync HydraReader.Read ct
+            let selectAsyncNew (db: DB) = selectAsync' (Create db.OpenContext)
+            let updateTask' (db: DB) = updateTask (Create db.OpenContext)
+
+        module MsCrmConfig =
+            open Rmm.Management.MsCrmConfig
+
+            let selectTask' ct = selectTask HydraReader.Read ct
+            let selectTaskNew (db: DB) = selectTask' (Create db.OpenContext)
+            let selectAsync' ct = selectAsync HydraReader.Read ct
+            let selectAsyncNew (db: DB) = selectAsync' (Create db.OpenContext)
+            let updateTask' (db: DB) = updateTask (Create db.OpenContext)
 
     [<RequireQualifiedAccess>]
     module SystemUser =
+        open Common
+        open Common.MsCrm
+        open Rmm.Management.RmmMsCrm
+
         let userTable =
             table<dbo.SystemUserBase> |> inSchema (nameof dbo)
 
@@ -102,8 +117,8 @@ module Data =
               FullName = su.FullName
               PrimaryEmail = EmailAddress su.InternalEMailAddress }
 
-        let getUserByDomainName db name =
-            selectTaskNew db {
+        let getUserByDomainName (db: DB) name =
+            selectAsync' (Create db.OpenContext) {
                 for u in userTable do
                     where (u.DomainName = name)
                     mapSeq (toUser u)
@@ -111,7 +126,7 @@ module Data =
             }
 
         let whereDomainName db name =
-            selectTaskNew db {
+            selectAsyncNew db {
                 for u in userTable do
                     where (u.DomainName = name)
                     tryHead
@@ -121,29 +136,32 @@ module Data =
             match systemUser with
             | Some su -> Some su.SystemUserId
             | None -> None
-        
-        let update (db: DB) (systemUser: dbo.SystemUserBase) =
-            updateAsync (Create db.OpenContext) {
+
+        let update db (systemUser: dbo.SystemUserBase) =
+            updateAsync' db {
                 for u in userTable do
-                entity systemUser
-                excludeColumn u.SystemUserId
-                where (u.SystemUserId = systemUser.SystemUserId)
+                    entity systemUser
+                    excludeColumn u.SystemUserId
+                    where (u.SystemUserId = systemUser.SystemUserId)
             }
 
     [<RequireQualifiedAccess>]
     module Logs =
+        open Common.MsCrm
+        open Rmm.Management.RmmMsCrm
+
         let systemLogEntryTable =
             table<dbo.dgs_systemlogentryBase>
             |> inSchema (nameof dbo)
 
-        let count (db: DB) =
-            selectAsync HydraReader.Read (Create db.OpenContext) {
+        let count db =
+            selectAsyncNew db {
                 for log in systemLogEntryTable do
                     count
             }
 
-        let latest (db: DB) =
-            selectAsync HydraReader.Read (Create db.OpenContext) {
+        let latest db =
+            selectAsyncNew db {
                 for log in systemLogEntryTable do
                     take 5
                     toArray
@@ -151,6 +169,9 @@ module Data =
 
     [<RequireQualifiedAccess>]
     module Contacts =
+        open Common.MsCrm
+        open Rmm.Management.RmmMsCrm
+
         let contactBaseTable =
             table<dbo.ContactBase> |> inSchema (nameof dbo)
 
@@ -166,20 +187,20 @@ module Data =
 
                 | None -> "ERROR" }
 
-        let getById (db: DB) contactId =
+        let getById db contactId =
             let (ContactId id) = contactId
 
-            selectTask' (Create db.OpenContext) {
+            selectAsyncNew db {
                 for ct in contactBaseTable do
                     where (ct.ContactId = id)
                     mapSeq (toContact ct)
                     tryHead
             }
 
-        let getByNo (db: DB) contactNumber =
+        let getByNo db contactNumber =
             let (ContactNumber cno) = contactNumber
 
-            selectTask' (Create db.OpenContext) {
+            selectAsyncNew db {
                 for ct in contactBaseTable do
                     where (ct.dgs_ContactNumber = Some cno)
                     // select (ct.ContactId, ct.dgs_ContactNumber, ct.FullName) into selected
@@ -187,8 +208,8 @@ module Data =
                     tryHead
             }
 
-        let getIdByNo (db: DB) cNo =
-            selectTaskNew db {
+        let getIdByNo db cNo =
+            selectAsyncNew db {
                 for ct in contactBaseTable do
                     where (ct.dgs_ContactNumber = cNo)
                     select ct.ContactId
@@ -197,6 +218,10 @@ module Data =
 
     [<RequireQualifiedAccess>]
     module Activities =
+        open Common
+        open Common.MsCrm
+        open Rmm.Management.RmmMsCrm
+
         type UserInfoUpdate =
             { PartyIdName: string option
               AddressUsed: string option
@@ -281,46 +306,84 @@ module Data =
                 // printfn $"%s{sql}"
 
                 do ctx.CommitTransaction()
-
-                // return party.RowIds.Length
                 do sw.Stop()
 
                 let result =
                     { OperationResult.Zero with
-                        Updated = party.RowIds.Length
+                        Updated = updated
                         Elapsed = sw.Elapsed }
 
                 return result
             }
 
         /// New info must be in 'systemUser'
+        /// Max chunksSize = 2100 (server limit)
         let updateUserInfoBatch (chunkSize: int) (db: DB) (systemUser: dbo.SystemUserBase option) =
-            let sw = Stopwatch.StartNew()
+            async {
+                let sw = Stopwatch.StartNew()
 
-            let createUpdateRec =
-                UserInfoUpdate.create systemUser
+                let createUpdateRec =
+                    UserInfoUpdate.create systemUser
 
-            let doUpdate = updateUserInfoAsync db
+                let doUpdate = updateUserInfoAsync db
+                
+                let maxDegreeOfParallelism max seq = seq, max
 
-            let chunkResults =
-                idsWhereUser db (SystemUser.getId systemUser)
-                |> Async.RunSynchronously
-                |> Seq.cache
-                |> Seq.chunkBySize chunkSize
-                |> Seq.map createUpdateRec
-                |> Seq.choose id
-                |> Seq.map doUpdate
-                |> Async.Parallel
-                |> Async.RunSynchronously
-            
-            do sw.Stop()
-            
-            let executionResult =
-                let totals = OperationResult.total chunkResults
-                { totals with
-                    Elapsed = sw.Elapsed }
-            let result = (executionResult, chunkResults)
+                let chunkResults =
+                    idsWhereUser db (SystemUser.getId systemUser)
+                    |> Async.RunSynchronously
+                    |> Seq.cache
+                    |> Seq.chunkBySize chunkSize
+                    |> Seq.map createUpdateRec
+                    |> Seq.choose id
+                    |> Seq.map doUpdate
+                    |> maxDegreeOfParallelism 8
+                    |> Async.Parallel
+                    |> Async.RunSynchronously
 
-            result
+                do sw.Stop()
+
+                let executionResult =
+                    let totals =
+                        OperationResult.total chunkResults
+
+                    { totals with Elapsed = sw.Elapsed }
+
+                let result = (executionResult, chunkResults)
+
+                return result
+            }
 
         let updateUserInfo db user = updateUserInfoBatch 1000 db user
+
+    module Config =
+        open Common
+        open Common.MsCrmConfig
+        open Rmm.Management.MsCrmConfig
+
+        let deploymentPropertiesTable =
+            table<dbo.DeploymentProperties>
+            |> inSchema (nameof dbo)
+
+        type DeploymentProperties = DisableSSLCheckForEncryption of bool option
+
+        let selectSslCheckForEncryption (db: DB) =
+            let columnName =
+                nameof DisableSSLCheckForEncryption
+
+            selectAsyncNew db {
+                for prop in deploymentPropertiesTable do
+                    where (prop.ColumnName = columnName)
+                    select prop.BitColumn
+                    tryHead
+            }
+
+        let updateSslCheckForEncryption db (disable: bool option) =
+            let columnName =
+                nameof DisableSSLCheckForEncryption
+
+            updateAsync' db {
+                for p in deploymentPropertiesTable do
+                    set p.BitColumn disable
+                    where (p.ColumnName = columnName)
+            }

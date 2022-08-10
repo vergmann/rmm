@@ -1,7 +1,7 @@
 [general]
 connection = "Data Source=KBNDVCRM80\\DEV01;Initial Catalog=RMM_MSCRM;Integrated Security=SSPI;TrustServerCertificate=True"
-output = "Crm.fs"
-namespace = "Rmm.Crm"
+output = "RmmMsCrm.fs"
+namespace = "Rmm.Management.MsCrm"
 cli_mutable = true
 [readers]
 reader_type = "Microsoft.Data.SqlClient.SqlDataReader"

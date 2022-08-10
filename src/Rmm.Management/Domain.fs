@@ -1,4 +1,4 @@
-﻿namespace Rmm.Crm
+﻿namespace Rmm.Management
 
 open System
 
