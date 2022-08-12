@@ -1,0 +1,16 @@
+﻿<clickdimensions>
+    <settings>
+        <accountkey>agviDRxD2y0SHY2gXXhcjl</accountkey>
+        <token>atVCEw</token>
+        <emailclickScore>10</emailclickScore>
+        <formerrorScore>-5</formerrorScore>
+        <formsuccessScore>25</formsuccessScore>
+        <oppcreateScore>50</oppcreateScore>
+        <opplostScore>-10</opplostScore>
+        <pageviewScore>3</pageviewScore>
+        <visitScore>5</visitScore>
+        <region>eu</region>
+        <crmversion>2017</crmversion>
+        <subscriptionmanagementstatus>0</subscriptionmanagementstatus>
+    </settings>
+</clickdimensions>

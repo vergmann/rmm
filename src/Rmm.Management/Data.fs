@@ -2,13 +2,20 @@ namespace Rmm.Management
 
 open System
 open System.Diagnostics
+open System.Threading.Tasks
+open System.Xml.Linq
 open Microsoft.FSharp.Core
+open FSharp.Data
 open SqlHydra.Query
 open Rmm.Management
 open Rmm.Management.Domain
 open Rmm.Management.SqlServer
 
 module Data =
+    
+    [<Literal>]
+    let ResolutionFolder = __SOURCE_DIRECTORY__
+
     module Common =
         type OperationResult =
             { Selected: int
@@ -64,8 +71,34 @@ module Data =
             | None, Some m, None -> $"%s{m}" |> Some
             | None, None, None -> None
 
+        // Will ensure 1 processor not used for processing unless the machine
+        // only has one (but then it will not be parallel anyway).
+        let maxDegreeOfParallelism (max: int) seq =
+            let count = Environment.ProcessorCount
+
+            let processors =
+                match count, max with
+                | c,_ when c <= 1 -> 1
+                | _, m when 1 < m && m < count  -> m
+                | _, _ -> count - 1
+
+            seq, processors
+            
+        let parallelOptions max =
+            let options = ParallelOptions ()
+            options.MaxDegreeOfParallelism <- max
+            options
+
+        let base64Decode (base64EncodedData: string) =
+            Convert.FromBase64String base64EncodedData
+            |> Text.Encoding.UTF8.GetString
+
+        let base64Encode (plainText: string) =
+            Text.Encoding.UTF8.GetBytes plainText
+            |> Convert.ToBase64String
+
         module MsCrm =
-            open Rmm.Management.RmmMsCrm
+            open Rmm.Management.MsCrm
 
             let selectTask' ct = selectTask HydraReader.Read ct
             let selectTaskNew (db: DB) = selectTask' (Create db.OpenContext)
@@ -86,7 +119,7 @@ module Data =
     module SystemUser =
         open Common
         open Common.MsCrm
-        open Rmm.Management.RmmMsCrm
+        open Rmm.Management.MsCrm
 
         let userTable =
             table<dbo.SystemUserBase> |> inSchema (nameof dbo)
@@ -145,10 +178,11 @@ module Data =
                     where (u.SystemUserId = systemUser.SystemUserId)
             }
 
+
     [<RequireQualifiedAccess>]
     module Logs =
         open Common.MsCrm
-        open Rmm.Management.RmmMsCrm
+        open Rmm.Management.MsCrm
 
         let systemLogEntryTable =
             table<dbo.dgs_systemlogentryBase>
@@ -170,7 +204,7 @@ module Data =
     [<RequireQualifiedAccess>]
     module Contacts =
         open Common.MsCrm
-        open Rmm.Management.RmmMsCrm
+        open Rmm.Management.MsCrm
 
         let contactBaseTable =
             table<dbo.ContactBase> |> inSchema (nameof dbo)
@@ -220,7 +254,7 @@ module Data =
     module Activities =
         open Common
         open Common.MsCrm
-        open Rmm.Management.RmmMsCrm
+        open Rmm.Management.MsCrm
 
         type UserInfoUpdate =
             { PartyIdName: string option
@@ -326,8 +360,6 @@ module Data =
                     UserInfoUpdate.create systemUser
 
                 let doUpdate = updateUserInfoAsync db
-                
-                let maxDegreeOfParallelism max seq = seq, max
 
                 let chunkResults =
                     idsWhereUser db (SystemUser.getId systemUser)
@@ -337,7 +369,7 @@ module Data =
                     |> Seq.map createUpdateRec
                     |> Seq.choose id
                     |> Seq.map doUpdate
-                    |> maxDegreeOfParallelism 8
+                    |> maxDegreeOfParallelism -2
                     |> Async.Parallel
                     |> Async.RunSynchronously
 
@@ -387,3 +419,49 @@ module Data =
                     set p.BitColumn disable
                     where (p.ColumnName = columnName)
             }
+
+    module WebResources =
+        open Common.MsCrm
+        open Rmm.Management.MsCrm
+
+        let webResourceTable =
+            table<dbo.WebResourceBase>
+            |> inSchema (nameof dbo)
+
+        let getCdiSettings db =
+            let zero = DB.dateTimeZero
+
+            selectAsyncNew db {
+                for wr in webResourceTable do
+                    where (
+                        wr.Name = "cdi_settings"
+                        && wr.OverwriteTime = zero
+                    )
+
+                    select wr.Content
+                    tryHead
+            }
+        
+        
+        type ClickDimensionsXml = XmlProvider<"./samples/cdiSettings.xml", Global = true, ResolutionFolder=ResolutionFolder>
+
+        type outputXml = ClickDimensionsXml
+        let updateAccountKey cdiSettingsXml accountKey token =
+             let clickDimensions = ClickDimensionsXml.Parse(cdiSettingsXml)
+             let settings = clickDimensions.Settings
+             let updatedSettings = outputXml.Settings (
+                     accountKey,
+                     token,
+                     settings.EmailclickScore,
+                     settings.FormerrorScore,
+                     settings.FormsuccessScore,
+                     settings.OppcreateScore,
+                     settings.OpplostScore,
+                     settings.PageviewScore,
+                     settings.VisitScore,
+                     settings.Region,
+                     settings.Crmversion,
+                     settings.Subscriptionmanagementstatus
+                )
+             let output = new outputXml.Clickdimensions (updatedSettings) 
+             output.ToString()

@@ -1,1 +1,1 @@
-dotnet sqlhydra-mssql "sqlhydra-RmmMsCrrm.toml"
+dotnet sqlhydra-mssql "sqlhydra-rmmmscrm.toml"

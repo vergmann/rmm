@@ -1,6 +1,6 @@
 [general]
 connection = "Data Source=KBNDVCRM80\\DEV01;Initial Catalog=RMM_MSCRM;Integrated Security=SSPI;TrustServerCertificate=True"
-output = "RmmMsCrm.fs"
+output = "MsCrm.fs"
 namespace = "Rmm.Management.MsCrm"
 cli_mutable = true
 [readers]
@@ -10,7 +10,8 @@ include = [
     "dbo/Contact*",
     "dbo/dgs_systemlogentry*",
     "dbo/ActivityP*",
-    "dbo/SystemUser*"
+    "dbo/SystemUser*",
+    "dbo/WebResource*"
     ]
 exclude = [
     "dbo/Filter*"
